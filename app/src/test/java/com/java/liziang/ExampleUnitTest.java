@@ -1,4 +1,4 @@
-package com.example.houfudao;
+package com.java.liziang;
 
 import org.junit.Test;
 

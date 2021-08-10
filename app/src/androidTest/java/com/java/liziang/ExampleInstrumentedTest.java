@@ -1,4 +1,4 @@
-package com.example.houfudao;
+package com.java.liziang;
 
 import android.content.Context;
 
@@ -21,7 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-
-        assertEquals("com.example.houfudao", appContext.getPackageName());
+        assertEquals("com.java.liziang", appContext.getPackageName());
     }
 }
