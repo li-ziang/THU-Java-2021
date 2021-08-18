@@ -3,7 +3,7 @@ package turitorial.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import turitorial.Status;
-import turitorial.UserRepository;
+import turitorial.user.UserRepository;
 
 import javax.validation.Valid;
 import java.util.List;
