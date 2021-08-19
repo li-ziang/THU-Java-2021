@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-
-	<name>HouFuDao</name>
-	<comment>Project THU-Java-2021 created by Buildship.</comment>
+	<name>app</name>
+	<comment>Project app created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -17,7 +16,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1629294784248</id>
+			<id>1629274600643</id>
 			<name></name>
 			<type>30</type>
 			<matcher>
