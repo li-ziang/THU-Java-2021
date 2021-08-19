@@ -9,7 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 import org.json .*;
-
+import turitorial.history.History;
+class His {
+    public String username;
+    public String instanceName;
+    public His(){}
+    public His(String username, String instanceName) {
+        this.username = username;
+        this.instanceName = instanceName;
+    }
+};
 @RestController
 public class UserController {
     @Autowired
@@ -82,6 +91,23 @@ public class UserController {
 //        }
 //        return null;
 //    }
+
+    @PostMapping("/users/addhistory")
+    public String addHistory(@Valid @RequestBody His his) {
+        String username = his.username, instanceName = his.instanceName;
+        List<User> users = userRepository.findAll();
+        for(User temp_user: users) {
+            if(username.equals(temp_user.getUsername())) {
+                History history = new History(instanceName, "", temp_user);
+                temp_user.histories.add(history);
+                User temp = userRepository.save(temp_user);
+                System.out.println(temp.histories);
+                return "Success";
+            }
+        }
+        return "failure";
+    }
+
     @DeleteMapping("/users/all")
     public String deleteUsers() {
         JSONObject jsonObject = new JSONObject();

@@ -13,11 +13,27 @@ public class History {
     private @NotBlank String time;
     private @Id @GeneratedValue long id;
     @ManyToOne(fetch = FetchType.LAZY) User user;
-    History() {}
-    History(String instanceName, String time) {
+    public History() {}
+    public History(String instanceName, String time, User user) {
         this.time = time;
         this.instanceName = instanceName;
+        this.user = user;
     }
+    public String getInstanceName() {
+        return instanceName;
+    }
+    public String getTime() {
+        return time;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if(this == o) return true;
@@ -29,10 +45,6 @@ public class History {
     @Override
     public int hashCode() {
         return Objects.hash(instanceName, time);
-    }
-    @Override
-    public String toString() {
-        return "";
     }
 
 }
