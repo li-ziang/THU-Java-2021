@@ -1,8 +1,12 @@
 package turitorial.user;
 
+import turitorial.history.History;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 import java.util.Objects;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -10,6 +14,7 @@ public class User {
     private @NotBlank String username;
     private @NotBlank String password;
     private @NotBlank boolean loggedIn;
+    @OneToMany(cascade = CascadeType.ALL) List<History> histories;
     public User() {
     }
     public User(@NotBlank String username,
@@ -18,6 +23,11 @@ public class User {
         this.password = password;
         this.loggedIn = false;
     }
+
+    public List<History> getHistories() {
+        return histories;
+    }
+
     public long getId() {
         return id;
     }
