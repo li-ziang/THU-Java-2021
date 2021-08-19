@@ -39,7 +39,7 @@ hs_err_pid*
 /captures
 .externalNativeBuild
 .cxx
-.project
+/.project
 
 #build.gradle
 build.gradle
