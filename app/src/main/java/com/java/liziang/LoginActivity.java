@@ -9,12 +9,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.util.Log;
 import java.io.IOException;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
+import okhttp3.Call;
+import okhttp3.Callback;
+import org.json.JSONException;
+import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etUsername, etPassword;
@@ -46,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private void loginUser() {
         final String userName = etUsername.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-        Log.i("1","1");
+
         if (userName.isEmpty()) {
             etUsername.setError("Username is required");
             etUsername.requestFocus();
@@ -56,39 +54,91 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.requestFocus();
             return;
         }
-        Log.i("1","1");
 
-        Call<ResponseBody> call = RetrofitClient
-                .getInstance()
-                .getAPI()
-                .checkUser(new User(userName, password));
-        Log.i("5","5");
-        call.enqueue(new Callback<ResponseBody>() {
+        String api = "/users/login";
+        String json = String.format("{\"username\": \"%s\", \"password\":\"%s\"}",userName,password);
+        Server server = new Server(api,json);
+        Call call=server.call();
+
+        call.enqueue(new Callback() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s = "";
-                Log.i("2","2");
-                try {
-                    Log.i("3","3");
-                    s = response.body().string();
-                    Log.i("4","4");
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                if (s.equals(userName)) {
-                    Toast.makeText(LoginActivity.this, "User logged in!", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(LoginActivity.this, DashboardActivity.class).putExtra("username", userName));
-                } else {
-                    Toast.makeText(LoginActivity.this, "Incorrect Credentials! Try again!", Toast.LENGTH_LONG).show();
-                }
+            public void onFailure(Call call, IOException e) {
+                Log.i("login fail",e.toString());
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.i("1","2");
-                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                String string = response.body().string();
+                Log.i("login response",string);
+                JSONObject ret = null;
+                try {
+                    ret = new JSONObject(string);
+                    String code = ret.optString("code","defaultValue");
+                    String content = ret.optString("content","defaultValue");
+                    Log.i("code",code);
+                    Log.i("content",content);
+
+                    if (code.equals("200")) {
+                        startActivity(new Intent(LoginActivity.this, DashboardActivity.class).putExtra("username", userName));
+                    } else {
+                        Log.i("login fail","error info");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+    }
+
+
+    private void logoutUser() {
+        final String userName = etUsername.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+
+        if (userName.isEmpty()) {
+            etUsername.setError("Username is required");
+            etUsername.requestFocus();
+            return;
+        } else if (password.isEmpty()) {
+            etPassword.setError("Password is required");
+            etPassword.requestFocus();
+            return;
+        }
+
+        String api = "/users/logout";
+        String json = String.format("{\"username\": \"%s\"}",userName);
+        Server server = new Server(api,json);
+        Call call=server.call();
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i("logout fail",e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                String string = response.body().string();
+                Log.i("login response",string);
+                JSONObject ret = null;
+                try {
+                    ret = new JSONObject(string);
+                    String code = ret.optString("code","defaultValue");
+                    String content = ret.optString("content","defaultValue");
+                    Log.i("code",code);
+                    Log.i("content",content);
+
+                    if (code.equals("200")) {
+                        startActivity(new Intent(LoginActivity.this, DashboardActivity.class).putExtra("username", userName));
+                    } else {
+                        Log.i("logout fail","error info");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
