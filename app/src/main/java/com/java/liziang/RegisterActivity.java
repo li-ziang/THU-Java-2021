@@ -12,6 +12,9 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -20,8 +23,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-//import retrofit2.Call;
-//import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -65,71 +66,43 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        String api = "/users/register";
+        String json = String.format("{\"username\": \"%s\", \"password\":\"%s\"}",userName,password);
+        Server server = new Server(api,json);
+        Call call=server.call();
 
-//        Call<ResponseBody> call = RetrofitClient
-//                .getInstance()
-//                .getAPI()
-//                .createUser(new User(userName, password));
-//
-//        call.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                String s = "";
-//                try {
-//                    s = response.body().string();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                if (s.equals("SUCCESS")) {
-//                    Toast.makeText(RegisterActivity.this, "Successfully registered. Please login", Toast.LENGTH_LONG).show();
-//                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-//                } else {
-//                    Toast.makeText(RegisterActivity.this, "User already exists!", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-//            }
-//        });
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .build();
-        FormBody formBody = new FormBody.Builder()
-                .add("username", "test").add("password", "test")
-                .build();
-
-        Request request = new Request.Builder()
-                .header("X-Client-Type", "Android")
-                .url("http://10.0.2.2:8080/users/login")
-                .post(RequestBody
-                        .create(MediaType
-                                        .parse("application/json"),
-                                "{\"username\": \"test\", \"password\":\"test\"}"
-                        ))
-                .build();
-//        Request request = new Request.Builder()
-//
-//                .post(formBody)
-//                .url("http://10.0.2.2:8080/users/login")
-//                .build();
-        Call call = okHttpClient.newCall(request);
 
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.i("1",e.toString());
+                Log.i("register fail",e.toString());
             }
 
             @Override
             public void onResponse(Call call, okhttp3.Response response) throws IOException {
                 String string = response.body().string();
-                Log.i("asdas", string);
+                Log.i("register response",string);
+                JSONObject ret = null;
+                try {
+                    ret = new JSONObject(string);
+                    String code = ret.optString("code","defaultValue");
+                    String content = ret.optString("content","defaultValue");
+                    Log.i("code",code);
+                    Log.i("content",content);
+
+                    if (code.equals("200")) {
+//                        Toast.makeText(RegisterActivity.this, "Successfully registered. Please login", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                    } else {
+                        Log.i("regist fail","user already exit");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
+
+
     }
 }

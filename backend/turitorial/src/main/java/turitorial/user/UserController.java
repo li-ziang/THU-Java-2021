@@ -5,12 +5,20 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import turitorial.Status;
 
 import javax.validation.Valid;
 import java.util.List;
 import org.json .*;
-
+import turitorial.history.History;
+class His {
+    public String username;
+    public String instanceName;
+    public His(){}
+    public His(String username, String instanceName) {
+        this.username = username;
+        this.instanceName = instanceName;
+    }
+};
 @RestController
 public class UserController {
     @Autowired
@@ -68,6 +76,38 @@ public class UserController {
         jsonObject.put("content", "did not login");
         return  jsonObject.toString();
     }
+//    @PostMapping("/users/histories")
+//    public List<String> getHistories(@Valid @RequestBody User user) {
+//        List<User> users = userRepository.findAll();
+//        for(User other: users) {
+//            if(other.equals(user)) {
+//                List<String> ret = new ArrayList<String>();
+//                List<History> histories = other.getHistories();
+//                for(History history:histories) {
+//                    ret.add(history.getInstanceName());
+//                }
+//                return ret;
+//            }
+//        }
+//        return null;
+//    }
+
+    @PostMapping("/users/addhistory")
+    public String addHistory(@Valid @RequestBody His his) {
+        String username = his.username, instanceName = his.instanceName;
+        List<User> users = userRepository.findAll();
+        for(User temp_user: users) {
+            if(username.equals(temp_user.getUsername())) {
+                History history = new History(instanceName, "", temp_user);
+                temp_user.histories.add(history);
+                User temp = userRepository.save(temp_user);
+                System.out.println(temp.histories);
+                return "Success";
+            }
+        }
+        return "failure";
+    }
+
     @DeleteMapping("/users/all")
     public String deleteUsers() {
         JSONObject jsonObject = new JSONObject();
@@ -75,4 +115,5 @@ public class UserController {
         jsonObject.put("code","200");
         return jsonObject.toString();
     }
+
 }
