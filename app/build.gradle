@@ -47,5 +47,4 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation "com.google.android.material:material:1.0.0"
     implementation "androidx.cardview:cardview:1.0.0"
-    implementation 'androidx.recyclerview.wiget:recyclerview:28.0.0'
 }
