@@ -75,7 +75,9 @@ public class DataLoader {
         KnowledgeCard sample = new KnowledgeCard(jsonObject.getString("entity_type"),jsonObject.getString("entity_name"),jsonObject.getJSONArray("entity_features"));
         return sample;
     }
-    public static void main(String[] args) throws JSONException {
+
+    static void main(String[] args) throws JSONException {
+
 
     }
 }

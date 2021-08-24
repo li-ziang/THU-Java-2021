@@ -4,7 +4,8 @@ import turitorial.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Objects;
+import java.util.*;
+
 
 @Entity
 @Table(name = "histories")
