@@ -25,4 +25,14 @@ public class HistoryController {
         jsonObject.put("code","200");
         return jsonObject.toString();
     }
+//    @PostMapping("/histories/add")
+//    public void addHistory(String username, String instanceName) {
+//        List<User> users = userRepository.findAll();
+//
+//        for(User temp_user: users) {
+//            if(username.equals(temp_user.getUsername())) {
+////                temp_user.a
+//            }
+//        }
+//    }
 }

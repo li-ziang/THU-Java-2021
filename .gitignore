@@ -41,12 +41,16 @@ Thumbs.db
 
 /local.properties
 /.idea/workspace.xml
-/.idea/libraries
 .DS_Store
 .project
 /build
 /captures
 .externalNativeBuild
+.cxx
+/.project
+
+#build.gradle
+build.gradle
 
 
 /*/out
@@ -56,4 +60,3 @@ Thumbs.db
 *.ipr
 *~
 *.swp
-

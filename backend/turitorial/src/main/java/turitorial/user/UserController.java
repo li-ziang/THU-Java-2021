@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
+import org.json .*;
+import turitorial.history.History;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,7 +18,6 @@ import org.json .*;
 import turitorial.dataloader.HttpRequest;
 import turitorial.history.History;
 import turitorial.history.HistoryRepository;
-
 class His {
     public String username;
     public String instanceName;
@@ -48,6 +50,7 @@ class InstanceInfo{
         this.username = username;
     }
 }
+
 @RestController
 public class UserController {
     @Autowired
@@ -122,7 +125,6 @@ public class UserController {
         }
         return null;
     }
-
 
 
     @PostMapping("/users/addhistory")
