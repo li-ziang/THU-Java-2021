@@ -21,21 +21,25 @@ import com.java.liziang.ui.main.SectionsPagerAdapter;
 import com.java.liziang.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-
-private ActivityMainBinding binding;
-
+   public static MainItem mainItem;
+    private ActivityMainBinding binding;
+     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-     //binding = ActivityMainBinding.inflate(getLayoutInflater());
-     setContentView(R.layout.activity_main);
-        findViewById(R.id.user_image).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            }
-        });
+    
+       //TODO: use something to init the MainItem class
+       String course = "语文";
+       mainItem = new MainItem(course);
+        
+        //binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(R.layout.activity_main);
+            findViewById(R.id.user_image).setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
+            });
 
 
 //        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
