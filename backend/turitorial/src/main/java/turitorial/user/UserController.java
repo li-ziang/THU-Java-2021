@@ -16,6 +16,7 @@ import org.json .*;
 import turitorial.dataloader.HttpRequest;
 import turitorial.history.History;
 import turitorial.history.HistoryRepository;
+import turitorial.searchKeyHis.SearchKeyHis;
 
 class His {
     public String username;
@@ -49,12 +50,20 @@ class InstanceInfo{
         this.username = username;
     }
 }
+
+class userHistory {
+    public String username;
+    public Integer number;
+}
+
 @RestController
 public class UserController {
     @Autowired
     UserRepository userRepository;
     @Autowired
     HistoryRepository historyRepository;
+
+
     @PostMapping("/users/register")
     public String registerUser(@Valid @RequestBody User newUser) {
         JSONObject jsonObject = new JSONObject();
@@ -62,7 +71,7 @@ public class UserController {
         System.out.println("New user: " + newUser.toString());
         for (User user : users) {
             System.out.println("Registered user: " + newUser.toString());
-            if (user.equals(newUser)) {
+            if (user.getUsername().equals(newUser)) {
                 System.out.println("User Already exists!");
                 jsonObject.put("code", "400");
                 jsonObject.put("content", "user already exists");
@@ -79,9 +88,9 @@ public class UserController {
         JSONObject jsonObject = new JSONObject();
         List<User> users = userRepository.findAll();
         for (User other : users) {
-            if (other.equals(user)) {
-                user.setLoggedIn(true);
-                userRepository.save(user);
+            if (other.getUsername().equals(user.getUsername())) {
+                other.setLoggedIn(true);
+                userRepository.save(other);
                 jsonObject.put("code", "200");
                 jsonObject.put("content", "login successfully");
                 return jsonObject.toString();
@@ -97,8 +106,8 @@ public class UserController {
         List<User> users = userRepository.findAll();
         for (User other : users) {
             if (other.equals(user)) {
-                user.setLoggedIn(false);
-                userRepository.save(user);
+                other.setLoggedIn(false);
+                userRepository.save(other);
                 jsonObject.put("code", "200");
                 jsonObject.put("content", "logout successfully");
                 return jsonObject.toString();
@@ -109,13 +118,20 @@ public class UserController {
         return  jsonObject.toString();
     }
     @PostMapping("/users/histories")
-    public List<String> getHistories(@Valid @RequestBody User user) {
+    public List<String> getHistories(@Valid @RequestBody userHistory userHistory) {
         List<User> users = userRepository.findAll();
+        String username = userHistory.username;
+        Integer number = userHistory.number;
+        Integer tot_num = 0;
+        System.out.println(number);
         for(User other: users) {
-            if(other.equals(user)) {
+            if(other.getUsername().equals(username)) {
+                System.out.println("found");
                 List<String> ret = new ArrayList<String>();
                 List<History> histories = other.getHistories();
                 for(History history:histories) {
+                    tot_num ++;
+                    if(tot_num == number) break;
                     ret.add(history.getInstanceName());
                 }
                 return ret;
@@ -143,21 +159,25 @@ public class UserController {
         return "failure";
     }
 
+    public void addSearchKey(String searchKey, User user) {
+        SearchKeyHis s = new SearchKeyHis(searchKey, user);
+        System.out.println(user.getId());
+        user.searchKeyHistories.add(s);
+        userRepository.save(user);
+    }
+
     @PostMapping("/users/search")
     public String searchInstance(@Valid @RequestBody SearchKey searchKey) {
         String username = searchKey.username, keyword = searchKey.keyword, subject = searchKey.subject;
         List<User> users = userRepository.findAll();
         for(User user: users) {
             if(user.getUsername().equals(username)) {
-                // TODO: ADD keyword to user's keyword form;
+                addSearchKey(keyword, user);
             }
         }
         String string = HttpRequest.sendGet("http://open.edukg.cn/opedukg/api/typeOpen/open/instanceList",
                 "course=" + subject + "&searchKey=" + keyword + "&id=a91a42e6-202e-42f1-8e7a-3dcaf7239035");
         JSONObject json = new JSONObject(string);
-        System.out.println(json);
-
-
         JSONArray data = json.getJSONArray("data");
         JSONArray retArray = new JSONArray();
         for(int i = 0; i < data.length(); i++) {
@@ -182,8 +202,6 @@ public class UserController {
         addHistory(his);
         return string;
     }
-
-
 
     @DeleteMapping("/users/all")
     public String deleteUsers() {
