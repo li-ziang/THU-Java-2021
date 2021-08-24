@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import turitorial.user.User;
+import turitorial.user.UserController;
 import turitorial.user.UserRepository;
 
 import java.util.List;
@@ -24,7 +25,6 @@ public class HistoryController {
         jsonObject.put("code","200");
         return jsonObject.toString();
     }
-
 //    @PostMapping("/histories/add")
 //    public void addHistory(String username, String instanceName) {
 //        List<User> users = userRepository.findAll();
