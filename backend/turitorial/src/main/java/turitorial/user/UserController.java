@@ -54,6 +54,19 @@ class InstanceInfo{
 class userHistory {
     public String username;
     public Integer number;
+    public userHistory(String username, Integer number) {
+        this.number = number;
+        this.username = username;
+    }
+}
+
+class userSearchKey {
+    public Integer number;
+    public String username;
+    public userSearchKey(Integer number, String username) {
+        this.number = number;
+        this.username = username;
+    }
 }
 
 @RestController
@@ -117,17 +130,17 @@ public class UserController {
         jsonObject.put("content", "did not login");
         return  jsonObject.toString();
     }
-    @PostMapping("/users/histories")
+    @PostMapping("/search/history")
     public List<String> getHistories(@Valid @RequestBody userHistory userHistory) {
         List<User> users = userRepository.findAll();
         String username = userHistory.username;
         Integer number = userHistory.number;
         Integer tot_num = 0;
+        List<String> ret = new ArrayList<String>();
         System.out.println(number);
         for(User other: users) {
             if(other.getUsername().equals(username)) {
                 System.out.println("found");
-                List<String> ret = new ArrayList<String>();
                 List<History> histories = other.getHistories();
                 for(History history:histories) {
                     tot_num ++;
@@ -137,7 +150,31 @@ public class UserController {
                 return ret;
             }
         }
-        return null;
+        return ret;
+    }
+
+    @PostMapping("/search/searchkey")
+    public List<String> getSearchkeyHis(@Valid @RequestBody userSearchKey usersearchKey) {
+        List<User> users = userRepository.findAll();
+        String username = usersearchKey.username;
+        Integer number = usersearchKey.number;
+        Integer tot_num = 0;
+        System.out.println(number);
+        List<String> ret = new ArrayList<String>();
+        for(User other: users) {
+            if(other.getUsername().equals(username)) {
+                System.out.println("found");
+                List<SearchKeyHis> searchKeyHis = other.getSearchKeyHistories();
+                for(SearchKeyHis his:searchKeyHis) {
+                    tot_num ++;
+                    if(tot_num == number) break;
+                    ret.add(his.getSearchKey());
+                }
+                return ret;
+            }
+        }
+        return ret;
+
     }
 
 
@@ -194,7 +231,7 @@ public class UserController {
         return retArray.toString();
     }
 
-    @PostMapping("/users/instance")
+    @PostMapping("/search/info")
     public String getInstance(@Valid @RequestBody InstanceInfo instanceInfo ) {
         String course = instanceInfo.course, instanceName = new String(instanceInfo.instanceName.getBytes(StandardCharsets.UTF_8)), username = instanceInfo.username;
         String id = apiLogin();
@@ -213,7 +250,6 @@ public class UserController {
         return jsonObject.toString();
     }
 
-//    @PostMapping("users/apiLogin")
     public String apiLogin() {
         String string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeAuth/user/login",
                 "password=thueda2019&phone=18201616030");
