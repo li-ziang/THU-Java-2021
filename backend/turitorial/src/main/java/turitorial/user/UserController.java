@@ -175,8 +175,10 @@ public class UserController {
                 addSearchKey(keyword, user);
             }
         }
+        String id = apiLogin();
+        System.out.println(id);
         String string = HttpRequest.sendGet("http://open.edukg.cn/opedukg/api/typeOpen/open/instanceList",
-                "course=" + subject + "&searchKey=" + keyword + "&id=a91a42e6-202e-42f1-8e7a-3dcaf7239035");
+                "course=" + subject + "&searchKey=" + keyword + "&id=" + id);
         JSONObject json = new JSONObject(string);
         JSONArray data = json.getJSONArray("data");
         JSONArray retArray = new JSONArray();
@@ -195,9 +197,9 @@ public class UserController {
     @PostMapping("/users/instance")
     public String getInstance(@Valid @RequestBody InstanceInfo instanceInfo ) {
         String course = instanceInfo.course, instanceName = new String(instanceInfo.instanceName.getBytes(StandardCharsets.UTF_8)), username = instanceInfo.username;
-
+        String id = apiLogin();
         String string = HttpRequest.sendGet("http://open.edukg.cn/opedukg/api/typeOpen/open/infoByInstanceName",
-                "course=" + course + "&name=" + instanceName + "&id=a91a42e6-202e-42f1-8e7a-3dcaf7239035");
+                "course=" + course + "&name=" + instanceName + "&id=" + id);
         His his = new His(username, instanceName);
         addHistory(his);
         return string;
@@ -211,12 +213,12 @@ public class UserController {
         return jsonObject.toString();
     }
 
-    @PostMapping("users/apiLogin")
-    public String apiLogin(@Valid @RequestBody User user) {
+//    @PostMapping("users/apiLogin")
+    public String apiLogin() {
         String string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeAuth/user/login",
                 "password=thueda2019&phone=18201616030");
-        System.out.println(string);
-        return string;
+        JSONObject jsonObject = new JSONObject(string);
+        return jsonObject.getString("id");
     }
 
 }
