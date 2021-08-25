@@ -74,47 +74,33 @@
                 android:layout_marginTop="20dp"
                 android:layout_height="wrap_content" android:id="@+id/buttonSearch" android:layout_weight="1"/>
         </LinearLayout>
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout2"
+
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabMaxWidth="0dp"
-            app:tabSelectedTextColor="@color/design_default_color_primary"
-            app:tabTextColor="@color/design_default_color_primary"
-            app:tabIndicatorFullWidth="false"
-            >
+            android:layout_height="match_parent" android:layout_weight="1">
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabItem1"
-                android:layout_width="wrap_content"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout2"
+                android:layout_width="395dp"
                 android:layout_height="wrap_content"
-                android:text="语文"
-                />
+                android:layout_weight="0.12"
+                android:background="@color/white"
+                app:tabTextColor="@color/black" />
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabItem2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="数学"
-                />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="英语"
-                />
-
-            <com.google.android.material.tabs.TabItem
-                android:text="物理"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.tabs.TabLayout>
+            <ImageView
+                android:id="@+id/edit_image"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:layout_margin="12dp"
+                android:layout_weight="1"
+                android:contentDescription="Add channel"
+                android:src="@drawable/edit" />
+        </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
