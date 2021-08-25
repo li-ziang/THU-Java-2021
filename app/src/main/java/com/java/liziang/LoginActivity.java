@@ -54,7 +54,8 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.requestFocus();
             return;
         }
-
+        MainActivity.mainItem.curUser= userName;
+        Log.i("adf",MainActivity.mainItem.curUser);
         String api = "/users/login";
         String json = String.format("{\"username\": \"%s\", \"password\":\"%s\"}",userName,password);
         Server server = new Server(api,json);
@@ -79,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("content",content);
 
                     if (code.equals("200")) {
+                        MainActivity.mainItem.curUser= userName;
                         startActivity(new Intent(LoginActivity.this, DashboardActivity.class).putExtra("username", userName));
                     } else {
                         Log.i("login fail","error info");
@@ -131,7 +133,9 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("content",content);
 
                     if (code.equals("200")) {
-                        startActivity(new Intent(LoginActivity.this, DashboardActivity.class).putExtra("username", userName));
+                        //TODO:need a logout.xml file
+                       MainActivity.mainItem.curUser= "";
+                        // startActivity(new Intent(LoginActivity.this, DashboardActivity.class).putExtra("username", userName));
                     } else {
                         Log.i("logout fail","error info");
                     }

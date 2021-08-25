@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
+  public static MainItem mainItem;
+      String course = "语文";
+        mainItem = new MainItem(course);
+      //mainItem.search();
     private ArrayList<Fragment> fragments = new ArrayList<>();
     private String[] titles = new String[]{"李狗", "英超", "西甲", "意甲","狗黄1","狗黄2","狗黄3"};
     @Override
