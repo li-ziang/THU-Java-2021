@@ -35,6 +35,7 @@ public class MainItem {
         curStringList.add("math");
         curStringList.add("physics");
 
+
         stringList.add("chinese");
         stringList.add("english");
         stringList.add("math");
@@ -52,39 +53,41 @@ public class MainItem {
         this.searchContent=searchContent;
     }
     public void search(){
-
-        String api = "/search/instanceList";
-        String json = String.format("{\"username\": \"%s\", \"password\":\"%s\", \"searchkey\":\"%s\"}",curUser,course,searchContent);
-        Server server = new Server(api,json);
-        Call call=server.call();
-
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.i("login fail",e.toString());
-            }
-
-            @Override
-            public void onResponse(Call call, okhttp3.Response response) throws IOException {
-                String string = response.body().string();
-                Log.i("login response",string);
-                JSONArray arr = null;
-                try {
-                    arr = new JSONArray(string);
-                    for(int i=0; i<arr.length(); i++) {
-                        JSONObject jsonObj = arr.getJSONObject(i);
-                        String label = jsonObj.optString("label","defaultValue");
-                        String category = jsonObj.optString("category","defaultValue");
-                        Item it = new Item(label,category);
-                        arrList.add(it);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
+        arrList.add(new Item("a","b"));
+        arrList.add(new Item("c","d"));
+        arrList.add(new Item("e","f"));
+//        String api = "/search/instanceList";
+//        String json = String.format("{\"username\": \"%s\", \"password\":\"%s\", \"searchkey\":\"%s\"}",curUser,course,searchContent);
+//        Server server = new Server(api,json);
+//        Call call=server.call();
+//
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                Log.i("login fail",e.toString());
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+//                String string = response.body().string();
+//                Log.i("login response",string);
+//                JSONArray arr = null;
+//                try {
+//                    arr = new JSONArray(string);
+//                    for(int i=0; i<arr.length(); i++) {
+//                        JSONObject jsonObj = arr.getJSONObject(i);
+//                        String label = jsonObj.optString("label","defaultValue");
+//                        String category = jsonObj.optString("category","defaultValue");
+//                        Item it = new Item(label,category);
+//                        arrList.add(it);
+//                    }
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        });
     }
 }
 

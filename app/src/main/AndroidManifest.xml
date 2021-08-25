@@ -13,6 +13,9 @@
         android:theme="@style/Theme.HouFuDao"
         android:usesCleartextTraffic="true" >
         <activity
+            android:name=".EditSubjectActivity"
+            android:exported="true" />
+        <activity
             android:name=".HostActivity"
             android:exported="true"
             android:label="@string/title_activity_host"
