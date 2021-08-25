@@ -29,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     
        //TODO: use something to init the MainItem class
-       String course = "语文";
-       mainItem = new MainItem(course);
+        String course = "语文";
+        mainItem = new MainItem(course);
+        //mainItem.search();
         
         //binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);

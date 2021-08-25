@@ -51,7 +51,7 @@ public class MainItem {
         this(course);
         this.searchContent=searchContent;
     }
-    public void serach(){
+    public void search(){
 
         String api = "/search/instanceList";
         String json = String.format("{\"username\": \"%s\", \"password\":\"%s\", \"searchkey\":\"%s\"}",curUser,course,searchContent);
