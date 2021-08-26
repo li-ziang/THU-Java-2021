@@ -148,13 +148,15 @@ public class UserController {
         return  jsonObject.toString();
     }
     @PostMapping("/search/history")
-    public List<String> getHistories(@Valid @RequestBody userHistory userHistory) {
+    public String getHistories(@Valid @RequestBody userHistory userHistory) {
         List<User> users = userRepository.findAll();
         String username = userHistory.username;
         Integer number = userHistory.number;
         Integer tot_num = 0;
-        List<String> ret = new ArrayList<String>();
+
+//        List<String> ret = new ArrayList<String>();
         System.out.println(number);
+        JSONArray retArray = new JSONArray();
         for(User other: users) {
             if(other.getUsername().equals(username)) {
                 System.out.println("found");
@@ -162,12 +164,15 @@ public class UserController {
                 for(History history:histories) {
                     tot_num ++;
                     if(tot_num == number) break;
-                    ret.add(history.getInstanceName());
+                    JSONObject temp = new JSONObject();
+                    temp.put("history", history.getInstanceName());
+                    temp.put("time", history.getTime());
+                    retArray.put(temp);
                 }
-                return ret;
+                return retArray.toString();
             }
         }
-        return ret;
+        return retArray.toString();
     }
 
     @PostMapping("/search/searchkey")
@@ -271,6 +276,7 @@ public class UserController {
         String string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeAuth/user/login",
                 "password=thueda2019&phone=18201616030");
         JSONObject jsonObject = new JSONObject(string);
+        System.out.println(jsonObject.getString("id"));
         return jsonObject.getString("id");
     }
 
@@ -316,13 +322,13 @@ public class UserController {
             Integer score = obj.getInt("score");
             String subject = obj.getString("subject");
             String value = obj.getString("value");
-            String message = obj.has("message") ? obj.getString("message") : null; // 没找到的时候，显示此问题没找到答案。
+//            String message = obj.has("message") ? obj.getString("message") : null; // 没找到的时候，显示此问题没找到答案。
             JSONObject temp = new JSONObject();
             temp.put("all", all);
             temp.put("score", score);
             temp.put("subject", subject);
             temp.put("value", value);
-            temp.put("message", message);
+//            temp.put("message", message);
             retArray.put(temp);
         }
         return retArray.toString();
