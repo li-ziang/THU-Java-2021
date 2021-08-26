@@ -69,6 +69,23 @@ class userSearchKey {
     }
 }
 
+class LinkInstance {
+    public String context;
+    public String course;
+    public LinkInstance(String context, String course) {
+        this.context = context;
+        this.course = course;
+    }
+}
+class Question {
+    public String course;
+    public String inputQuestion;
+    public Question(String course, String inputQuestion) {
+        this.course = course;
+        this.inputQuestion = inputQuestion;
+    }
+}
+
 @RestController
 public class UserController {
     @Autowired
@@ -255,6 +272,60 @@ public class UserController {
                 "password=thueda2019&phone=18201616030");
         JSONObject jsonObject = new JSONObject(string);
         return jsonObject.getString("id");
+    }
+
+    @PostMapping("/users/linkedInstances")
+    public String getLinkedInstances(@Valid @RequestBody LinkInstance linkInstance) {
+        String context = linkInstance.context, course = linkInstance.course;
+        context = context.replaceAll(" ", "_");
+        String id = apiLogin();
+        String string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeOpen/open/linkInstance",
+                "context=" + context + "&course=" + course + "&id=" + id);
+        System.out.println(string);
+        JSONObject json = new JSONObject(string);
+        JSONObject data = json.getJSONObject("data");
+        JSONArray array = data.getJSONArray("results");
+        JSONArray retArray = new JSONArray();
+        for(int i = 0; i < array.length(); i++) {
+            JSONObject obj = array.getJSONObject(i);
+            String entity_type = obj.getString("entity_type");
+            Integer start_index = obj.getInt("start_index");
+            Integer end_index = obj.getInt("end_index");
+            String entity = obj.getString("entity");
+            JSONObject temp = new JSONObject();
+            temp.put("entity_type", entity_type);
+            temp.put("entity", entity);
+            temp.put("end_index", end_index);
+            temp.put("start_index", start_index);
+            retArray.put(temp);
+        }
+        return retArray.toString();
+    }
+    @PostMapping("/users/Question")
+    public String ansQuestion(@Valid @RequestBody Question question) {
+        String inputQuestion = question.inputQuestion, course = question.course;
+        String id = apiLogin();
+        String string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeOpen/open/inputQuestion",
+                "course=" + course + "&inputQuestion=" + inputQuestion + "&id=" + id);
+        JSONObject json = new JSONObject(string);
+        JSONArray data = json.getJSONArray("data");
+        JSONArray retArray = new JSONArray();
+        for(int i = 0; i < data.length(); i++) {
+            JSONObject obj = data.getJSONObject(i);
+            String all = obj.getString("all");
+            Integer score = obj.getInt("score");
+            String subject = obj.getString("subject");
+            String value = obj.getString("value");
+            String message = obj.has("message") ? obj.getString("message") : null; // 没找到的时候，显示此问题没找到答案。
+            JSONObject temp = new JSONObject();
+            temp.put("all", all);
+            temp.put("score", score);
+            temp.put("subject", subject);
+            temp.put("value", value);
+            temp.put("message", message);
+            retArray.put(temp);
+        }
+        return retArray.toString();
     }
 
 }
