@@ -49,12 +49,6 @@ public class ObjectItem {
                         property = parseJsonArray(jsonProperty, "label", "predicateLabel", true);
                         subContent = parseJsonArray(jsonSubContent, "subject_label", "predicate_label", false);
 
-                        // Log.i("----------",objContent.size()+"");
-                        // Log.i("----------",property.size()+"");
-                        // Log.i("----------",subContent.size()+"");
-                        // Log.i("----------",objContent.toString()+"");
-                        // Log.i("----------",property.toString()+"");
-                        // Log.i("----------",subContent.toString()+"");
 
                     } catch (JSONException e) {
                         e.printStackTrace();
