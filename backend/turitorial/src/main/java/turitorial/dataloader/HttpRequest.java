@@ -3,6 +3,8 @@ package turitorial.dataloader;
 import java.io.*;
 import java.net.*;
 import org.json.*;
+
+import javax.net.ssl.HttpsURLConnection;
 import java.util.*;
 
 
@@ -84,18 +86,5 @@ public class HttpRequest {
         return result;
     }
 
-//    public static void main(String[] args) {
-//        String s=HttpRequest.sendGet("http://open.edukg.cn/opedukg/api/typeOpen/open/instanceList",
-//                "course=english&searchKey=apple&id=ee09e883-c628-403a-bd7f-edf0ef3c490a");
-//        JSONObject jsonObject = new JSONObject(s);
-//        JSONArray data = jsonObject.getJSONArray("data");
-//
-//        jsonObject = data.getJSONObject(0);
-//        String label = jsonObject.getString("label");
-//        String category = jsonObject.getString("category");
-//        String uri = jsonObject.getString("uri");
-//        System.out.println(label);
-//        System.out.println(category);
-//        System.out.println(uri);
-//    }
+
 }

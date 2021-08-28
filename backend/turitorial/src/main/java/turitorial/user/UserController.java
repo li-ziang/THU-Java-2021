@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -240,8 +241,15 @@ public class UserController {
         }
         String id = apiLogin();
         System.out.println(id);
-        String string = HttpRequest.sendGet("http://open.edukg.cn/opedukg/api/typeOpen/open/instanceList",
-                "course=" + subject + "&searchKey=" + keyword + "&id=" + id);
+        String string = null;
+        try{
+            string = HttpRequest.sendGet("http://open.edukg.cn/opedukg/api/typeOpen/open/instanceList",
+                    "course=" + subject + "&searchKey=" + URLEncoder.encode(keyword, "utf-8") + "&id=" + id);
+        }
+        catch (UnsupportedEncodingException e) {
+            System.out.println(e);
+        }
+
         JSONObject json = new JSONObject(string);
         JSONArray data = json.getJSONArray("data");
         JSONArray retArray = new JSONArray();
@@ -261,8 +269,15 @@ public class UserController {
     public String getInstance(@Valid @RequestBody InstanceInfo instanceInfo ) { // 获取实体详情
         String course = instanceInfo.course, instanceName = new String(instanceInfo.instanceName.getBytes(StandardCharsets.UTF_8)), username = instanceInfo.username;
         String id = apiLogin();
-        String string = HttpRequest.sendGet("http://open.edukg.cn/opedukg/api/typeOpen/open/infoByInstanceName",
-                "course=" + course + "&name=" + instanceName + "&id=" + id);
+        String string = null;
+        try {
+            string = HttpRequest.sendGet("http://open.edukg.cn/opedukg/api/typeOpen/open/infoByInstanceName",
+                    "course=" + course + "&name=" + URLEncoder.encode(instanceName, "utf-8") + "&id=" + id);
+        }
+        catch(UnsupportedEncodingException e) {
+            System.out.println(e);
+        }
+
         System.out.println(string);
 
         JSONObject json = new JSONObject(string);
@@ -367,8 +382,15 @@ public class UserController {
         String context = linkInstance.context, course = linkInstance.course;
         context = context.replaceAll(" ", "_");
         String id = apiLogin();
-        String string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeOpen/open/linkInstance",
-                "context=" + context + "&course=" + course + "&id=" + id);
+        String string = null;
+        try {
+            string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeOpen/open/linkInstance",
+                    "context=" + context + "&course=" + URLEncoder.encode(course, "utf-8") + "&id=" + id);
+        }
+        catch (UnsupportedEncodingException e) {
+            System.out.println(e);
+        }
+
         System.out.println(string);
         JSONObject json = new JSONObject(string);
         JSONObject data = json.getJSONObject("data");
@@ -393,8 +415,14 @@ public class UserController {
     public String ansQuestion(@Valid @RequestBody Question question) { // 实体问答接口
         String inputQuestion = question.inputQuestion, course = question.course;
         String id = apiLogin();
-        String string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeOpen/open/inputQuestion",
-                "course=" + course + "&inputQuestion=" + inputQuestion + "&id=" + id);
+        String string = null;
+        try {
+            string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeOpen/open/inputQuestion",
+                    "course=" + course + "&inputQuestion=" + URLEncoder.encode(inputQuestion, "utf-8") + "&id=" + id);
+        }
+        catch (UnsupportedEncodingException e) {
+            System.out.println(e);
+        }
         JSONObject json = new JSONObject(string);
         JSONArray data = json.getJSONArray("data");
         JSONArray retArray = new JSONArray();
