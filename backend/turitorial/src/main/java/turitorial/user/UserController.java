@@ -30,12 +30,12 @@ class His {
 class SearchKey {
     public String username;
     public String keyword;
-    public String subject;
+    public String course;
     public SearchKey(){}
-    public SearchKey(String username, String keyword, String subject) {
+    public SearchKey(String username, String keyword, String course) {
         this.keyword = keyword;
         this.username = username;
-        this.subject = subject;
+        this.course = course;
     }
 }
 
@@ -95,18 +95,21 @@ public class UserController {
 
 
     @PostMapping("/users/register")
-    public String registerUser(@Valid @RequestBody User newUser) {
+    public String registerUser(@Valid @RequestBody User newUser) { // 注册
         JSONObject jsonObject = new JSONObject();
         List<User> users = userRepository.findAll();
         System.out.println("New user: " + newUser.toString());
         for (User user : users) {
             System.out.println("Registered user: " + newUser.toString());
-            if (user.getUsername().equals(newUser)) {
+            if (user.getUsername().equals(newUser.getUsername())) {
                 System.out.println("User Already exists!");
                 jsonObject.put("code", "400");
                 jsonObject.put("content", "user already exists");
                 return jsonObject.toString();
             }
+        }
+        if(newUser.getUsername() == "") {
+            return "Username can not be empty";
         }
         userRepository.save(newUser);
         jsonObject.put("code", "200");
@@ -114,11 +117,11 @@ public class UserController {
         return jsonObject.toString();
     }
     @PostMapping("/users/login")
-    public String loginUser(@Valid @RequestBody User user) {
+    public String loginUser(@Valid @RequestBody User user) { // 登录
         JSONObject jsonObject = new JSONObject();
         List<User> users = userRepository.findAll();
         for (User other : users) {
-            if (other.getUsername().equals(user.getUsername())) {
+            if (other.getUsername().equals(user.getUsername()) && other.getPassword().equals(user.getPassword())) {
                 other.setLoggedIn(true);
                 userRepository.save(other);
                 jsonObject.put("code", "200");
@@ -131,7 +134,7 @@ public class UserController {
         return jsonObject.toString();
     }
     @PostMapping("/users/logout")
-    public String logUserOut(@Valid @RequestBody User user) {
+    public String logUserOut(@Valid @RequestBody User user) { // 登出
         JSONObject jsonObject = new JSONObject();
         List<User> users = userRepository.findAll();
         for (User other : users) {
@@ -148,7 +151,7 @@ public class UserController {
         return  jsonObject.toString();
     }
     @PostMapping("/search/history")
-    public String getHistories(@Valid @RequestBody userHistory userHistory) {
+    public String getHistories(@Valid @RequestBody userHistory userHistory) { // 获取某一个用户的历史记录
         List<User> users = userRepository.findAll();
         String username = userHistory.username;
         Integer number = userHistory.number;
@@ -176,7 +179,7 @@ public class UserController {
     }
 
     @PostMapping("/search/searchkey")
-    public List<String> getSearchkeyHis(@Valid @RequestBody userSearchKey usersearchKey) {
+    public List<String> getSearchkeyHis(@Valid @RequestBody userSearchKey usersearchKey) { // 获取某一用户的搜索关键词记录
         List<User> users = userRepository.findAll();
         String username = usersearchKey.username;
         Integer number = usersearchKey.number;
@@ -202,11 +205,11 @@ public class UserController {
 
 
     @PostMapping("/users/addhistory")
-    public String addHistory(@Valid @RequestBody His his) {
+    public String addHistory(@Valid @RequestBody His his) { // 为用户添加历史记录
         String username = his.username, instanceName = his.instanceName;
         List<User> users = userRepository.findAll();
         for(User temp_user: users) {
-            if(username.equals(temp_user.getUsername())) {
+            if(username.equals(temp_user.getUsername()) && temp_user.isLoggedIn()) {
                 Date date = new Date();
                 History history = new History(instanceName, date.toString(), temp_user);
                 temp_user.histories.add(history);
@@ -226,11 +229,11 @@ public class UserController {
     }
 
     @PostMapping("/users/search")
-    public String searchInstance(@Valid @RequestBody SearchKey searchKey) {
-        String username = searchKey.username, keyword = searchKey.keyword, subject = searchKey.subject;
+    public String searchInstance(@Valid @RequestBody SearchKey searchKey) { // 实体搜索接口
+        String username = searchKey.username, keyword = searchKey.keyword, subject = searchKey.course;
         List<User> users = userRepository.findAll();
         for(User user: users) {
-            if(user.getUsername().equals(username)) {
+            if(user.getUsername().equals(username) && user.isLoggedIn()) {
                 addSearchKey(keyword, user);
             }
         }
@@ -254,13 +257,28 @@ public class UserController {
     }
 
     @PostMapping("/search/info")
-    public String getInstance(@Valid @RequestBody InstanceInfo instanceInfo ) {
+    public String getInstance(@Valid @RequestBody InstanceInfo instanceInfo ) { // 获取实体详情
         String course = instanceInfo.course, instanceName = new String(instanceInfo.instanceName.getBytes(StandardCharsets.UTF_8)), username = instanceInfo.username;
         String id = apiLogin();
         String string = HttpRequest.sendGet("http://open.edukg.cn/opedukg/api/typeOpen/open/infoByInstanceName",
                 "course=" + course + "&name=" + instanceName + "&id=" + id);
         His his = new His(username, instanceName);
+
         addHistory(his);
+        getInstanceFromUri("", "english");
+
+        return string;
+    }
+
+    public String getInstanceFromUri(String uri, String course) {
+        String id = apiLogin();
+        System.out.println("testing getInstanceFromUri");
+        course = "english";
+        uri = "http://www.w3.org/2002/07/owl#NamedIndividl";
+        String string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeOpen/open/getKnowledgeCard",
+                "course=" + course + "&uri=" + uri + "&id=" + id);
+
+        System.out.println(string);
         return string;
     }
 
@@ -272,7 +290,7 @@ public class UserController {
         return jsonObject.toString();
     }
 
-    public String apiLogin() {
+    public String apiLogin() { // api登录
         String string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeAuth/user/login",
                 "password=thueda2019&phone=18201616030");
         JSONObject jsonObject = new JSONObject(string);
@@ -281,7 +299,7 @@ public class UserController {
     }
 
     @PostMapping("/users/linkedInstances")
-    public String getLinkedInstances(@Valid @RequestBody LinkInstance linkInstance) {
+    public String getLinkedInstances(@Valid @RequestBody LinkInstance linkInstance) { // 实体链接接口
         String context = linkInstance.context, course = linkInstance.course;
         context = context.replaceAll(" ", "_");
         String id = apiLogin();
@@ -308,7 +326,7 @@ public class UserController {
         return retArray.toString();
     }
     @PostMapping("/users/Question")
-    public String ansQuestion(@Valid @RequestBody Question question) {
+    public String ansQuestion(@Valid @RequestBody Question question) { // 实体问答接口
         String inputQuestion = question.inputQuestion, course = question.course;
         String id = apiLogin();
         String string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeOpen/open/inputQuestion",
