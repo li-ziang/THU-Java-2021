@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -22,6 +23,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
   public static MainItem mainItem;
+    public TabLayout tabLayout;
+    public ViewPager viewPager1;
+    public FmPagerAdapter pagerAdapter;
     private AlertDialog.Builder builder;
 
     private ArrayList<Fragment> fragments = new ArrayList<>();
@@ -33,7 +37,19 @@ public class MainActivity extends AppCompatActivity {
         mainItem = new MainItem(course);
         //mainItem.search();
         setContentView(R.layout.activity_main);
-     init();
+        tabLayout = findViewById(R.id.tab_layout2);
+        viewPager1 = findViewById(R.id.viewpager);
+        fragments.clear();
+        for (String ele:mainItem.curStringList) {
+            Log.i("which",ele);
+            fragments.add(new TabFragment(ele));
+        }
+        pagerAdapter = new FmPagerAdapter(mainItem.curStringList, fragments, getSupportFragmentManager());
+        for(Fragment ele:pagerAdapter.the_arraylist){
+            Log.i("which2",ele.toString());
+        }
+        viewPager1.setAdapter(pagerAdapter);
+        tabLayout.setupWithViewPager(viewPager1);
         findViewById(R.id.edit_image).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -49,20 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void init() {
-        TabLayout tabLayout = findViewById(R.id.tab_layout2);
-        ViewPager viewPager1 = findViewById(R.id.viewpager);
-        fragments.clear();
-        for (String ele:mainItem.curStringList) {
-            fragments.add(new TabFragment(ele));
-        }
 
-        FmPagerAdapter pagerAdapter = new FmPagerAdapter(mainItem.curStringList, fragments, getSupportFragmentManager());
-        viewPager1.setAdapter(pagerAdapter);
-
-
-        tabLayout.setupWithViewPager(viewPager1);
-    }
 
     private void showMultiSelect() {
         final List<Integer> choice = new ArrayList<>();
@@ -110,15 +113,11 @@ public class MainActivity extends AppCompatActivity {
                 .setMultiChoiceItems(items, isSelect, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-
                         if (b) {
                             choice.add(i);
-
                         } else {
-                            choice.remove(choice.indexOf(i));
-
+                            choice.remove(i);
                         }
-
                     }
                 }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
@@ -129,8 +128,20 @@ public class MainActivity extends AppCompatActivity {
                         for (int j = 0; j < choice.size(); j++) {
                             mainItem.curStringList.add(items[choice.get(j)]);
                         }
-                        init();
-                        //Toast.makeText(MainActivity.this, "你选择了" + str, Toast.LENGTH_LONG).show();
+                        pagerAdapter.the_list.clear();
+                        pagerAdapter.the_arraylist.clear();
+//                        pagerAdapter.the_list.add("ele");
+//                            pagerAdapter.the_arraylist.add(new TabFragment("ele"));
+//
+                        //pagerAdapter.notifyDataSetChanged();
+                        for(String ele:mainItem.curStringList) {
+                            pagerAdapter.the_list.add(ele);
+                            pagerAdapter.the_arraylist.add(new TabFragment(ele));
+                        }
+                        pagerAdapter.notifyDataSetChanged();
+                        //viewPager1.notify();
+
+
                     }
                 });
 
