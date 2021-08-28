@@ -1,5 +1,6 @@
 package turitorial.user;
 
+import io.swagger.v3.core.util.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -265,16 +266,76 @@ public class UserController {
         His his = new His(username, instanceName);
 
         addHistory(his);
-        getInstanceFromUri("", "english");
+        JSONObject json = new JSONObject(string);
+        JSONObject data = json.getJSONObject("data");
+        JSONObject ret = new JSONObject(); // 最终的返回值，包含NamedIndividual， property和content
+        ret.put("NamedIndividual", false); // 初始化为false
+        JSONArray property = new JSONArray();
+        JSONArray obj_content = new JSONArray(); // 所以的object实体
+        JSONArray sub_content = new JSONArray(); // 所有的subject实体
+        if(data.has("property")) {
+            JSONArray temp_property = data.getJSONArray("property");
+            for(int i = 0; i < temp_property.length(); i++) {
+                JSONObject tpo = temp_property.getJSONObject(i);
+                String object = tpo.getString("object");
+                String entity_name = null;
+                Boolean isEntity = false;
+                if(object.contains("NamedIndividual")) {
+                    ret.put("NamedIndividual", true); // 命名实体标识，记录后直接continue
+                    continue;
+                }
+                if(object.contains("http://kb.cs.tsinghua.edu.cn")) {
+                    continue; // 标识出处，不显示在前端
+                }
+                if(object.contains("http://edukg.org")) { // 为实体uri，需要转换成中文
+                    String instanceFromUri = getInstanceFromUri(object, course);
+                    JSONObject temp_obj = new JSONObject(instanceFromUri);
+                    JSONObject temp_data = temp_obj.getJSONObject("data");
+                    entity_name = temp_data.getString("entity_name");
+                    isEntity = true;
+                }
+                else {
+                    entity_name = object; // 实体名为中文
+                }
+                String predicateLabel = tpo.getString("predicateLabel");
+                JSONObject ret_obj = new JSONObject();
+                ret_obj.put("predicateLabel", predicateLabel);
+                ret_obj.put("entity_name", entity_name);
+                ret_obj.put("isEntity", isEntity);
+                property.put(ret_obj);
+            }
+        }
 
-        return string;
+        if(data.has("content")) {
+            JSONArray temp_content = data.getJSONArray("content");
+            for(int i = 0; i < temp_content.length(); i++) {
+                JSONObject tpo = temp_content.getJSONObject(i);
+                if(tpo.has("object_label")) {
+                    String object_label = tpo.getString("object_label");
+                    String predicate_label = tpo.getString("predicate_label");
+                    JSONObject temp_obj = new JSONObject();
+                    temp_obj.put("object_label", object_label);
+                    temp_obj.put("predicate_label", predicate_label);
+                    obj_content.put(temp_obj);
+                }
+                if(tpo.has("subject_label")) {
+                    String subject_label = tpo.getString("subject_label");
+                    String predicate_label = tpo.getString("predicate_label");
+                    JSONObject temp_obj = new JSONObject();
+                    temp_obj.put("predicate_label", predicate_label);
+                    temp_obj.put("subject_label", subject_label);
+                    sub_content.put(temp_obj);
+                }
+            }
+        }
+        ret.put("property",property );
+        ret.put("obj_content", obj_content);
+        ret.put("sub_content", sub_content);
+        return ret.toString();
     }
 
     public String getInstanceFromUri(String uri, String course) {
         String id = apiLogin();
-        System.out.println("testing getInstanceFromUri");
-        course = "english";
-        uri = "http://www.w3.org/2002/07/owl#NamedIndividl";
         String string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeOpen/open/getKnowledgeCard",
                 "course=" + course + "&uri=" + uri + "&id=" + id);
 
