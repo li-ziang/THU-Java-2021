@@ -263,10 +263,13 @@ public class UserController {
         String id = apiLogin();
         String string = HttpRequest.sendGet("http://open.edukg.cn/opedukg/api/typeOpen/open/infoByInstanceName",
                 "course=" + course + "&name=" + instanceName + "&id=" + id);
-        His his = new His(username, instanceName);
+        System.out.println(string);
 
-        addHistory(his);
         JSONObject json = new JSONObject(string);
+        if(json.has("label") && json.getString("label") != "") {
+            His his = new His(username, instanceName);
+            addHistory(his);
+        }
         JSONObject data = json.getJSONObject("data");
         JSONObject ret = new JSONObject(); // 最终的返回值，包含NamedIndividual， property和content
         ret.put("NamedIndividual", false); // 初始化为false
@@ -300,7 +303,7 @@ public class UserController {
                 String predicateLabel = tpo.getString("predicateLabel");
                 JSONObject ret_obj = new JSONObject();
                 ret_obj.put("predicateLabel", predicateLabel);
-                ret_obj.put("entity_name", entity_name);
+                ret_obj.put("label", entity_name);
                 ret_obj.put("isEntity", isEntity);
                 property.put(ret_obj);
             }
