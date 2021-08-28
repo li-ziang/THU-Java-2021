@@ -54,8 +54,8 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.requestFocus();
             return;
         }
-        MainActivity.mainItem.curUser= userName;
-        Log.i("adf",MainActivity.mainItem.curUser);
+
+        // Log.i("adf",MainActivity.mainItem.curUser);
         String api = "/users/login";
         String json = String.format("{\"username\": \"%s\", \"password\":\"%s\"}",userName,password);
         Server server = new Server(api,json);
@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, okhttp3.Response response) throws IOException {
                 String string = response.body().string();
-                Log.i("login response",string);
+                Log.i("logout response",string);
                 JSONObject ret = null;
                 try {
                     ret = new JSONObject(string);

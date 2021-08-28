@@ -3,7 +3,7 @@ package com.java.liziang;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
+import android.util.*;
 import com.google.android.material.tabs.TabLayout;
 import com.java.liziang.ui.main.FmPagerAdapter;
 
@@ -25,15 +25,18 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog.Builder builder;
 
     private ArrayList<Fragment> fragments = new ArrayList<>();
-    private String[] titles ;//= new String[]{"李狗", "英超", "西甲", "意甲","狗黄1","狗黄2","狗黄3"};
+    private String[] titles ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String course = "语文";
+        String course = "chinese";
         mainItem = new MainItem(course);
-        //mainItem.search();
+        mainItem.search();
+        Log.i("label","dasfdafadsfas");
+            //  Log.i("label",mainItem.arrList.get(1).label);
+            //  Log.i("category",mainItem.arrList.get(1).category);
         setContentView(R.layout.activity_main);
-     init();
+        init();
         findViewById(R.id.edit_image).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {

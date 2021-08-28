@@ -22,9 +22,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 public class MainItem {
-    public String curUser="";
+    public String curUser="test";
     public String course="";
-    public String searchContent="a";
+    public String searchContent="s";
     public ArrayList<String> curStringList =new ArrayList<>();//cur string list 4 cources
     final private ArrayList<String> stringList =new ArrayList<>(); //all the 9 cources
     public ArrayList<Item> arrList =new ArrayList<>();// item list
@@ -53,41 +53,39 @@ public class MainItem {
         this.searchContent=searchContent;
     }
     public void search(){
-        arrList.add(new Item("a","b"));
-        arrList.add(new Item("c","d"));
-        arrList.add(new Item("e","f"));
-//        String api = "/search/instanceList";
-//        String json = String.format("{\"username\": \"%s\", \"password\":\"%s\", \"searchkey\":\"%s\"}",curUser,course,searchContent);
-//        Server server = new Server(api,json);
-//        Call call=server.call();
-//
-//        call.enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                Log.i("login fail",e.toString());
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, okhttp3.Response response) throws IOException {
-//                String string = response.body().string();
-//                Log.i("login response",string);
-//                JSONArray arr = null;
-//                try {
-//                    arr = new JSONArray(string);
-//                    for(int i=0; i<arr.length(); i++) {
-//                        JSONObject jsonObj = arr.getJSONObject(i);
-//                        String label = jsonObj.optString("label","defaultValue");
-//                        String category = jsonObj.optString("category","defaultValue");
-//                        Item it = new Item(label,category);
-//                        arrList.add(it);
-//                    }
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        });
+       String api = "/users/search";
+       String json = String.format("{\"username\": \"%s\", \"course\":\"%s\", \"keyword\":\"%s\"}",curUser,course,searchContent);
+       Server server = new Server(api,json);
+       Call call=server.call();
+
+       call.enqueue(new Callback() {
+           @Override
+           public void onFailure(Call call, IOException e) {
+               Log.i("search fail",e.toString());
+           }
+
+           @Override
+           public void onResponse(Call call, okhttp3.Response response) throws IOException {
+               String string = response.body().string();
+               Log.i("search response",string);
+               JSONArray arr = null;
+               try {
+                   arr = new JSONArray(string);
+                   for(int i=0; i<arr.length(); i++) {
+                       JSONObject jsonObj = arr.getJSONObject(i);
+                       String label = jsonObj.optString("label","defaultValue");
+                       String category = jsonObj.optString("category","defaultValue");
+                       Item it = new Item(label,category);
+                       arrList.add(it);
+                   }
+                   Log.i("label",arrList.size()+"");
+               } catch (JSONException e) {
+                   e.printStackTrace();
+               }
+
+           }
+       });
+
     }
 }
 
