@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         mainItem = new MainItem(course);
         mainItem.search();
         Log.i("label","dasfdafadsfas");
+
+        mainItem.getViewHistory(10);
+        mainItem.getSearchHistory(10);
             //  Log.i("label",mainItem.arrList.get(1).label);
             //  Log.i("category",mainItem.arrList.get(1).category);
         setContentView(R.layout.activity_main);

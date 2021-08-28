@@ -1,33 +1,21 @@
 package com.java.liziang;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 import java.util.*;
+import android.util.*;
+import okhttp3.*;
 import org.json.*;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
+
+
 public class MainItem {
-    public String curUser="test";
+    public String curUser="hly";
     public String course="";
     public String searchContent="s";
     public ArrayList<String> curStringList =new ArrayList<>();//cur string list 4 cources
     final private ArrayList<String> stringList =new ArrayList<>(); //all the 9 cources
     public ArrayList<Item> arrList =new ArrayList<>();// item list
+
+    public ArrayList<String> searchKeyList = new ArrayList<>(); // 搜索历史
+    public ArrayList<String> viewList = new ArrayList<>(); //浏览历史
 
     MainItem(String course){
         curStringList.add("chinese");
@@ -52,7 +40,7 @@ public class MainItem {
         this(course);
         this.searchContent=searchContent;
     }
-    public void search(){
+    public void search(){ //实体搜索
        String api = "/users/search";
        String json = String.format("{\"username\": \"%s\", \"course\":\"%s\", \"keyword\":\"%s\"}",curUser,course,searchContent);
        Server server = new Server(api,json);
@@ -85,8 +73,73 @@ public class MainItem {
 
            }
        });
-
     }
+    public void getViewHistory(int number){ 
+        String api = "/search/history";
+        String json = String.format("{\"course\":%d,\"username\": \"%s\"}",number,curUser);
+        Server server = new Server(api,json);
+        Call call=server.call();
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i("getHistory fail",e.toString());
+            }
+ 
+            @Override
+            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                String string = response.body().string();
+                Log.i("getHistory response",string);
+                JSONArray arr = null;
+                ArrayList<String> viewList_ = new ArrayList<>();
+                try {
+                    arr = new JSONArray(string);
+                    for(int i=0; i<arr.length(); i++) {
+                        JSONObject jsonObj = arr.getJSONObject(i);
+                        String label = jsonObj.optString("history","defaultValue");
+                        viewList_.add(label);
+                    }
+                    viewList=viewList_;
+                    Log.i("viewList size",viewList.toString()+"");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+ 
+            }
+        });
+    }
+
+    public void getSearchHistory(int number){ 
+        String api = "/search/searchkey";
+        String json = String.format("{\"course\":%d,\"username\": \"%s\"}",number,curUser);
+        Server server = new Server(api,json);
+        Call call=server.call();
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i("getSearchHistory fail",e.toString());
+            }
+ 
+            @Override
+            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                String string = response.body().string();
+                Log.i("getSearchHistory response",string);
+                ArrayList<String> searchKeyList_ = new ArrayList<>();
+                String[] stringList = string.substring(1,string.length()-1).split(",");
+//                Log.i("string",stringList[1].substring(1,string.length()-1));
+                // searchKeyList
+                for (String s : stringList){
+                    searchKeyList_.add(s.substring(1,s.length()-1));
+                }
+                searchKeyList = searchKeyList_;
+                Log.i("searchKeyList size",searchKeyList.toString()+"");
+                Log.i("searchKeyList 0",searchKeyList.get(0));
+ 
+            }
+        });
+    }
+    
 }
 
 class Item{
