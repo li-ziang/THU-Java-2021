@@ -33,7 +33,7 @@ public class Server {
     public Server(String api, String json) {
         okHttpClient = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS).readTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS).build();
-        request = new Request.Builder().header("X-Client-Type", "Android").url("http://10.0.2.2:8080" + api)
+        request = new Request.Builder().header("X-Client-Type", "Android").url("http://49.232.147.32:23333/" + api)
                 .post(RequestBody.create(MediaType.parse("application/json"), json)).build();
         call_ = okHttpClient.newCall(request);
     }
