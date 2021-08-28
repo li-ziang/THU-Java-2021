@@ -10,7 +10,9 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 public class TabFragment extends Fragment {
+    public String tag;
     public TabFragment(String str) {
+        tag = str;
         Bundle b = new Bundle();
         b.putString("key", str);
         setArguments(b);
@@ -24,5 +26,9 @@ public class TabFragment extends Fragment {
         textView.setText(getArguments().getString("key"));
         textView.setBackgroundColor(Color.rgb((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255)));
         return view;
+    }
+    @Override
+    public String toString(){
+        return tag;
     }
 }

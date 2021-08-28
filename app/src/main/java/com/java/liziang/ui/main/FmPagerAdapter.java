@@ -8,12 +8,16 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+
 import com.java.liziang.R;
+import com.java.liziang.TabFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FmPagerAdapter extends FragmentPagerAdapter{
+public class FmPagerAdapter extends FragmentStatePagerAdapter {
     public ArrayList<String> the_list;
     public ArrayList<Fragment> the_arraylist;
 
@@ -21,19 +25,24 @@ public class FmPagerAdapter extends FragmentPagerAdapter{
         super(fm);
         the_arraylist = new ArrayList<Fragment>();
         the_list = new ArrayList<String>();
-        Log.i("ele", strings.get(1));
+        the_arraylist.clear();
+        the_list.clear();
+
         //the_list.add(strings.get(1));
         for(String ele:strings) {
             the_list.add(ele);
         }
    //     Log.i("uu", String.valueOf(the_list.size()));
-        for(int i=0;i<array.size();i++)
+        for(int i=0;i<array.size();i++) {
+            Log.i("ele", array.get(i).toString());
             the_arraylist.add(array.get(i));
+        }
     }
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
+        //Log.i("print",the_arraylist.get(position).toString());
         return the_arraylist.get(position);
     }
     @Override
@@ -45,5 +54,21 @@ public class FmPagerAdapter extends FragmentPagerAdapter{
     @Override
     public CharSequence getPageTitle(int position) {
         return the_list.get(position);
+    }
+    public void removeTabPage(int position) {
+        if (!the_arraylist.isEmpty() && position<the_arraylist.size()) {
+            the_arraylist.remove(position);
+            notifyDataSetChanged();
+        }
+    }
+    public void addTabPage(String title) {
+        the_arraylist.add(new TabFragment(title));
+        notifyDataSetChanged();
+    }
+    @Override
+    public int getItemPosition(Object object)   {
+
+            return POSITION_NONE;
+
     }
 }
