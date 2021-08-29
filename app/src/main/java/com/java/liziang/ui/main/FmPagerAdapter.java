@@ -20,9 +20,11 @@ import java.util.List;
 public class FmPagerAdapter extends FragmentStatePagerAdapter {
     public ArrayList<String> the_list;
     public ArrayList<Fragment> the_arraylist;
+    public Context context;
 
-    public FmPagerAdapter(List<String> strings, ArrayList<Fragment> array, FragmentManager fm) {
+    public FmPagerAdapter(Context context,List<String> strings, ArrayList<Fragment> array, FragmentManager fm) {
         super(fm);
+        this.context = context;
         the_arraylist = new ArrayList<Fragment>();
         the_list = new ArrayList<String>();
         the_arraylist.clear();

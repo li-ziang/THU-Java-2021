@@ -36,24 +36,16 @@ public class MainActivity extends AppCompatActivity {
         String course = "chinese";
         mainItem = new MainItem(course);
         mainItem.search();
-        Log.i("label","dasfdafadsfas");
-
         mainItem.getViewHistory(10);
         mainItem.getSearchHistory(10);
-            //  Log.i("label",mainItem.arrList.get(1).label);
-            //  Log.i("category",mainItem.arrList.get(1).category);
         setContentView(R.layout.activity_main);
         tabLayout = findViewById(R.id.tab_layout2);
         viewPager1 = findViewById(R.id.viewpager);
         fragments.clear();
         for (String ele:mainItem.curStringList) {
-            Log.i("which",ele);
             fragments.add(new TabFragment(ele));
         }
-        pagerAdapter = new FmPagerAdapter(mainItem.curStringList, fragments, getSupportFragmentManager());
-        for(Fragment ele:pagerAdapter.the_arraylist){
-            Log.i("which2",ele.toString());
-        }
+        pagerAdapter = new FmPagerAdapter(getApplicationContext(),mainItem.curStringList, fragments, getSupportFragmentManager());
         viewPager1.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager1);
         findViewById(R.id.edit_image).setOnClickListener(new View.OnClickListener(){
