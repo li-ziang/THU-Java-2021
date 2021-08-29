@@ -11,6 +11,7 @@ public class ObjectItem {
     public String course;
     public String jsonString;
 
+    public Boolean namedIndividual;
     public ArrayList<Content> objContent = new ArrayList<>();
     public ArrayList<Content> property = new ArrayList<>();
     public ArrayList<Content> subContent = new ArrayList<>();
@@ -42,7 +43,7 @@ public class ObjectItem {
                         JSONObject jsonObject = new JSONObject(jsonString);
                         JSONArray jsonObjContent = jsonObject.getJSONArray("obj_content");
                         JSONArray jsonProperty = jsonObject.getJSONArray("property");
-                        Boolean namedIndividual = jsonObject.getBoolean("NamedIndividual");
+                        namedIndividual = jsonObject.getBoolean("NamedIndividual");
                         JSONArray jsonSubContent = jsonObject.getJSONArray("sub_content");
 
                         objContent = parseJsonArray(jsonObjContent, "object_label", "predicate_label", false);
