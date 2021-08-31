@@ -115,7 +115,10 @@ public class MainActivity extends AppCompatActivity {
                         if (b) {
                             choice.add(i);
                         } else {
-                            choice.remove(i);
+                            
+                            choice.remove(choice.indexOf(i));
+                            Log.i("size", String.valueOf(choice.size()));
+                            Log.i("index",String.valueOf(i));
                         }
                     }
                 }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
