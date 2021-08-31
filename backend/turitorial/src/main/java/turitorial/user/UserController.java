@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.json .*;
+import turitorial.collection.Collection;
 import turitorial.dataloader.HttpRequest;
 import turitorial.history.History;
 import turitorial.history.HistoryRepository;
@@ -87,6 +88,16 @@ class Question {
         this.inputQuestion = inputQuestion;
     }
 }
+
+class  AddCollection{
+    public String username;
+    public String instanceName;
+    public AddCollection(String username, String instanceName) {
+        this.instanceName = instanceName;
+        this.username = username;
+    }
+}
+
 
 @RestController
 public class UserController {
@@ -220,7 +231,7 @@ public class UserController {
                 return "Success";
             }
         }
-        return "failure";
+        return "No such user";
     }
 
     public void addSearchKey(String searchKey, User user) {
@@ -285,6 +296,7 @@ public class UserController {
             His his = new His(username, instanceName);
             addHistory(his);
         }
+
         JSONObject data = json.getJSONObject("data");
         JSONObject ret = new JSONObject(); // 最终的返回值，包含NamedIndividual， property和content
         ret.put("NamedIndividual", false); // 初始化为false
@@ -349,6 +361,21 @@ public class UserController {
         ret.put("property",property );
         ret.put("obj_content", obj_content);
         ret.put("sub_content", sub_content);
+        ret.put("isCollected", false);
+        List<User> allUsers = userRepository.findAll();
+        for(User temp_user: allUsers) {
+            if(temp_user.getUsername().equals(username) && temp_user.isLoggedIn()) {
+                List<Collection> collections = temp_user.collections;
+                for(Collection temp_collection: collections) {
+                    if(temp_collection.getInstanceName().equals(instanceName)) {
+                        ret.put("isCollected", true);
+                        break;
+                    }
+                }
+                break;
+            }
+         }
+
         return ret.toString();
     }
 
@@ -444,6 +471,40 @@ public class UserController {
         return retArray.toString();
     }
 
+    @PostMapping("/users/addCollection")
+    public String addCollection(@Valid @RequestBody AddCollection addCollection) {
+        String username = addCollection.username, instanceName = addCollection.instanceName;
+        List<User> users = userRepository.findAll();
+        for(User temp_user: users) {
+            if(temp_user.getUsername().equals(username) && temp_user.isLoggedIn()) {
+                Collection collection = new Collection(instanceName, temp_user);
+                for(Collection temp_collection: temp_user.collections) {
+                    if(temp_collection.getInstanceName().equals(instanceName)) {
+                        return "Already in collection";
+                    }
+                }
+                temp_user.collections.add(collection);
+                userRepository.save(temp_user);
+                return "Success";
+            }
+        }
+        return "No Such User";
+    }
 
-
+    @PostMapping("/users/deleteCollection")
+    public String deleteCollection(@Valid @RequestBody AddCollection deleteCollection) {
+        String username = deleteCollection.username, instanceName = deleteCollection.instanceName;
+        List<User> users = userRepository.findAll();
+        for(User temp_user: users) {
+            if(temp_user.getUsername().equals(username) && temp_user.isLoggedIn()) {
+                for(int i = 0; i < temp_user.histories.size(); i++) {
+                    if(temp_user.histories.get(i).getInstanceName().equals(instanceName)) {
+                        temp_user.histories.remove(i);
+                        return "Success";
+                    }
+                }
+            }
+        }
+        return "No such User";
+    }
 }

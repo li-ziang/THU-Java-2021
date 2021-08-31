@@ -13,8 +13,9 @@ public class Collection {
     @ManyToOne(fetch = FetchType.LAZY)
     User user;
     public Collection(){}
-    public Collection(String instanceName) {
+    public Collection(String instanceName, User user) {
         this.instanceName = instanceName;
+        this.user = user;
     }
     public String getInstanceName() {
         return this.instanceName;
