@@ -20,7 +20,7 @@ public class MainItem {
     MainItem(String course){
         curStringList.add("chinese");
         curStringList.add("english");
-        curStringList.add("math");
+        //curStringList.add("math");
         curStringList.add("physics");
 
 
@@ -41,6 +41,8 @@ public class MainItem {
         this.searchContent=searchContent;
     }
     public void search(){ //实体搜索
+        Log.i("call func","call search");
+        //arrList = new ArrayList<>();
        String api = "/users/search";
        String json = String.format("{\"username\": \"%s\", \"course\":\"%s\", \"keyword\":\"%s\"}",curUser,course,searchContent);
        Server server = new Server(api,json);
@@ -67,12 +69,15 @@ public class MainItem {
                        arrList.add(it);
                    }
                    Log.i("label",arrList.size()+"");
+                   //.................................
                } catch (JSONException e) {
                    e.printStackTrace();
                }
 
            }
        });
+       Log.i("end func","end search");
+        Log.i("size in func",arrList.size()+"");
     }
     public void getViewHistory(int number){ 
         String api = "/search/history";

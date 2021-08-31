@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog.Builder builder;
 
     private ArrayList<Fragment> fragments = new ArrayList<>();
-    private String[] titles ;
+    private String[] titles;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +62,24 @@ public class MainActivity extends AppCompatActivity {
                 // startActivity(new Intent(MainActivity.this, ObjectLinckActivity.class));
             }
         });
-
+        findViewById(R.id.buttonSearch).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                TextView searchContent = (TextView) findViewById(R.id.searchEdit);
+                mainItem.searchContent = searchContent.getText().toString();
+                pagerAdapter.the_arraylist.clear();
+                for(String ele:mainItem.curStringList) {
+                    pagerAdapter.the_arraylist.add(new TabFragment(ele));
+                }
+                pagerAdapter.notifyDataSetChanged();
+            }
+        });
+        findViewById(R.id.buttonSearch).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ObjectActivity.class));
+            }
+        });
     }
 
 
@@ -115,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                         if (b) {
                             choice.add(i);
                         } else {
-                            
+
                             choice.remove(choice.indexOf(i));
                             Log.i("size", String.valueOf(choice.size()));
                             Log.i("index",String.valueOf(i));

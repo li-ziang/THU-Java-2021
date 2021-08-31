@@ -18,18 +18,24 @@ import java.util.ArrayList;
 
 public class TabFragment extends Fragment {
     RecyclerView recyclerView;
-    String texts[]={"1","2","3","4"};
+    ArrayList<ItemModel> itemModel;
     CustomAdapter adapter;
     ArrayList<ItemModel> arrayList;
     public String tag;
     public TabFragment(String str) {
         tag = str;
-        Bundle b = new Bundle();
+        itemModel = new ArrayList<>();
+        MainActivity.mainItem.course = str;
+        Log.i("sub",MainActivity.mainItem.course);
+        MainActivity.mainItem.search();
+        Log.i("size",String.valueOf(MainActivity.mainItem.arrList.size()));
+                Bundle b = new Bundle();
         b.putString("key", str);
         setArguments(b);
-        for(int i=0;i<texts.length;i++){
-            texts[i] = tag+texts[i];
-            Log.i("ooo",texts[i]);
+
+        for(int i=0;i<MainActivity.mainItem.arrList.size();i++){
+            itemModel.add(new ItemModel(MainActivity.mainItem.arrList.get(i).label,MainActivity.mainItem.arrList.get(i).category));
+//            Log.i("ooo",texts[i]);
         }
     }
 
@@ -40,22 +46,16 @@ public class TabFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        arrayList = new ArrayList<ItemModel>();
-        for(int i=0;i<texts.length;i++){
-            ItemModel itemModel = new ItemModel(texts[i]);
-            arrayList.add(itemModel);
-        }
-        adapter = new CustomAdapter(arrayList);
+
+        adapter = new CustomAdapter(itemModel);
         recyclerView.setAdapter(adapter);
         return view;
     }
     class ItemModel{
-        String text;
-        ItemModel(String text){
-            this.text = text;
-        }
-        public String getText(){
-            return text;
+        public String label;
+        public String category;
+        ItemModel(String label,String category){
+            this.label = label;this.category = category;
         }
     }
     class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.viewHolder>{
@@ -72,20 +72,24 @@ public class TabFragment extends Fragment {
         }
         @Override
         public  void onBindViewHolder(viewHolder viewHolder, int position) {
-            viewHolder.text.setText(arrayList.get(position).getText());
+            viewHolder.label.setText(itemModel.get(position).label);
+            viewHolder.category.setText(itemModel.get(position).category);
         }
+
 
         @Override
         public int getItemCount() {
-            return arrayList.size();
+            return itemModel.size();
         }
 
         public class viewHolder extends RecyclerView.ViewHolder {
-            TextView text;
+            TextView label;
+            TextView category;
 
             public viewHolder(View itemView) {
                 super(itemView);
-                text = (TextView) itemView.findViewById(R.id.the_text);
+                category =(TextView) itemView.findViewById(R.id.category);
+                label = (TextView) itemView.findViewById(R.id.label);
             }
         }
     }

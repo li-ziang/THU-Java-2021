@@ -86,6 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.12"
                 android:background="@color/white"
+                app:tabMode="scrollable"
                 app:tabTextColor="@color/black" />
 
             <ImageView
