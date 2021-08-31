@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import org.json .*;
 import turitorial.collection.Collection;
+import turitorial.collection.CollectionRepository;
 import turitorial.dataloader.HttpRequest;
 import turitorial.history.History;
 import turitorial.history.HistoryRepository;
@@ -105,7 +106,8 @@ public class UserController {
     UserRepository userRepository;
     @Autowired
     HistoryRepository historyRepository;
-
+    @Autowired
+    CollectionRepository collectionRepository;
 
     @PostMapping("/users/register")
     public String registerUser(@Valid @RequestBody User newUser) { // 注册
@@ -497,9 +499,13 @@ public class UserController {
         List<User> users = userRepository.findAll();
         for(User temp_user: users) {
             if(temp_user.getUsername().equals(username) && temp_user.isLoggedIn()) {
-                for(int i = 0; i < temp_user.histories.size(); i++) {
-                    if(temp_user.histories.get(i).getInstanceName().equals(instanceName)) {
-                        temp_user.histories.remove(i);
+                System.out.println("Get users");
+                for(int i = 0; i < temp_user.collections.size(); i++) {
+                    if(temp_user.collections.get(i).getInstanceName().equals(instanceName)) {
+                        System.out.println(temp_user.collections.size());
+                        temp_user.collections.remove(i);
+                        userRepository.save(temp_user);
+                        System.out.println(temp_user.collections.size());
                         return "Success";
                     }
                 }

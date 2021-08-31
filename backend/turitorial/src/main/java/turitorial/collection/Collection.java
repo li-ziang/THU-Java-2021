@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 public class Collection {
     private @Id @GeneratedValue long id;
     private @NotBlank String instanceName;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     User user;
     public Collection(){}
     public Collection(String instanceName, User user) {
@@ -19,5 +19,8 @@ public class Collection {
     }
     public String getInstanceName() {
         return this.instanceName;
+    }
+    public Long getId() {
+        return this.id;
     }
 }
