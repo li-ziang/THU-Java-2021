@@ -385,7 +385,7 @@ public class UserController {
         String string = null;
         try {
             string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeOpen/open/linkInstance",
-                    "context=" + context + "&course=" + URLEncoder.encode(course, "utf-8") + "&id=" + id);
+                    "context=" + URLEncoder.encode(context, "utf-8") + "&course=" + URLEncoder.encode(course, "utf-8") + "&id=" + id);
         }
         catch (UnsupportedEncodingException e) {
             System.out.println(e);
@@ -443,5 +443,7 @@ public class UserController {
         }
         return retArray.toString();
     }
+
+
 
 }
