@@ -229,7 +229,7 @@ public class UserController {
                 History history = new History(instanceName, date.toString(), temp_user);
                 temp_user.histories.add(history);
                 User temp = userRepository.save(temp_user);
-                System.out.println(temp.histories);
+                System.out.println("add history");
                 return "Success";
             }
         }
@@ -294,12 +294,12 @@ public class UserController {
         System.out.println(string);
 
         JSONObject json = new JSONObject(string);
-        if(json.has("label") && json.getString("label") != "") {
+
+        JSONObject data = json.getJSONObject("data");
+        if(data.has("label") && !data.getString("label").equals("")) {
             His his = new His(username, instanceName);
             addHistory(his);
         }
-
-        JSONObject data = json.getJSONObject("data");
         JSONObject ret = new JSONObject(); // 最终的返回值，包含NamedIndividual， property和content
         ret.put("NamedIndividual", false); // 初始化为false
         JSONArray property = new JSONArray();
