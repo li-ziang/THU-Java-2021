@@ -28,8 +28,7 @@ public class TabFragment extends Fragment {
         MainActivity.mainItem.course = str;
         Log.i("sub",MainActivity.mainItem.course);
         MainActivity.mainItem.search();
-        Log.i("size",String.valueOf(MainActivity.mainItem.arrList.size()));
-                Bundle b = new Bundle();
+        Bundle b = new Bundle();
         b.putString("key", str);
         setArguments(b);
         try{
@@ -38,6 +37,7 @@ public class TabFragment extends Fragment {
             }
         }
         catch (InterruptedException e){}
+        Log.i("size",String.valueOf(MainActivity.mainItem.arrList.size()));
 
         for(int i=0;i<MainActivity.mainItem.arrList.size();i++){
             itemModel.add(new ItemModel(MainActivity.mainItem.arrList.get(i).label,MainActivity.mainItem.arrList.get(i).category));

@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         String course = "chinese";
         mainItem = new MainItem(course);
-        mainItem.search();
-        mainItem.getViewHistory(10);
-        mainItem.getSearchHistory(10);
+  //      mainItem.search();
+//        mainItem.getViewHistory(10);
+//        mainItem.getSearchHistory(10);
         setContentView(R.layout.activity_main);
         tabLayout = findViewById(R.id.tab_layout2);
         viewPager1 = findViewById(R.id.viewpager);
