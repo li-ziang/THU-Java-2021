@@ -466,6 +466,7 @@ public class UserController {
         catch (UnsupportedEncodingException e) {
             System.out.println(e);
         }
+        System.out.println(string);
         JSONObject json = new JSONObject(string);
         JSONArray data = json.getJSONArray("data");
         JSONArray retArray = new JSONArray();
@@ -484,7 +485,13 @@ public class UserController {
 //            temp.put("message", message);
             retArray.put(temp);
         }
-        return retArray.toString();
+//        String final_ret = retArray.get(0).("subject") + ", " + retArray.get(0).toString("value");
+        JSONObject final_ret = retArray.getJSONObject(0);
+        if(final_ret.getString("value").equals("")) {
+            return "";
+        }
+        return final_ret.getString("subject") + ", " + final_ret.getString("value");
+//        return retArray.toString();
     }
 
     @PostMapping("/users/addCollection")
