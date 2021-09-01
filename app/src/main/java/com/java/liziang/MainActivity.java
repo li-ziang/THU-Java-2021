@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.user_image).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                 startActivity(new Intent(MainActivity.this, ChannelListActivity.class));
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//                 startActivity(new Intent(MainActivity.this, ChannelListActivity.class));
             }
         });
         findViewById(R.id.buttonSearch).setOnClickListener(new View.OnClickListener(){
