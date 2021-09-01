@@ -13,9 +13,7 @@ import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 //import fastjson;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
@@ -26,14 +24,16 @@ import turitorial.dataloader.HttpRequest;
 import turitorial.history.History;
 import turitorial.history.HistoryRepository;
 import turitorial.searchKeyHis.SearchKeyHis;
-import java.util.Random;
+
 class His {
     public String username;
     public String instanceName;
+    public String course;
     public His(){}
-    public His(String username, String instanceName) {
+    public His(String username, String instanceName, String course) {
         this.username = username;
         this.instanceName = instanceName;
+        this.course = course;
     }
 };
 class SearchKey {
@@ -198,6 +198,7 @@ public class UserController {
                     JSONObject temp = new JSONObject();
                     temp.put("history", history.getInstanceName());
                     temp.put("time", history.getTime());
+                    temp.put("course", history.getCourse());
                     retArray.put(temp);
                 }
                 return retArray.toString();
@@ -234,12 +235,12 @@ public class UserController {
 
     @PostMapping("/users/addhistory")
     public String addHistory(@Valid @RequestBody His his) { // 为用户添加历史记录
-        String username = his.username, instanceName = his.instanceName;
+        String username = his.username, instanceName = his.instanceName, course = his.course;
         List<User> users = userRepository.findAll();
         for(User temp_user: users) {
             if(username.equals(temp_user.getUsername()) && temp_user.isLoggedIn()) {
                 Date date = new Date();
-                History history = new History(instanceName, date.toString(), temp_user);
+                History history = new History(instanceName, date.toString(), temp_user, course);
                 temp_user.histories.add(history);
                 User temp = userRepository.save(temp_user);
                 System.out.println("add history");
@@ -309,8 +310,8 @@ public class UserController {
         JSONObject json = new JSONObject(string);
 
         JSONObject data = json.getJSONObject("data");
-        if(data.has("label") && !data.getString("label").equals("")) {
-            His his = new His(username, instanceName);
+        if(data.has("uri") && !data.getString("uri").equals("")) {
+            His his = new His(username, instanceName, course);
             addHistory(his);
         }
         JSONObject ret = new JSONObject(); // 最终的返回值，包含NamedIndividual， property和content
@@ -535,7 +536,7 @@ public class UserController {
             if(i != qBody.length() - 1) {
                 point = qBody.charAt(i + 1);
             }
-            if((selection == 'D' || selection == 'C' || selection == 'B' || selection == 'A') && (point == '.')) {
+            if((selection == 'D' || selection == 'C' || selection == 'B' || selection == 'A')) {
                 String ans = qBody.substring(i);
                 ret.add(ans);
                 qBody = qBody.substring(0, i);
@@ -567,6 +568,7 @@ public class UserController {
         catch (UnsupportedEncodingException e) {
             System.out.println(e);
         }
+        System.out.println(string);
         JSONObject json = new JSONObject(string);
         JSONArray data = json.getJSONArray("data");
         JSONArray retArray = new JSONArray();
@@ -634,6 +636,82 @@ public class UserController {
         }
         return  retList.subList(0, 10);
     }
+
+    public List<String> getTopTenHistories(List<History> histories) {
+        HashMap<String, Integer> map = new HashMap<>();
+        for(History temp_his: histories) {
+            String instanceName = temp_his.getInstanceName();
+            if(map.containsKey(instanceName)) {
+                Integer time = map.get(instanceName);
+                map.put(instanceName, time + 1);
+            }
+            else {
+                map.put(instanceName, 1);
+            }
+        }
+        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(map.entrySet());
+
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            //降序排序
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                //return o1.getValue().compareTo(o2.getValue());
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+        int tot_num = 0;
+        List<String> ret = new ArrayList<>();
+        for (Map.Entry<String, Integer> mapping : list) {
+//            System.out.println(mapping.getKey() + ":" + mapping.getValue());
+            ret.add(mapping.getKey());
+            tot_num++;
+            if(tot_num == 10) return ret;
+        }
+        return ret;
+    }
+
+    @PostMapping("/users/recommend")
+    public String recommendExercise(@Valid @RequestBody String input) {
+        JSONObject json = new JSONObject(input);
+        String username = json.getString("username");
+        List<User> allUser = userRepository.findAll();
+        for(User temp_user: allUser) {
+            if(temp_user.getUsername().equals(username) && temp_user.isLoggedIn()) {
+                List<History> histories = temp_user.getHistories();
+                List<String> arr = getTopTenHistories(histories);
+                JSONArray retArray = new JSONArray();
+                for(int i = 0; i < arr.size(); i++) {
+                    String know = arr.get(i);
+                    JSONArray temp_arr = new JSONArray(getRelatedExercise(know));
+                    for(int j = 0; j < temp_arr.length(); j++) {
+                        JSONObject new_obj = temp_arr.getJSONObject(j);
+                        boolean flag = false;
+                        for(int k = 0; k < retArray.length(); k++) {
+                            JSONObject tmp_json = retArray.getJSONObject(i);
+                            if(tmp_json.getLong("qId") == new_obj.getLong("qId")) {
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if(flag) {
+                            continue;
+                        }
+                        retArray.put(new_obj);
+                    }
+                }
+                List<Integer> randList = getRandomTen(retArray.length());
+                System.out.println(randList);
+                JSONArray ret = new JSONArray();
+                for(int i = 0; i < randList.size(); i++) {
+                    ret.put(retArray.get(randList.get(i)));
+                }
+                return ret.toString();
+            }
+        }
+        return "No such user";
+    }
+
+
 
 
 

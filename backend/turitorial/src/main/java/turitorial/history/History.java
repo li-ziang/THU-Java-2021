@@ -11,13 +11,18 @@ import java.util.Objects;
 public class History {
     private @NotBlank String instanceName;
     private @NotBlank String time;
+    private @NotBlank String course;
     private @Id @GeneratedValue long id;
     @ManyToOne(fetch = FetchType.LAZY) User user;
     public History() {}
-    public History(String instanceName, String time, User user) {
+    public History(String instanceName, String time, User user, String course) {
         this.time = time;
         this.instanceName = instanceName;
         this.user = user;
+        this.course = course;
+    }
+    public String getCourse() {
+        return course;
     }
     public String getInstanceName() {
         return instanceName;
