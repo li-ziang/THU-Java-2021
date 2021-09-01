@@ -26,7 +26,7 @@ import turitorial.dataloader.HttpRequest;
 import turitorial.history.History;
 import turitorial.history.HistoryRepository;
 import turitorial.searchKeyHis.SearchKeyHis;
-
+import java.util.Random;
 class His {
     public String username;
     public String instanceName;
@@ -591,7 +591,6 @@ public class UserController {
         JSONObject json = new JSONObject(examine);
         List<String> arr = JSON.parseArray(json.getJSONArray("knowledge").toString(), String.class);
         JSONArray retArray = new JSONArray();
-        int tot_num = 0;
         for(int i = 0; i < arr.size(); i++) {
             String know = arr.get(i);
             JSONArray temp_arr = new JSONArray(getRelatedExercise(know));
@@ -609,13 +608,31 @@ public class UserController {
                     continue;
                 }
                 retArray.put(new_obj);
-                tot_num++;
-                if(tot_num >= 10) {
-                    return retArray.toString();
-                }
             }
         }
-        return retArray.toString();
+        List<Integer> randList = getRandomTen(retArray.length());
+        System.out.println(randList);
+        JSONArray ret = new JSONArray();
+        for(int i = 0; i < randList.size(); i++) {
+            ret.put(retArray.get(randList.get(i)));
+        }
+        return ret.toString();
+    }
+    List<Integer> getRandomTen(int len) {
+        List<Integer> retList = new ArrayList<>();
+        for(int i = 0; i < len; i++) {
+            retList.add(i);
+        }
+        int tot = 100;
+        Random rand = new Random();
+        while (tot > 0) {
+            tot--;
+            int x = rand.nextInt(len), y = rand.nextInt(len);
+            int originX = retList.get(x);
+            retList.set(x, retList.get(y));
+            retList.set(y, originX);
+        }
+        return  retList.subList(0, 10);
     }
 
 
