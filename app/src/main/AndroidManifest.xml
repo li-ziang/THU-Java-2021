@@ -13,6 +13,9 @@
         android:theme="@style/Theme.HouFuDao"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MessengerActivity"
+            android:exported="true" />
+        <activity
             android:name=".ObjectLinckActivity"
             android:exported="true" />
         <activity
