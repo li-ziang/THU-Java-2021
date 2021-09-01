@@ -33,7 +33,7 @@ import java.util.ArrayList;
 public class MessengerActivity extends Activity {
 
     private ChatView mChatView;
-    private String course;
+    private String course="chinese";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,6 +93,7 @@ public class MessengerActivity extends Activity {
                     ArrayList<String> stringList = MainActivity.mainItem.stringList;
                     if(stringList.contains(c)){
                         output = c+" set";
+                        course = c;
                     }
                     else{
                         output="set failed";
@@ -101,7 +102,7 @@ public class MessengerActivity extends Activity {
 
                 }else{
                     String api = "/users/Question";
-                    String json = String.format("{\"inputQuestion\": \"%s\", \"course\":\"%s\"}",inputText,"chinese");
+                    String json = String.format("{\"inputQuestion\": \"%s\", \"course\":\"%s\"}",inputText,course);
                     Server server = new Server(api,json);
                     Call call=server.call();
 
