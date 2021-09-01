@@ -1,5 +1,6 @@
 package com.java.liziang;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.session.PlaybackState;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -28,8 +30,7 @@ public class TabFragment extends Fragment {
         MainActivity.mainItem.course = str;
         Log.i("sub",MainActivity.mainItem.course);
         MainActivity.mainItem.search();
-        Log.i("size",String.valueOf(MainActivity.mainItem.arrList.size()));
-                Bundle b = new Bundle();
+        Bundle b = new Bundle();
         b.putString("key", str);
         setArguments(b);
         try{
@@ -38,11 +39,13 @@ public class TabFragment extends Fragment {
             }
         }
         catch (InterruptedException e){}
+        Log.i("size",String.valueOf(MainActivity.mainItem.arrList.size()));
 
         for(int i=0;i<MainActivity.mainItem.arrList.size();i++){
             itemModel.add(new ItemModel(MainActivity.mainItem.arrList.get(i).label,MainActivity.mainItem.arrList.get(i).category));
 //            Log.i("ooo",texts[i]);
         }
+
     }
 
     @Override
@@ -52,8 +55,13 @@ public class TabFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        adapter = new CustomAdapter(itemModel);
+        adapter = new CustomAdapter(itemModel,getContext());
+        adapter.setOnItemClickListener(new CustomAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                startActivity(new Intent(getContext(), ObjectActivity.class));
+            }
+        });
         recyclerView.setAdapter(adapter);
         return view;
     }
@@ -64,39 +72,5 @@ public class TabFragment extends Fragment {
             this.label = label;this.category = category;
         }
     }
-    class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.viewHolder>{
-        ArrayList<ItemModel> arrayList;
 
-        public CustomAdapter(ArrayList<ItemModel> arrayList) {
-            this.arrayList = arrayList;
-        }
-
-        @Override
-        public  viewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.item_list, viewGroup, false);
-            return new viewHolder(view);
-        }
-        @Override
-        public  void onBindViewHolder(viewHolder viewHolder, int position) {
-            viewHolder.label.setText(itemModel.get(position).label);
-            viewHolder.category.setText(itemModel.get(position).category);
-        }
-
-
-        @Override
-        public int getItemCount() {
-            return itemModel.size();
-        }
-
-        public class viewHolder extends RecyclerView.ViewHolder {
-            TextView label;
-            TextView category;
-
-            public viewHolder(View itemView) {
-                super(itemView);
-                category =(TextView) itemView.findViewById(R.id.category);
-                label = (TextView) itemView.findViewById(R.id.label);
-            }
-        }
-    }
 }
