@@ -13,7 +13,7 @@ public class MainItem {
     public ArrayList<String> curStringList =new ArrayList<>();//cur string list 4 cources
     final private ArrayList<String> stringList =new ArrayList<>(); //all the 9 cources
     public ArrayList<Item> arrList =new ArrayList<>();// item list
-
+    Boolean getArr = false;
     public ArrayList<String> searchKeyList = new ArrayList<>(); // 搜索历史
     public ArrayList<String> viewList = new ArrayList<>(); //浏览历史
 
@@ -43,6 +43,7 @@ public class MainItem {
     public void search(){ //实体搜索
         Log.i("call func","call search");
         //arrList = new ArrayList<>();
+       getArr = false;
        String api = "/users/search";
        String json = String.format("{\"username\": \"%s\", \"course\":\"%s\", \"keyword\":\"%s\"}",curUser,course,searchContent);
        Server server = new Server(api,json);
@@ -60,6 +61,7 @@ public class MainItem {
                Log.i("search response",string);
                JSONArray arr = null;
                try {
+                   arrList.clear();
                    arr = new JSONArray(string);
                    for(int i=0; i<arr.length(); i++) {
                        JSONObject jsonObj = arr.getJSONObject(i);
@@ -69,6 +71,7 @@ public class MainItem {
                        arrList.add(it);
                    }
                    Log.i("label",arrList.size()+"");
+                   getArr = true;
                    //.................................
                } catch (JSONException e) {
                    e.printStackTrace();

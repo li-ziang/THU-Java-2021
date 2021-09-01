@@ -15,6 +15,11 @@
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/fragment_tab.xml" value="0.1" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/item_list.xml" value="0.10778985507246377" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/text_row_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_channel.xml" value="0.23072916666666668" />
+        <entry key="app/src/main/res/layout/activity_channel_list.xml" value="0.25625" />
+        <entry key="app/src/main/res/layout/fitst.xml" value="0.23072916666666668" />
+        <entry key="app/src/main/res/layout/message_list_activity.xml" value="0.23072916666666668" />
+        <entry key="app/src/main/res/layout/second.xml" value="0.23072916666666668" />
       </map>
     </option>
   </component>

@@ -32,6 +32,12 @@ public class TabFragment extends Fragment {
                 Bundle b = new Bundle();
         b.putString("key", str);
         setArguments(b);
+        try{
+            while(MainActivity.mainItem.getArr==false){
+                Thread.sleep(10);
+            }
+        }
+        catch (InterruptedException e){}
 
         for(int i=0;i<MainActivity.mainItem.arrList.size();i++){
             itemModel.add(new ItemModel(MainActivity.mainItem.arrList.get(i).label,MainActivity.mainItem.arrList.get(i).category));

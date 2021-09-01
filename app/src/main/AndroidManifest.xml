@@ -13,6 +13,12 @@
         android:theme="@style/Theme.HouFuDao"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ChannelActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ChannelListActivity"
+            android:exported="true" />
+        <activity
             android:name=".ObjectLinckActivity"
             android:exported="true" />
         <activity
