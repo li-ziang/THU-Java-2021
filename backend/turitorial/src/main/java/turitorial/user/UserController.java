@@ -1,6 +1,8 @@
 package turitorial.user;
 
+import com.alibaba.fastjson.JSON;
 import io.swagger.v3.core.util.Json;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+//import fastjson;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
 import org.json .*;
 import turitorial.collection.Collection;
 import turitorial.collection.CollectionRepository;
@@ -99,6 +104,14 @@ class  AddCollection{
     }
 }
 
+class GetExercise {
+    public String instanceName;
+    public String username;
+    public GetExercise(String instanceName, String username) {
+        this.instanceName = instanceName;
+        this.username = username;
+    }
+}
 
 @RestController
 public class UserController {
@@ -513,4 +526,98 @@ public class UserController {
         }
         return "No such User";
     }
+
+    List<String> parseQuesion(String qBody) {
+        List<String> ret = new ArrayList<>();
+        for(int i = qBody.length() - 1; i >= 0; i--) {
+            char selection = qBody.charAt(i);
+            char point = ' ';
+            if(i != qBody.length() - 1) {
+                point = qBody.charAt(i + 1);
+            }
+            if((selection == 'D' || selection == 'C' || selection == 'B' || selection == 'A') && (point == '.')) {
+                String ans = qBody.substring(i);
+                ret.add(ans);
+                qBody = qBody.substring(0, i);
+//                System.out.println(qBody);
+                if(selection == 'A') {
+                    ret.add(qBody);
+                    break;
+                }
+            }
+        }
+        List<String> reverse = new ArrayList<>();
+        for(int i = ret.size() - 1; i >= 0; i--) {
+            reverse.add(ret.get(i));
+        }
+        return reverse;
+
+    }
+
+
+    @PostMapping("/users/exercise")
+    public String getRelatedExercise(@Valid @RequestBody String instanceName) {
+//        String instanceName = instanceName;
+        String id = apiLogin();
+        String string = null;
+        try {
+            string = HttpRequest.sendGet("http://open.edukg.cn/opedukg/api/typeOpen/open/questionListByUriName",
+                    "uriName=" + URLEncoder.encode(instanceName, "utf-8") + "&id=" + id);
+        }
+        catch (UnsupportedEncodingException e) {
+            System.out.println(e);
+        }
+        JSONObject json = new JSONObject(string);
+        JSONArray data = json.getJSONArray("data");
+        JSONArray retArray = new JSONArray();
+        for(int i = 0; i < data.length(); i++) {
+            JSONObject question = data.getJSONObject(i);
+            String qAnswer = question.getString("qAnswer");
+            Long qId = question.getLong("id");
+            String qBody = question.getString("qBody");
+            List<String> quesionWithAns = parseQuesion(qBody);
+            System.out.println(quesionWithAns);
+            JSONObject obj = new JSONObject();
+            obj.put("qId", qId);
+            obj.put("questionWithAns", quesionWithAns);
+            obj.put("qAnswer", qAnswer);
+            retArray.put(obj);
+        }
+        return retArray.toString();
+    }
+
+    @PostMapping("/users/exam")
+    public String giveExam(@Valid @RequestBody String examine) {
+        JSONObject json = new JSONObject(examine);
+        List<String> arr = JSON.parseArray(json.getJSONArray("knowledge").toString(), String.class);
+        JSONArray retArray = new JSONArray();
+        int tot_num = 0;
+        for(int i = 0; i < arr.size(); i++) {
+            String know = arr.get(i);
+            JSONArray temp_arr = new JSONArray(getRelatedExercise(know));
+            for(int j = 0; j < temp_arr.length(); j++) {
+                JSONObject new_obj = temp_arr.getJSONObject(j);
+                boolean flag = false;
+                for(int k = 0; k < retArray.length(); k++) {
+                    JSONObject tmp_json = retArray.getJSONObject(i);
+                    if(tmp_json.getLong("qId") == new_obj.getLong("qId")) {
+                        flag = true;
+                        break;
+                    }
+                }
+                if(flag) {
+                    continue;
+                }
+                retArray.put(new_obj);
+                tot_num++;
+                if(tot_num >= 10) {
+                    return retArray.toString();
+                }
+            }
+        }
+        return retArray.toString();
+    }
+
+
+
 }
