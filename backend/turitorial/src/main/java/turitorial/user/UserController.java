@@ -115,6 +115,7 @@ class GetExercise {
 
 @RestController
 public class UserController {
+    String apiId = "56e882e9-df1a-4326-9dfa-7192f47d0056";
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -417,6 +418,7 @@ public class UserController {
                 "password=thueda2019&phone=18201616030");
         JSONObject jsonObject = new JSONObject(string);
         System.out.println(jsonObject.getString("id"));
+        this.apiId = jsonObject.getString("id");
         return jsonObject.getString("id");
     }
 
@@ -457,7 +459,7 @@ public class UserController {
     @PostMapping("/users/Question")
     public String ansQuestion(@Valid @RequestBody Question question) { // 实体问答接口
         String inputQuestion = question.inputQuestion, course = question.course;
-        String id = apiLogin();
+        String id = apiId;
         String string = null;
         try {
             string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeOpen/open/inputQuestion",
