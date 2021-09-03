@@ -67,6 +67,7 @@ public class MainItem {
                        JSONObject jsonObj = arr.getJSONObject(i);
                        String label = jsonObj.optString("label","defaultValue");
                        String category = jsonObj.optString("category","defaultValue");
+                       //TODO: 找到是不是在数据库中
                        Item it = new Item(label,category);
                        arrList.add(it);
                    }
@@ -153,10 +154,16 @@ public class MainItem {
 class Item{
     public String label;
     public String category;
+    Boolean read=false;
 
     public Item(String label,String category){
         this.label=label;
         this.category=category;
+    }
+    public Item(String label,String category,Boolean read){
+        this.label=label;
+        this.category=category;
+        this.read=read;
     }
     public Item(){
         this("","");

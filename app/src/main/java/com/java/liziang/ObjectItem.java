@@ -22,8 +22,10 @@ public class ObjectItem {
         Log.i("adsaf","fadsfa");
         if (inDatabase()) {
             int b = 1;
+            //TODO: public String jsonString;
         } else {
             String api = "/search/info";
+
             String json = String.format("{\"username\": \"%s\", \"course\":\"%s\", \"instanceName\":\"%s\"}", MainActivity.mainItem.curUser, course, name);
             Server server = new Server(api, json);
             Call call = server.call();
@@ -38,7 +40,7 @@ public class ObjectItem {
                 public void onResponse(Call call, okhttp3.Response response) throws IOException {
                     jsonString = response.body().string();
                     // Log.i("object search fail",string);
-
+                    //TODO: save jsonString 用42行参数
                     try {
                         JSONObject jsonObject = new JSONObject(jsonString);
                         JSONArray jsonObjContent = jsonObject.getJSONArray("obj_content");
