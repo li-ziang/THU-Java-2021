@@ -11,7 +11,7 @@ public class MainItem {
     public String course="";
     public String searchContent="s";
     public ArrayList<String> curStringList =new ArrayList<>();//cur string list 4 cources
-    final private ArrayList<String> stringList =new ArrayList<>(); //all the 9 cources
+    final public ArrayList<String> stringList =new ArrayList<>(); //all the 9 cources
     public ArrayList<Item> arrList =new ArrayList<>();// item list
     Boolean getArr = false;
     public ArrayList<String> searchKeyList = new ArrayList<>(); // 搜索历史

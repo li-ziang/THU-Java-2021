@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public ViewPager viewPager1;
     public FmPagerAdapter pagerAdapter;
     private AlertDialog.Builder builder;
-
+    static public DbHelper dbHelper;
     private ArrayList<Fragment> fragments = new ArrayList<>();
     private String[] titles;
     @Override
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override`
             public void onClick(View view) {
 //                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                 startActivity(new Intent(MainActivity.this, ChannelListActivity.class));
+                 startActivity(new Intent(MainActivity.this, MessengerActivity.class));
             }
         });
         findViewById(R.id.buttonSearch).setOnClickListener(new View.OnClickListener(){
@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
                 pagerAdapter.notifyDataSetChanged();
             }
         });
+        dbHelper = new DbHelper(MainActivity.this, "test.db", null, 1);
+//        DbHelper.insert("test", "test", "english", dbHelper.getWritableDatabase()); // 测试用
         // findViewById(R.id.buttonSearch).setOnClickListener(new View.OnClickListener(){
         //     @Override
         //     public void onClick(View view) {
