@@ -40,13 +40,11 @@ class SearchKey {
     public String username;
     public String keyword;
     public String course;
-    public String sorted;
     public SearchKey(){}
-    public SearchKey(String username, String keyword, String course, String sorted) {
+    public SearchKey(String username, String keyword, String course) {
         this.keyword = keyword;
         this.username = username;
         this.course = course;
-        this.sorted = sorted;
     }
 }
 
@@ -148,7 +146,7 @@ public class UserController {
         return jsonObject.toString();
     }
     @PostMapping("/users/login")
-    public String loginUser(@Valid @RequestBody User user) { // 登录
+    public String loginUser(@Valid @RequestBody User user) { // 登   录
         JSONObject jsonObject = new JSONObject();
         List<User> users = userRepository.findAll();
         for (User other : users) {
@@ -263,7 +261,6 @@ public class UserController {
     @PostMapping("/users/search")
     public String searchInstance(@Valid @RequestBody SearchKey searchKey) { // 实体搜索接口
         String username = searchKey.username, keyword = searchKey.keyword, subject = searchKey.course;
-        String sorted = searchKey.sorted;
         List<User> users = userRepository.findAll();
         for(User user: users) {
             if(user.getUsername().equals(username) && user.isLoggedIn()) {
@@ -290,30 +287,11 @@ public class UserController {
             String label = obj.getString("label");
             String category = obj.getString("category");
             map.put(label, category);
-//            JSONObject temp = new JSONObject();
-//            temp.put("label", label);
-//            temp.put("category", category);
-//            retArray.put(temp);
-        }
-        Set set=map.keySet();
-        Object[] arr=set.toArray();
-
-        Arrays.sort(arr);
-        if(sorted.equals("down")) {
-            for(int i = 0, j = arr.length - 1; i < j; i++, j-- ) {
-                Object temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
-        }
-        for(Object label: arr){
-            String category = map.get(label);
             JSONObject temp = new JSONObject();
             temp.put("label", label);
             temp.put("category", category);
             retArray.put(temp);
         }
-
 
 
         return retArray.toString();
