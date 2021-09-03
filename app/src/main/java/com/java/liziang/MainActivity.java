@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                 startActivity(new Intent(MainActivity.this, MessengerActivity.class));
+                 startActivity(new Intent(MainActivity.this, QuestionsActivity.class));
             }
         });
         findViewById(R.id.buttonSearch).setOnClickListener(new View.OnClickListener(){
@@ -75,13 +75,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         dbHelper = new DbHelper(MainActivity.this, "test.db", null, 1);
-//        DbHelper.insert("test", "test", "english", dbHelper.getWritableDatabase()); // 测试用
-        // findViewById(R.id.buttonSearch).setOnClickListener(new View.OnClickListener(){
-        //     @Override
-        //     public void onClick(View view) {
-        //         startActivity(new Intent(MainActivity.this, ObjectActivity.class));
-        //     }
-        // });
+
     }
 
 
