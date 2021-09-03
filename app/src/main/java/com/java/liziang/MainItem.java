@@ -68,14 +68,16 @@ public class MainItem {
                        String label = jsonObj.optString("label","defaultValue");
                        String category = jsonObj.optString("category","defaultValue");
                        //: 找到是不是在数据库中
-//                       String find_ans = DbHelper.find(label, course, MainActivity.dbHelper.getReadableDatabase());
+                       String find_ans = DbHelper.find(label, course, MainActivity.dbHelper.getReadableDatabase());
                        Item it;
-//                       if(find_ans != null) {
-//                           it = new Item(label, category, true);
-//                       }
-//                       else {
-                           it = new Item(label,category);
-//                       }
+                       if(find_ans != null) {
+                           Log.d("isRead", label);
+                           it = new Item(label, category, true);
+                       }
+                       else {
+                           Log.d("is not read", label);
+                           it = new Item(label,category, false);
+                       }
                        arrList.add(it);
                    }
                    Log.i("label",arrList.size()+"");
@@ -161,16 +163,17 @@ public class MainItem {
 class Item{
     public String label;
     public String category;
-    Boolean read=false;
+    public Boolean isRead;
 
     public Item(String label,String category){
         this.label=label;
         this.category=category;
+        this.isRead = false;
     }
-    public Item(String label,String category,Boolean read){
+    public Item(String label,String category,Boolean isRead){
         this.label=label;
         this.category=category;
-        this.read=read;
+        this.isRead = isRead;
     }
     public Item(){
         this("","");
