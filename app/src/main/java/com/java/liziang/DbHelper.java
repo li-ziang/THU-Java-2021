@@ -42,15 +42,19 @@ public class DbHelper extends SQLiteOpenHelper {
         values1.put("course", course);
         values1.put("instanceName", instanceName);
         long result = db.insert("instance", null, values1);
+        Log.d("inserting new data", "inserting new data");
     }
 
     public static String find(String instanceName, String course, SQLiteDatabase db) {
 //        SQLiteDatabase db = MainActivity.dbHelper.getReadableDatabase();
         Cursor cursor =  db.rawQuery("SELECT * FROM instance WHERE instanceName = ? and course = ?",
                 new String[]{instanceName, course});
+        if(cursor.moveToFirst() == true)
+        Log.d("finding data", "finding data");
         if(cursor.moveToFirst())
         {
             String content = cursor.getString(cursor.getColumnIndex("content"));
+            Log.d(content, content);
             return content;
         }
         cursor.close();

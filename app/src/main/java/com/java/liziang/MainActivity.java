@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbHelper = new DbHelper(MainActivity.this, "test1.db", null, 1);
         String course = "chinese";
         mainItem = new MainItem(course);
   //      mainItem.search();
@@ -74,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 pagerAdapter.notifyDataSetChanged();
             }
         });
-        dbHelper = new DbHelper(MainActivity.this, "test.db", null, 1);
+        DbHelper.insert("test", "test", "test", dbHelper.getWritableDatabase());
+
 
     }
 
