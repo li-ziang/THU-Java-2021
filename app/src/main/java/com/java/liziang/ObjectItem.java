@@ -2,6 +2,10 @@ package com.java.liziang;
 import java.io.IOException;
 import java.util.*;
 import android.util.*;
+
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+
 import okhttp3.*;
 import org.json.*;
 
@@ -68,6 +72,19 @@ public class ObjectItem {
 
     public boolean inDatabase(String instanceName, String course) {
 //        return false;
+        String string = DbHelper.find(instanceName, course, MainActivity.dbHelper.getReadableDatabase());
+        JSONObject json;
+        try {
+            json = new JSONObject(string);
+            if(!json.has("data") || json.getString("data") == "" ) {
+                Log.d("congxincun", "congxincun");
+                return false;
+            }
+        }
+        catch (JSONException e) {}
+
+
+
         return (DbHelper.find(instanceName, course, MainActivity.dbHelper.getReadableDatabase()) != null);
     }
 
