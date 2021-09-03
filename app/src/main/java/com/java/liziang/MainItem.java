@@ -68,7 +68,14 @@ public class MainItem {
                        String label = jsonObj.optString("label","defaultValue");
                        String category = jsonObj.optString("category","defaultValue");
                        //TODO: 找到是不是在数据库中
-                       Item it = new Item(label,category);
+                       String find_ans = DbHelper.find(label, course, MainActivity.dbHelper.getReadableDatabase());
+                       Item it;
+                       if(find_ans != null) {
+                           it = new Item(label, category, true);
+                       }
+                       else {
+                           it = new Item(label,category);
+                       }
                        arrList.add(it);
                    }
                    Log.i("label",arrList.size()+"");
