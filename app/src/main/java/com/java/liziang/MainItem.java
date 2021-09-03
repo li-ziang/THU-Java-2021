@@ -67,7 +67,7 @@ public class MainItem {
                        JSONObject jsonObj = arr.getJSONObject(i);
                        String label = jsonObj.optString("label","defaultValue");
                        String category = jsonObj.optString("category","defaultValue");
-                       //TODO: 找到是不是在数据库中
+                       //: 找到是不是在数据库中
 //                       String find_ans = DbHelper.find(label, course, MainActivity.dbHelper.getReadableDatabase());
                        Item it;
 //                       if(find_ans != null) {

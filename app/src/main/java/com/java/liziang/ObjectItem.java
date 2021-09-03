@@ -22,7 +22,7 @@ public class ObjectItem {
         Log.i("adsaf","fadsfa");
         if (inDatabase(name, course)) {
             int b = 1;
-            //TODO: public String jsonString;
+            //: public String jsonString;
             jsonString = DbHelper.find(name, course, MainActivity.dbHelper.getReadableDatabase());
         } else {
             String api = "/search/info";
@@ -42,7 +42,8 @@ public class ObjectItem {
                     jsonString = response.body().string();
                     // Log.i("object search fail",string);
                     //TODO: save jsonString 用42行参数
-//                    DbHelper.insert(jsonString, name, course, MainActivity.dbHelper.getWritableDatabase());
+
+                    DbHelper.insert(jsonString, name, course, MainActivity.dbHelper.getWritableDatabase());
                     try {
                         JSONObject jsonObject = new JSONObject(jsonString);
                         JSONArray jsonObjContent = jsonObject.getJSONArray("obj_content");
