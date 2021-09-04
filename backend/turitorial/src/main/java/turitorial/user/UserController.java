@@ -314,6 +314,10 @@ public class UserController {
 
 
         JSONObject json = new JSONObject(string);
+        if(!json.has("data")) {
+            JSONArray ret = new JSONArray();
+            return ret.toString();
+        }
         JSONArray data = json.getJSONArray("data");
         JSONArray retArray = new JSONArray();
         HashMap<String, String> map = new HashMap<>();
@@ -348,7 +352,12 @@ public class UserController {
 
         System.out.println(string);
 
+
         JSONObject json = new JSONObject(string);
+        if(!json.has("data")) {
+            JSONArray ret = new JSONArray();
+            return ret.toString();
+        }
 
         JSONObject data = json.getJSONObject("data");
         if(data.has("uri") && !data.getString("uri").equals("")) {
@@ -377,7 +386,12 @@ public class UserController {
                 if(object.contains("http://edukg.org")) { // 为实体uri，需要转换成中文
                     String instanceFromUri = getInstanceFromUri(object, course);
                     JSONObject temp_obj = new JSONObject(instanceFromUri);
+                    if(!temp_obj.has("data")) {
+                        JSONArray temp = new JSONArray();
+                        return temp.toString();
+                    }
                     JSONObject temp_data = temp_obj.getJSONObject("data");
+
                     entity_name = temp_data.getString("entity_name");
                     isEntity = true;
                 }
@@ -478,6 +492,10 @@ public class UserController {
 
         System.out.println(string);
         JSONObject json = new JSONObject(string);
+        if(!json.has("data")) {
+            JSONArray temp = new JSONArray();
+            return temp.toString();
+        }
         JSONObject data = json.getJSONObject("data");
         JSONArray array = data.getJSONArray("results");
         JSONArray retArray = new JSONArray();
@@ -510,6 +528,10 @@ public class UserController {
         }
         System.out.println(string);
         JSONObject json = new JSONObject(string);
+        if(!json.has("data")) {
+            JSONArray ret = new JSONArray();
+            return ret.toString();
+        }
         JSONArray data = json.getJSONArray("data");
         JSONArray retArray = new JSONArray();
         for(int i = 0; i < data.length(); i++) {
@@ -619,6 +641,10 @@ public class UserController {
         }
         System.out.println(string);
         JSONObject json = new JSONObject(string);
+        if(!json.has("data")) {
+            JSONArray ret = new JSONArray();
+            return ret.toString();
+        }
         JSONArray data = json.getJSONArray("data");
         JSONArray retArray = new JSONArray();
         for(int i = 0; i < data.length(); i++) {
