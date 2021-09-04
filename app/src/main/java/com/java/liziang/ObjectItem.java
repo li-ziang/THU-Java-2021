@@ -2,6 +2,10 @@ package com.java.liziang;
 import java.io.IOException;
 import java.util.*;
 import android.util.*;
+
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+
 import okhttp3.*;
 import org.json.*;
 
@@ -20,10 +24,13 @@ public class ObjectItem {
         name = name_;
         course = course_;
         Log.i("adsaf","fadsfa");
-        if (inDatabase()) {
+        if (inDatabase(name, course)) {
             int b = 1;
+            //: public String jsonString;
+            jsonString = DbHelper.find(name, course, MainActivity.dbHelper.getReadableDatabase());
         } else {
             String api = "/search/info";
+
             String json = String.format("{\"username\": \"%s\", \"course\":\"%s\", \"instanceName\":\"%s\"}", MainActivity.mainItem.curUser, course, name);
             Server server = new Server(api, json);
             Call call = server.call();
@@ -38,7 +45,9 @@ public class ObjectItem {
                 public void onResponse(Call call, okhttp3.Response response) throws IOException {
                     jsonString = response.body().string();
                     // Log.i("object search fail",string);
+                    //TODO: save jsonString 用42行参数
 
+                    DbHelper.insert(jsonString, name, course, MainActivity.dbHelper.getWritableDatabase());
                     try {
                         JSONObject jsonObject = new JSONObject(jsonString);
                         JSONArray jsonObjContent = jsonObject.getJSONArray("obj_content");
@@ -61,8 +70,22 @@ public class ObjectItem {
         }
     }
 
-    public boolean inDatabase() {
-        return false;
+    public boolean inDatabase(String instanceName, String course) {
+//        return false;
+        String string = DbHelper.find(instanceName, course, MainActivity.dbHelper.getReadableDatabase());
+        JSONObject json;
+        try {
+            json = new JSONObject(string);
+            if(!json.has("data") || json.getString("data") == "" ) {
+                Log.d("congxincun", "congxincun");
+                return false;
+            }
+        }
+        catch (JSONException e) {}
+
+
+
+        return (DbHelper.find(instanceName, course, MainActivity.dbHelper.getReadableDatabase()) != null);
     }
 
     ArrayList<Content> parseJsonArray(JSONArray jsonArray, String jectLabel, String predicateLabel, Boolean isEntity) {

@@ -67,7 +67,17 @@ public class MainItem {
                        JSONObject jsonObj = arr.getJSONObject(i);
                        String label = jsonObj.optString("label","defaultValue");
                        String category = jsonObj.optString("category","defaultValue");
-                       Item it = new Item(label,category);
+                       //: 找到是不是在数据库中
+                       String find_ans = DbHelper.find(label, course, MainActivity.dbHelper.getReadableDatabase());
+                       Item it;
+                       if(find_ans != null) {
+                           Log.d("isRead", label);
+                           it = new Item(label, category, true);
+                       }
+                       else {
+                           Log.d("is not read", label);
+                           it = new Item(label,category, false);
+                       }
                        arrList.add(it);
                    }
                    Log.i("label",arrList.size()+"");
@@ -155,10 +165,17 @@ public class MainItem {
 class Item{
     public String label;
     public String category;
+    public Boolean isRead;
 
     public Item(String label,String category){
         this.label=label;
         this.category=category;
+        this.isRead = false;
+    }
+    public Item(String label,String category,Boolean isRead){
+        this.label=label;
+        this.category=category;
+        this.isRead = isRead;
     }
     public Item(){
         this("","");
