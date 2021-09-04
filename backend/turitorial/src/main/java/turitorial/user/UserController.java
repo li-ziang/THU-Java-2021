@@ -195,12 +195,12 @@ public class UserController {
                 List<History> histories = other.getHistories();
                 for(History history:histories) {
                     tot_num ++;
-                    if(tot_num == number) break;
                     JSONObject temp = new JSONObject();
                     temp.put("history", history.getInstanceName());
                     temp.put("time", history.getTime());
                     temp.put("course", history.getCourse());
                     retArray.put(temp);
+                    if(tot_num == number) return retArray.toString();
                 }
                 return retArray.toString();
             }
@@ -214,20 +214,30 @@ public class UserController {
         String username = usersearchKey.username;
         Integer number = usersearchKey.number;
         Integer tot_num = 0;
+        System.out.println("是不是null");
         System.out.println(number);
         List<String> ret = new ArrayList<String>();
         for(User other: users) {
             if(other.getUsername().equals(username)) {
                 System.out.println("found");
                 List<SearchKeyHis> searchKeyHis = other.getSearchKeyHistories();
-                for(SearchKeyHis his:searchKeyHis) {
+                for(int i = searchKeyHis.size() - 1; i >= 0; i-- ) {
+                    SearchKeyHis his = searchKeyHis.get(i);
                     tot_num ++;
-                    if(tot_num == number) break;
                     ret.add(his.getSearchKey());
+                    if(tot_num >= number) {
+                        System.out.println(ret.size());
+                        System.out.println("number1111");
+                        return ret;
+                    }
                 }
+                System.out.println("number 22222");
+                System.out.println(ret.size());
                 return ret;
             }
         }
+        System.out.println("number3333");
+        System.out.println(ret.size());
         return ret;
 
     }
@@ -251,11 +261,35 @@ public class UserController {
         return "No such user";
     }
 
-    public void addSearchKey(String searchKey, User user) {
-        SearchKeyHis s = new SearchKeyHis(searchKey, user);
-        System.out.println(user.getId());
-        user.searchKeyHistories.add(s);
-        userRepository.save(user);
+    public void addSearchKey(String searchKey, User usersadas) {
+        String username = usersadas.getUsername();
+        if(searchKey.equals("")) return;
+        System.out.println(usersadas.getId());
+        List<User> users = userRepository.findAll();
+        for(User temp_user: users) {
+            if(username.equals(temp_user.getUsername())) {
+                for(int i = temp_user.searchKeyHistories.size() - 1; i >= 0; i--) {
+                    if(temp_user.searchKeyHistories.get(i).getSearchKey().equals(searchKey) || temp_user.searchKeyHistories.get(i).getSearchKey().equals("")) {
+                        temp_user.searchKeyHistories.remove(i);
+                    }
+                }
+                SearchKeyHis s = new SearchKeyHis(searchKey, temp_user);
+                temp_user.searchKeyHistories.add(s);
+                userRepository.save(temp_user);
+                System.out.println(temp_user.searchKeyHistories);
+            }
+        }
+
+//        for(int i = 0; i < user.searchKeyHistories.size(); i++) {
+//            SearchKeyHis sh = user.searchKeyHistories.get(i);
+//            if(sh.getSearchKey().equals(searchKey)) {
+//                System.out.println("remove");
+//                user.searchKeyHistories.remove(i);
+//            }
+//        }
+//        System.out.println(s.getSearchKey());
+//        user.searchKeyHistories.add(s);
+
     }
 
     @PostMapping("/users/search")
@@ -277,6 +311,7 @@ public class UserController {
         catch (UnsupportedEncodingException e) {
             System.out.println(e);
         }
+
 
         JSONObject json = new JSONObject(string);
         JSONArray data = json.getJSONArray("data");
@@ -309,6 +344,7 @@ public class UserController {
         catch(UnsupportedEncodingException e) {
             System.out.println(e);
         }
+        System.out.println("search/info");
 
         System.out.println(string);
 
