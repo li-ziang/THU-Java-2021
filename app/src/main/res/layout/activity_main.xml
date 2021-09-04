@@ -48,6 +48,8 @@
                  />
         </LinearLayout>
         </LinearLayout>
+
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -75,6 +77,15 @@
                 android:layout_height="wrap_content" android:id="@+id/buttonSearch" android:layout_weight="1"/>
         </LinearLayout>
 
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/the_list"
+            ></ListView>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -98,6 +109,7 @@
                 android:contentDescription="Add channel"
                 android:src="@drawable/edit" />
         </LinearLayout>
+</FrameLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager

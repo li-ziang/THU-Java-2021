@@ -3,6 +3,8 @@ package com.java.liziang;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.*;
 import com.google.android.material.tabs.TabLayout;
 import com.java.liziang.ui.main.FmPagerAdapter;
@@ -14,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,9 +28,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
   public static MainItem mainItem;
+    public static ArrayList<String> historyList = new ArrayList<String>();
     public TabLayout tabLayout;
     public ViewPager viewPager1;
+    public TextView searchContent;
+    public ListView list;
     public FmPagerAdapter pagerAdapter;
+    public ListAdapter listAdapter;
     private AlertDialog.Builder builder;
     static public DbHelper dbHelper;
     private ArrayList<Fragment> fragments = new ArrayList<>();
@@ -36,10 +44,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         String course = "chinese";
         mainItem = new MainItem(course);
-  //      mainItem.search();
+        //      mainItem.search();
 //        mainItem.getViewHistory(10);
-//        mainItem.getSearchHistory(10);
+        mainItem.getSearchHistory(8);
+        try{
+            while(MainActivity.mainItem.getHis==false){
+                Thread.sleep(10);
+            }
+        }
+        catch (InterruptedException e){}
+        historyList.clear();
+        for(String ele:mainItem.searchKeyList){
+            historyList.add(ele);
+        }
+        Log.i("history",String.valueOf(historyList.size()));
         setContentView(R.layout.activity_main);
+        list = (ListView) findViewById(R.id.the_list);
+        listAdapter = new ListAdapter(getApplicationContext(),historyList);
+        list.setAdapter(listAdapter);
+        list.setVisibility(View.GONE);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            //parent 代表listView View 代表 被点击的列表项 position 代表第几个 id 代表列表编号
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                searchContent.setText(listAdapter.list.get(position));
+                list.setVisibility(View.GONE);
+            }
+        });
         tabLayout = findViewById(R.id.tab_layout2);
         viewPager1 = findViewById(R.id.viewpager);
         fragments.clear();
@@ -56,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         findViewById(R.id.user_image).setOnClickListener(new View.OnClickListener(){
-            @Override`
+            @Override
             public void onClick(View view) {
 //                startActivity(new Intent(MainActivity.this, LoginActivity.class));
                  startActivity(new Intent(MainActivity.this, MessengerActivity.class));
@@ -65,15 +96,51 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.buttonSearch).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                TextView searchContent = (TextView) findViewById(R.id.searchEdit);
+                searchContent = (TextView) findViewById(R.id.searchEdit);
                 mainItem.searchContent = searchContent.getText().toString();
                 pagerAdapter.the_arraylist.clear();
                 for(String ele:mainItem.curStringList) {
                     pagerAdapter.the_arraylist.add(new TabFragment(ele));
                 }
                 pagerAdapter.notifyDataSetChanged();
+                mainItem.getSearchHistory(8);
+                try{
+                    while(MainActivity.mainItem.getHis==false){
+                        Thread.sleep(10);
+                    }
+                }
+                catch (InterruptedException e){}
+                listAdapter.list.clear();
+                for(String ele:mainItem.searchKeyList){
+                    listAdapter.list.add(ele);
+                }
+                listAdapter.notifyDataSetChanged();
+                searchContent.setText("");
+
             }
         });
+        list.bringToFront();
+        searchContent = (TextView) findViewById(R.id.searchEdit);
+        searchContent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s != null && !s.toString().equals("")) {
+                    list.setVisibility(View.VISIBLE);
+                } else {
+                    list.setVisibility(View.GONE);
+                }
+            }
+        });
+
+
         dbHelper = new DbHelper(MainActivity.this, "test.db", null, 1);
 //        DbHelper.insert("test", "test", "english", dbHelper.getWritableDatabase()); // 测试用
         // findViewById(R.id.buttonSearch).setOnClickListener(new View.OnClickListener(){
@@ -171,3 +238,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
+
+

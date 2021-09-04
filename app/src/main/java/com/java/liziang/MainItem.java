@@ -14,6 +14,7 @@ public class MainItem {
     final public ArrayList<String> stringList =new ArrayList<>(); //all the 9 cources
     public ArrayList<Item> arrList =new ArrayList<>();// item list
     Boolean getArr = false;
+    Boolean getHis = false;
     public ArrayList<String> searchKeyList = new ArrayList<>(); // 搜索历史
     public ArrayList<String> viewList = new ArrayList<>(); //浏览历史
 
@@ -22,8 +23,6 @@ public class MainItem {
         curStringList.add("english");
         //curStringList.add("math");
         curStringList.add("physics");
-
-
         stringList.add("chinese");
         stringList.add("english");
         stringList.add("math");
@@ -41,6 +40,7 @@ public class MainItem {
         this.searchContent=searchContent;
     }
     public void search(){ //实体搜索
+ //       getArr = true;
         Log.i("call func","call search");
         //arrList = new ArrayList<>();
        getArr = false;
@@ -76,7 +76,6 @@ public class MainItem {
                } catch (JSONException e) {
                    e.printStackTrace();
                }
-
            }
        });
        Log.i("end func","end search");
@@ -117,9 +116,11 @@ public class MainItem {
         });
     }
 
-    public void getSearchHistory(int number){ 
+    public void getSearchHistory(int number){
+        getHis = false;
         String api = "/search/searchkey";
-        String json = String.format("{\"course\":%d,\"username\": \"%s\"}",number,curUser);
+        Log.i("this is number !!!!", String.valueOf(number));
+        String json = String.format("{\"number\":%d,\"username\": \"%s\"}",number,curUser);
         Server server = new Server(api,json);
         Call call=server.call();
 
@@ -141,7 +142,8 @@ public class MainItem {
                     searchKeyList_.add(s.substring(1,s.length()-1));
                 }
                 searchKeyList = searchKeyList_;
-                Log.i("searchKeyList size",searchKeyList.toString()+"");
+                getHis = true;
+                Log.i("searchKeyList size",String.valueOf(searchKeyList.size()));
                 Log.i("searchKeyList 0",searchKeyList.get(0));
  
             }
