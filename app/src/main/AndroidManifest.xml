@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HouFuDao"
         android:usesCleartextTraffic="true">
+        <activity android:name=".LinkedInfo"></activity>
+        <activity android:name=".InstanceLinkActivity" />
         <activity
             android:name=".ResultActivity"
             android:exported="true" />
