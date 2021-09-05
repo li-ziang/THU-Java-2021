@@ -61,9 +61,10 @@ public class MainItem {
                Log.i("search response",string);
                JSONArray arr = null;
                try {
-                   arrList.clear();
-                   arr = new JSONArray(string);
-                   for(int i=0; i<arr.length(); i++) {
+                    arrList.clear();
+                    arr = new JSONArray(string);
+                    
+                    for(int i=0; i<arr.length(); i++) {
                        JSONObject jsonObj = arr.getJSONObject(i);
                        String label = jsonObj.optString("label","defaultValue");
                        String category = jsonObj.optString("category","defaultValue");
