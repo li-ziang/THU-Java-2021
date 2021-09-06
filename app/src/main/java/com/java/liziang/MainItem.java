@@ -84,7 +84,6 @@ public class MainItem {
 
                    Log.i("label",arrList.size()+"");
                    getArr = true;
-                   //.................................
                } catch (JSONException e) {
                    e.printStackTrace();
                }
@@ -147,16 +146,19 @@ public class MainItem {
                 String string = response.body().string();
                 Log.i("getSearchHistory response",string);
                 ArrayList<String> searchKeyList_ = new ArrayList<>();
-                String[] stringList = string.substring(1,string.length()-1).split(",");
+                if(string.length()!=2){
+                    String[] stringList = string.substring(1,string.length()-1).split(",");
 //                Log.i("string",stringList[1].substring(1,string.length()-1));
-                // searchKeyList
-                for (String s : stringList){
-                    searchKeyList_.add(s.substring(1,s.length()-1));
+                    // searchKeyList
+                    for (String s : stringList){
+                        searchKeyList_.add(s.substring(1,s.length()-1));
+                    }
                 }
+
                 searchKeyList = searchKeyList_;
                 getHis = true;
-                Log.i("searchKeyList size",String.valueOf(searchKeyList.size()));
-                Log.i("searchKeyList 0",searchKeyList.get(0));
+//                Log.i("searchKeyList size",String.valueOf(searchKeyList.size()));
+//                Log.i("searchKeyList 0",searchKeyList.get(0));
  
             }
         });

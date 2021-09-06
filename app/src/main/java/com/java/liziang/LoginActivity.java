@@ -80,8 +80,10 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("content",content);
 
                     if (code.equals("200")) {
+                        Log.i("login success",userName);
                         MainActivity.mainItem.curUser= userName;
-                        startActivity(new Intent(LoginActivity.this, DashboardActivity.class).putExtra("username", userName));
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                        startActivity(new Intent(LoginActivity.this, MainActivity.class).putExtra("username", userName));
                     } else {
                         Log.i("login fail","error info");
                     }
@@ -95,56 +97,5 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void logoutUser() {
-        final String userName = etUsername.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
 
-        if (userName.isEmpty()) {
-            etUsername.setError("Username is required");
-            etUsername.requestFocus();
-            return;
-        } else if (password.isEmpty()) {
-            etPassword.setError("Password is required");
-            etPassword.requestFocus();
-            return;
-        }
-
-        String api = "/users/logout";
-        String json = String.format("{\"username\": \"%s\"}",userName);
-        Server server = new Server(api,json);
-        Call call=server.call();
-
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.i("logout fail",e.toString());
-            }
-
-            @Override
-            public void onResponse(Call call, okhttp3.Response response) throws IOException {
-                String string = response.body().string();
-                Log.i("logout response",string);
-                JSONObject ret = null;
-                try {
-                    ret = new JSONObject(string);
-                    String code = ret.optString("code","defaultValue");
-                    String content = ret.optString("content","defaultValue");
-                    Log.i("code",code);
-                    Log.i("content",content);
-
-                    if (code.equals("200")) {
-                        //TODO:need a logout.xml file
-                       MainActivity.mainItem.curUser= "";
-                        // startActivity(new Intent(LoginActivity.this, DashboardActivity.class).putExtra("username", userName));
-                    } else {
-                        Log.i("logout fail","error info");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-    }
 }
