@@ -7,6 +7,7 @@ import org.json.*;
 
 
 public class MainItem {
+    public String sequence = "a-z";
     public String curUser="hly";
     public String course="";
     public String searchContent="s";
@@ -83,6 +84,18 @@ public class MainItem {
                    }
 
                    Log.i("label",arrList.size()+"");
+                   if(sequence.equalsIgnoreCase("a-z")){
+                       //从a到z把arrList排序
+                   }
+                   else if(sequence.equalsIgnoreCase("z-a")){
+
+                   }
+                   else if(sequence.equalsIgnoreCase("长-短")){
+
+                   }
+                   else{
+
+                   }
                    getArr = true;
                } catch (JSONException e) {
                    e.printStackTrace();
