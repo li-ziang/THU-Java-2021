@@ -23,6 +23,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
+import java.util.ArrayList;
 
 public class Server {
     OkHttpClient okHttpClient;
@@ -36,6 +37,8 @@ public class Server {
                 .post(RequestBody.create(MediaType.parse("application/json"), json)).build();
         call_ = okHttpClient.newCall(request);
     }
+
+
     public Call call(){
         return call_;
     }

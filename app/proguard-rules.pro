@@ -12,7 +12,7 @@
 #   public *;
 #}
 
- -keep public class com.sina.weibo.sdk.**{*;} # weibo
+# -keep public class com.sina.weibo.sdk.**{*;} # weibo
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.

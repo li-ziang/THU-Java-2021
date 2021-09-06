@@ -16,7 +16,7 @@
         android:layout_below="@+id/answersgrp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="-397dp"
+        android:layout_marginTop="-377dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="#FF5722"
@@ -24,14 +24,16 @@
         android:textColor="#ffffff" />
 
     <TextView
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/DispName"
-        android:textColor="@color/accent_material_light"
-        android:layout_alignParentTop="true"
+        android:layout_width="195dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:autoSizeTextType="uniform"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/accent_material_light" />
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -124,9 +126,9 @@
         android:layout_above="@+id/answersgrp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="85dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="49dp"
         android:text="Questions"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 

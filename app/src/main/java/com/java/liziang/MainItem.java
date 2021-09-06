@@ -62,9 +62,10 @@ public class MainItem {
                Log.i("search response",string);
                JSONArray arr = null;
                try {
-                   arrList.clear();
-                   arr = new JSONArray(string);
-                   for(int i=0; i<arr.length(); i++) {
+                    arrList.clear();
+                    arr = new JSONArray(string);
+                    
+                    for(int i=0; i<arr.length(); i++) {
                        JSONObject jsonObj = arr.getJSONObject(i);
                        String label = jsonObj.optString("label","defaultValue");
                        String category = jsonObj.optString("category","defaultValue");
@@ -95,7 +96,6 @@ public class MainItem {
 
                    }
                    getArr = true;
-                   //.................................
                } catch (JSONException e) {
                    e.printStackTrace();
                }
@@ -158,16 +158,19 @@ public class MainItem {
                 String string = response.body().string();
                 Log.i("getSearchHistory response",string);
                 ArrayList<String> searchKeyList_ = new ArrayList<>();
-                String[] stringList = string.substring(1,string.length()-1).split(",");
+                if(string.length()!=2){
+                    String[] stringList = string.substring(1,string.length()-1).split(",");
 //                Log.i("string",stringList[1].substring(1,string.length()-1));
-                // searchKeyList
-                for (String s : stringList){
-                    searchKeyList_.add(s.substring(1,s.length()-1));
+                    // searchKeyList
+                    for (String s : stringList){
+                        searchKeyList_.add(s.substring(1,s.length()-1));
+                    }
                 }
+
                 searchKeyList = searchKeyList_;
                 getHis = true;
-                Log.i("searchKeyList size",String.valueOf(searchKeyList.size()));
-                Log.i("searchKeyList 0",searchKeyList.get(0));
+//                Log.i("searchKeyList size",String.valueOf(searchKeyList.size()));
+//                Log.i("searchKeyList 0",searchKeyList.get(0));
  
             }
         });
