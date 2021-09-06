@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public TabLayout tabLayout;
     public ViewPager viewPager1;
     public TextView searchContent;
+    public Spinner spinner;
     public ListView list;
     public FmPagerAdapter pagerAdapter;
     public ListAdapter listAdapter;
@@ -81,6 +83,24 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter = new FmPagerAdapter(getApplicationContext(),mainItem.curStringList, fragments, getSupportFragmentManager());
         viewPager1.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager1);
+        spinner = (Spinner) findViewById(R.id.spinner1);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int pos, long id) {
+
+                String[] sequence = getResources().getStringArray(R.array.sequence);
+                mainItem.sequence = sequence[pos];
+                Log.i("sequence",mainItem.sequence);
+                //Toast.makeText(MainActivity.this, "你点击的是:"+sequence[pos], 2000).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Another interface callback
+            }
+        });
+
         findViewById(R.id.edit_image).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {

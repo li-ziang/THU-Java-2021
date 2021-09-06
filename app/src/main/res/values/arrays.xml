@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sequence">
+        <item>a-z</item>
+        <item>z-a</item>
+        <item>长-短</item>
+        <item>短-长</item>
+    </string-array>
+</resources>
