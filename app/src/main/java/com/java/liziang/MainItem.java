@@ -82,6 +82,7 @@ public class MainItem {
                        }
                        arrList.add(it);
                    }
+
                    Log.i("label",arrList.size()+"");
                    if(sequence.equalsIgnoreCase("a-z")){
                        //从a到z把arrList排序
