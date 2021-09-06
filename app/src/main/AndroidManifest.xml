@@ -14,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HouFuDao"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LinkedInfo"></activity>
+        <activity
+            android:name=".LogoutActivity"
+            android:exported="true" />
+        <activity android:name=".LinkedInfo" />
         <activity android:name=".InstanceLinkActivity" />
         <activity
             android:name=".ResultActivity"

@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".LinkedInfo">
         <ListView
-            android:id="@+id/list_item"
+            android:id="@+id/list_item_link"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="#f00"

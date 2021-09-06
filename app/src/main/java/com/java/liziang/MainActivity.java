@@ -44,9 +44,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         dbHelper = new DbHelper(MainActivity.this, "test1.db", null, 1);
         String course = "chinese";
-        mainItem = new MainItem(course);
-        //      mainItem.search();
-//        mainItem.getViewHistory(10);
+        if(mainItem==null){
+            mainItem = new MainItem(course);
+        }
+
+        Log.i("name in main",MainActivity.mainItem.curUser);
         mainItem.getSearchHistory(8);
         try{
             while(MainActivity.mainItem.getHis==false){
@@ -90,8 +92,16 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.user_image).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, LinkedInfo.class));
+                Log.i("user",mainItem.curUser);
+                if(mainItem.curUser.equals("hly")){
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//                startActivity(new Intent(MainActivity.this, LinkedInfo.class));
 //                 startActivity(new Intent(MainActivity.this, QuestionsActivity.class));
+                }
+                else{
+                    startActivity(new Intent(MainActivity.this, LogoutActivity.class));
+                }
+
             }
         });
         findViewById(R.id.buttonSearch).setOnClickListener(new View.OnClickListener(){
