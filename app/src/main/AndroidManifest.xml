@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HouFuDao"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LinkedInfo"></activity>
+        <activity android:name=".LinkedInfoActivity"></activity>
         <activity android:name=".InstanceLinkActivity" />
         <activity
             android:name=".ResultActivity"
