@@ -7,23 +7,17 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-//public class LinkedInfoActivity extends AppCompatActivity {
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_linked_info);
-//    }
-//}
 
 public class LinkedInfoActivity extends AppCompatActivity {
     private ListView listView;
+    String inputText;
     private String datas[]={ "Sunday", "Monday", "Tuesday", "Wednesday",
-            "Thursday", "Friday", "Saturday" };//准备数据源
+            "Thursday", "Friday", "Saturday", "Saturday" };//准备数据源
     ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        inputText = InstanceLinkActivity.inputText;
         requestWindowFeature(Window.FEATURE_NO_TITLE);//隐藏标题栏
         setContentView(R.layout.activity_linked_info);
         listView=(ListView)findViewById(R.id.lv);

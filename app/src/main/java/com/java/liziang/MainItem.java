@@ -81,6 +81,7 @@ public class MainItem {
                        }
                        arrList.add(it);
                    }
+
                    Log.i("label",arrList.size()+"");
                    getArr = true;
                    //.................................
