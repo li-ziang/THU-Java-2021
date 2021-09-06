@@ -17,7 +17,7 @@
         <activity
             android:name=".LogoutActivity"
             android:exported="true" />
-        <activity android:name=".LinkedInfo" />
+        <activity android:name=".LinkedInfoActivity" />
         <activity android:name=".InstanceLinkActivity" />
         <activity
             android:name=".ResultActivity"
