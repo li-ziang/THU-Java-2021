@@ -167,7 +167,7 @@ public class UserController {
         JSONObject jsonObject = new JSONObject();
         List<User> users = userRepository.findAll();
         for (User other : users) {
-            if (other.equals(user)) {
+            if (other.getUsername().equals(user.getUsername())) {
                 other.setLoggedIn(false);
                 userRepository.save(other);
                 jsonObject.put("code", "200");
