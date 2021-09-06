@@ -144,8 +144,13 @@ public class MainActivity extends AppCompatActivity {
                 searchContent = (TextView) findViewById(R.id.searchEdit);
                 mainItem.searchContent = searchContent.getText().toString();
                 pagerAdapter.the_arraylist.clear();
+                pagerAdapter.the_list.clear();
                 for(String ele:mainItem.curStringList) {
                     pagerAdapter.the_arraylist.add(new TabFragment(ele));
+                }
+                for(int y=0;y<mainItem.curStringList.size();y++){
+                    String ele = mainItem.curStringList.get(y)+"("+pagerAdapter.the_arraylist.get(y).toString()+")";
+                    pagerAdapter.the_list.add(ele);
                 }
                 pagerAdapter.notifyDataSetChanged();
                 mainItem.getSearchHistory(8);
@@ -274,9 +279,15 @@ public class MainActivity extends AppCompatActivity {
 //
                         //pagerAdapter.notifyDataSetChanged();
                         for(String ele:mainItem.curStringList) {
-                            pagerAdapter.the_list.add(ele);
+                            //pagerAdapter.the_list.add(ele);
                             pagerAdapter.the_arraylist.add(new TabFragment(ele));
                         }
+                        //pagerAdapter.the_list.clear();
+                        for(int y=0;y<mainItem.curStringList.size();y++){
+                            String ele = mainItem.curStringList.get(y)+"("+pagerAdapter.the_arraylist.get(y).toString()+")";
+                            pagerAdapter.the_list.add(ele);
+                        }
+
                         pagerAdapter.notifyDataSetChanged();
                         //viewPager1.notify();
 

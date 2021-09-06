@@ -72,5 +72,9 @@ public class TabFragment extends Fragment {
             this.label = label;this.category = category;
         }
     }
+    @Override
+    public String toString(){
+        return String.valueOf(itemModel.size());
+    }
 
 }
