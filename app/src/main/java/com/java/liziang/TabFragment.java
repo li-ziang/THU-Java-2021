@@ -42,7 +42,7 @@ public class TabFragment extends Fragment {
         Log.i("size",String.valueOf(MainActivity.mainItem.arrList.size()));
 
         for(int i=0;i<MainActivity.mainItem.arrList.size();i++){
-            itemModel.add(new ItemModel(MainActivity.mainItem.arrList.get(i).label,MainActivity.mainItem.arrList.get(i).category));
+            itemModel.add(new ItemModel(MainActivity.mainItem.arrList.get(i).label,MainActivity.mainItem.arrList.get(i).category,MainActivity.mainItem.arrList.get(i).isRead));
 //            Log.i("ooo",texts[i]);
         }
 
@@ -68,8 +68,9 @@ public class TabFragment extends Fragment {
     class ItemModel{
         public String label;
         public String category;
-        ItemModel(String label,String category){
-            this.label = label;this.category = category;
+        public boolean seen;
+        ItemModel(String label,String category,Boolean seen){
+            this.label = label;this.category = category;this.seen = seen;
         }
     }
     @Override
