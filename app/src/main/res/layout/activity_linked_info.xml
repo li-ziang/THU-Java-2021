@@ -5,12 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LinkedInfoActivity">
-    <ListView
+<!--    <ListView-->
+<!--        android:id="@+id/lv"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:divider="@android:color/holo_red_dark"-->
+<!--        android:dividerHeight="3dp"-->
+<!--        android:scrollbars="none"/>-->
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:divider="@android:color/holo_red_dark"
-        android:dividerHeight="3dp"
-        android:scrollbars="none"/>
+        android:layout_marginTop="5dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
