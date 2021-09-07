@@ -70,15 +70,20 @@ public class MainItem {
                        String label = jsonObj.optString("label","defaultValue");
                        String category = jsonObj.optString("category","defaultValue");
                        //: 找到是不是在数据库中
-                       String find_ans = DbHelper.find(label, course, MainActivity.dbHelper.getReadableDatabase());
+                        label = "李白"; // TODO: 改成非硬编码
+                        course="chinese";
+//                       String find_ans = DbHelper.find(label, course, MainActivity.dbHelper.getReadableDatabase());
+                        Boolean inDb = ObjectItem.inDatabase(label, course);
                        Item it;
-                       if(find_ans != null) {
+                       Log.i(" reading", "reading");
+
+                       if(inDb) {
                            Log.d("isRead", label);
                            it = new Item(label, category, true);
                        }
                        else {
                            Log.d("is not read", label);
-                           it = new Item(label,category, false);
+                           it = new Item(label,category, true);
                        }
                        arrList.add(it);
                    }

@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbHelper = new DbHelper(MainActivity.this, "test1.db", null, 1);
+        dbHelper = new DbHelper(MainActivity.this, "test.db", null, 1);
         String course = "chinese";
         if(mainItem==null){
             mainItem = new MainItem(course);

@@ -50,7 +50,7 @@ public class DbHelper extends SQLiteOpenHelper {
         Cursor cursor =  db.rawQuery("SELECT * FROM instance WHERE instanceName = ? and course = ?",
                 new String[]{instanceName, course});
         if(cursor.moveToFirst() == true)
-        Log.d("finding data", "finding data");
+        Log.d("finding data", instanceName + " " + course);
         if(cursor.moveToFirst())
         {
             String content = cursor.getString(cursor.getColumnIndex("content"));
@@ -59,5 +59,8 @@ public class DbHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return null;
+    }
+    public static void delete(String instanceName, String course, SQLiteDatabase db) {
+        db.execSQL("DELETE FROM instance WHERE instanceName = ? and course = ?",  new String[]{instanceName, course});
     }
 }
