@@ -14,7 +14,7 @@ import java.util.List;
 
 
 public class LinkedAdapter extends RecyclerView.Adapter<LinkedAdapter.viewHolder>{
-    List<String> arrayList = new ArrayList<>();
+    List<LinkedModel> arrayList = new ArrayList<>();
     Context con;
     //第一步 定义接口
     public interface OnItemClickListener {
@@ -28,7 +28,7 @@ public class LinkedAdapter extends RecyclerView.Adapter<LinkedAdapter.viewHolder
         this.listener = listener;
     }
 
-    public LinkedAdapter(List<String> arrayList, Context con) {
+    public LinkedAdapter(List<LinkedModel> arrayList, Context con) {
         this.arrayList = arrayList;
         this.con =con;
     }
@@ -48,7 +48,8 @@ public class LinkedAdapter extends RecyclerView.Adapter<LinkedAdapter.viewHolder
                 }
             }
         });
-        viewHolder.label.setText(arrayList.get(position));
+        viewHolder.label.setText(arrayList.get(position).label);
+        viewHolder.course.setText(arrayList.get(position).course);
         viewHolder.pos = viewHolder.getAdapterPosition();
     }
 
@@ -60,10 +61,12 @@ public class LinkedAdapter extends RecyclerView.Adapter<LinkedAdapter.viewHolder
 
     public class viewHolder extends RecyclerView.ViewHolder {
         TextView label;
+        TextView course;
         int pos;
         public viewHolder(View itemView) {
             super(itemView);
             label = (TextView) itemView.findViewById(R.id.label);
+            course = (TextView) itemView.findViewById(R.id.course);
         }
     }
 }

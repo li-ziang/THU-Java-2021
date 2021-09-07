@@ -26,18 +26,70 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Callback;
 
+class LinkedModel {
+    public String label;
+    public String course;
+    LinkedModel(String label, String course) {
+        this.label = label;
+        this.course = course;
+    }
+}
 
 public class LinkedInfoActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     public String inputText, course;
     LinkedAdapter adapter;
-    List<String> array = new ArrayList<>();
+    List<LinkedModel> array = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        array.add("nimasile");
-        array.add("nibasile");
-        array.add("mips nima ");
+        inputText = InstanceLinkActivity.inputText;
+        course = InstanceLinkActivity.course;
+        String api = "/users/linkedInstances";
+        String json = String.format("{\"context\": \"%s\", \"course\":\"%s\"}", inputText, course);
+        Server server = new Server(api,json);
+        Call call=server.call();
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i("linkedList api failed ",e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                String string = response.body().string();
+                JSONArray jsonArray = null;
+                array = new ArrayList<>();
+                try {
+                    jsonArray = new JSONArray(string);
+                    Log.i("info get from linkedInfo", string);
+                    if (jsonArray.length() != 0) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject temp = jsonArray.getJSONObject(i);
+                            String name = temp.getString("entity");
+                            LinkedModel lm = new LinkedModel(name, course);
+                            array.add(lm);
+                        }
+//                        startActivity(new Intent(LinkedInfoActivity.this, InstanceLinkActivity.class));
+                    } else {
+                        Log.i("login fail","error info");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+        try{
+            while(array == null){
+                Thread.sleep(10);
+            }
+        }
+
+        catch (InterruptedException e){}
+        Log.i(" fuck off", array.toString());
         setContentView(R.layout.activity_linked_info);
         recyclerView = (RecyclerView) findViewById(R.id.lv);
         recyclerView.setLayoutManager(new LinearLayoutManager(LinkedInfoActivity.this, LinearLayoutManager.VERTICAL,false));
@@ -50,79 +102,8 @@ public class LinkedInfoActivity extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(adapter);
-//        inputText = InstanceLinkActivity.inputText;
-//        course = InstanceLinkActivity.course;
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);//隐藏标题栏
-//        setContentView(R.layout.activity_linked_info);
-//        listView=(ListView)findViewById(R.id.lv);
-//        array = null;
-//
-////        array.add(InstanceLinkActivity.course);
-////        array.add(InstanceLinkActivity.inputText);
-//
-//        String api = "/users/linkedInstances";
-//        String json = String.format("{\"context\": \"%s\", \"course\":\"%s\"}", inputText, course);
-//        Server server = new Server(api,json);
-//        Call call=server.call();
-//
-//        call.enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                Log.i("linkedList api failed ",e.toString());
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, okhttp3.Response response) throws IOException {
-//                String string = response.body().string();
-//                JSONArray jsonArray = null;
-//                array = new ArrayList<String>();
-//                try {
-//                    jsonArray = new JSONArray(string);
-//                    Log.i("info get from linkedInfo", string);
-//                    if (jsonArray.length() != 0) {
-//                        for(int i = 0; i < jsonArray.length(); i++) {
-//                            JSONObject temp = jsonArray.getJSONObject(i);
-//                            String name = temp.getString("entity");
-//                            array.add(name);
-//                        }
-////                        startActivity(new Intent(LinkedInfoActivity.this, InstanceLinkActivity.class));
-//                    } else {
-//                        Log.i("login fail","error info");
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//
-//        });
-//        try{
-//            while(array == null){
-//                Thread.sleep(10);
-//            }
-//        }
-//        catch (InterruptedException e){}
-//        Log.i("array size", array.toString());
-//        //实例化ArrayAdapter
-//        String[] used = array.toArray(new String[0]);
-//        adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, used);
-//        listView.setAdapter(adapter);//设置适配器
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            //parent 代表listView View 代表 被点击的列表项 position 代表第几个 id 代表列表编号
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-////                searchContent.setText(listAdapter.list.get(position));
-//                String cou =  course;
-//                String instanceName = adapter.getItem(position).toString();
-//                Log.i(" to string ", "to string");
-//                Log.i("to string", instanceName);
-//                if(instanceName.equals("apple")) {
-//                    startActivity(new Intent(LinkedInfoActivity.this, LoginActivity.class));
-//                }
-//
-//
-////                listView.setVisibility(View.GONE);
-//            }
-//        });
+
+
+
     }
 }

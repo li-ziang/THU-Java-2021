@@ -23,6 +23,13 @@
                 android:padding="10dp"
                 android:textColor="@color/black"
                 android:textSize="16dp"/>
+            <TextView
+                android:id="@+id/course"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textColor="#888"
+                android:textSize="12dp"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
