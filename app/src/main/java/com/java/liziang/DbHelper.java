@@ -11,13 +11,13 @@ public class DbHelper extends SQLiteOpenHelper {
     public DbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
                     int version) {
         super(context, name, factory, version);
-        Log.d("creating database", "creating database");
+        // Log.d("creating database", "creating database");
     }
 
     @Override
     //数据库第一次创建时被调用
     public void onCreate(SQLiteDatabase db) {
-        Log.d("creating database", "creating database");
+        // Log.d("creating database", "creating database");
         db.execSQL("CREATE TABLE instance(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "instanceName VARCHAR(64), course VARCHAR(64),  " +
                 "content VARCHAR(1024))");
@@ -42,7 +42,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values1.put("course", course);
         values1.put("instanceName", instanceName);
         long result = db.insert("instance", null, values1);
-        Log.d("inserting new data", "inserting new data");
+        // Log.d("inserting new data", "inserting new data");
     }
 
     public static String find(String instanceName, String course, SQLiteDatabase db) {
@@ -50,11 +50,11 @@ public class DbHelper extends SQLiteOpenHelper {
         Cursor cursor =  db.rawQuery("SELECT * FROM instance WHERE instanceName = ? and course = ?",
                 new String[]{instanceName, course});
         if(cursor.moveToFirst() == true)
-        Log.d("finding data", instanceName + " " + course);
+//        Log.d("finding data", instanceName + " " + course);
         if(cursor.moveToFirst())
         {
             String content = cursor.getString(cursor.getColumnIndex("content"));
-            Log.d(content, content);
+//            Log.d(content, content);
             return content;
         }
         cursor.close();
