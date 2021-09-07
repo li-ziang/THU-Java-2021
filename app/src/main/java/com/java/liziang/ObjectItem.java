@@ -23,12 +23,15 @@ public class ObjectItem {
     ObjectItem(String name_, String course_) {
         name = name_;
         course = course_;
-        Log.i("adsaf","fadsfa");
+        Log.i(" name of instance", name);
         if (inDatabase(name, course)) {
+            Log.i(" searching in database", "searching in database");
             int b = 1;
             //: public String jsonString;
+
             jsonString = DbHelper.find(name, course, MainActivity.dbHelper.getReadableDatabase());
         } else {
+            Log.i("not in database", "not in database");
             String api = "/search/info";
 
             String json = String.format("{\"username\": \"%s\", \"course\":\"%s\", \"instanceName\":\"%s\"}", MainActivity.mainItem.curUser, course, name);
@@ -46,8 +49,18 @@ public class ObjectItem {
                     jsonString = response.body().string();
                     // Log.i("object search fail",string);
                     //TODO: save jsonString 用42行参数
+                    Log.i(" json jsonString", jsonString);
+                    if(DbHelper.find(name, course, MainActivity.dbHelper.getReadableDatabase()) != null) {
+                        DbHelper.delete(name, course, MainActivity.dbHelper.getWritableDatabase());
+                    }
+                    try{
+                        JSONObject temp = new JSONObject(jsonString);
+                        if(temp.has("obj_content")) {
+                            DbHelper.insert(jsonString, name, course, MainActivity.dbHelper.getWritableDatabase());
+                        }
+                    }
+                    catch(JSONException E) {}
 
-                    DbHelper.insert(jsonString, name, course, MainActivity.dbHelper.getWritableDatabase());
                     try {
                         JSONObject jsonObject = new JSONObject(jsonString);
                         JSONArray jsonObjContent = jsonObject.getJSONArray("obj_content");
@@ -70,13 +83,20 @@ public class ObjectItem {
         }
     }
 
-    public boolean inDatabase(String instanceName, String course) {
+    static public boolean inDatabase(String instanceName, String course) {
 //        return false;
         String string = DbHelper.find(instanceName, course, MainActivity.dbHelper.getReadableDatabase());
+
+
         JSONObject json;
+        if(string == null) {
+            return false;
+        }
         try {
+            Log.i("  data string", "data");
             json = new JSONObject(string);
-            if(!json.has("data") || json.getString("data") == "" ) {
+            Log.i(" 李白 在这里", json.toString());
+            if(!json.has("obj_content")) {
                 Log.d("congxincun", "congxincun");
                 return false;
             }
