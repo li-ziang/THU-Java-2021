@@ -50,11 +50,11 @@ public class DbHelper extends SQLiteOpenHelper {
         Cursor cursor =  db.rawQuery("SELECT * FROM instance WHERE instanceName = ? and course = ?",
                 new String[]{instanceName, course});
         if(cursor.moveToFirst() == true)
-        Log.d("finding data", instanceName + " " + course);
+//        Log.d("finding data", instanceName + " " + course);
         if(cursor.moveToFirst())
         {
             String content = cursor.getString(cursor.getColumnIndex("content"));
-            Log.d(content, content);
+//            Log.d(content, content);
             return content;
         }
         cursor.close();

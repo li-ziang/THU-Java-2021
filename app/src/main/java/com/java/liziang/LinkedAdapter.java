@@ -14,7 +14,7 @@ import java.util.List;
 
 
 public class LinkedAdapter extends RecyclerView.Adapter<LinkedAdapter.viewHolder>{
-    List<String> arrayList;
+    List<String> arrayList = new ArrayList<>();
     Context con;
     //第一步 定义接口
     public interface OnItemClickListener {

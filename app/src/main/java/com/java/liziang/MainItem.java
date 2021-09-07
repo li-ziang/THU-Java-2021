@@ -42,7 +42,7 @@ public class MainItem {
     }
     public void search(){ //实体搜索
  //       getArr = true;
-        Log.i("call func","call search");
+//        Log.i("call func","call search");
         //arrList = new ArrayList<>();
        getArr = false;
        String api = "/users/search";
@@ -59,7 +59,7 @@ public class MainItem {
            @Override
            public void onResponse(Call call, okhttp3.Response response) throws IOException {
                String string = response.body().string();
-               Log.i("search response",string);
+//               Log.i("search response",string);
                JSONArray arr = null;
                try {
                     arrList.clear();
@@ -75,20 +75,20 @@ public class MainItem {
 //                       String find_ans = DbHelper.find(label, course, MainActivity.dbHelper.getReadableDatabase());
                         Boolean inDb = ObjectItem.inDatabase(label, course);
                        Item it;
-                       Log.i(" reading", "reading");
+//                       Log.i(" reading", "reading");
 
                        if(inDb) {
-                           Log.d("isRead", label);
+//                           Log.d("isRead", label);
                            it = new Item(label, category, true);
                        }
                        else {
-                           Log.d("is not read", label);
+//                           Log.d("is not read", label);
                            it = new Item(label,category, true);
                        }
                        arrList.add(it);
                    }
 
-                   Log.i("label",arrList.size()+"");
+//                   Log.i("label",arrList.size()+"");
                    if(sequence.equalsIgnoreCase("a-z")){
                        //从a到z把arrList排序
                    }
@@ -107,8 +107,8 @@ public class MainItem {
                }
            }
        });
-       Log.i("end func","end search");
-        Log.i("size in func",arrList.size()+"");
+//       Log.i("end func","end search");
+//        Log.i("size in func",arrList.size()+"");
     }
     public void getViewHistory(int number){ 
         String api = "/search/history";

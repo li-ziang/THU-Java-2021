@@ -31,10 +31,14 @@ public class LinkedInfoActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     public String inputText, course;
     LinkedAdapter adapter;
-    List<String> array;
+    List<String> array = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        array.add("nimasile");
+        array.add("nibasile");
+        array.add("mips nima ");
+        setContentView(R.layout.activity_linked_info);
         recyclerView = (RecyclerView) findViewById(R.id.lv);
         recyclerView.setLayoutManager(new LinearLayoutManager(LinkedInfoActivity.this, LinearLayoutManager.VERTICAL,false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());

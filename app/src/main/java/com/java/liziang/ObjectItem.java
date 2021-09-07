@@ -23,15 +23,15 @@ public class ObjectItem {
     ObjectItem(String name_, String course_) {
         name = name_;
         course = course_;
-        Log.i(" name of instance", name);
+//        Log.i(" name of instance", name);
         if (inDatabase(name, course)) {
-            Log.i(" searching in database", "searching in database");
+//            Log.i(" searching in database", "searching in database");
             int b = 1;
             //: public String jsonString;
 
             jsonString = DbHelper.find(name, course, MainActivity.dbHelper.getReadableDatabase());
         } else {
-            Log.i("not in database", "not in database");
+//            Log.i("not in database", "not in database");
             String api = "/search/info";
 
             String json = String.format("{\"username\": \"%s\", \"course\":\"%s\", \"instanceName\":\"%s\"}", MainActivity.mainItem.curUser, course, name);
@@ -49,7 +49,7 @@ public class ObjectItem {
                     jsonString = response.body().string();
                     // Log.i("object search fail",string);
                     //TODO: save jsonString 用42行参数
-                    Log.i(" json jsonString", jsonString);
+//                    Log.i(" json jsonString", jsonString);
                     if(DbHelper.find(name, course, MainActivity.dbHelper.getReadableDatabase()) != null) {
                         DbHelper.delete(name, course, MainActivity.dbHelper.getWritableDatabase());
                     }
@@ -93,11 +93,11 @@ public class ObjectItem {
             return false;
         }
         try {
-            Log.i("  data string", "data");
+//            Log.i("  data string", "data");
             json = new JSONObject(string);
 //            Log.i(" 李白 在这里", json.toString());
             if(!json.has("obj_content")) {
-                Log.d("congxincun", "congxincun");
+//                Log.d("congxincun", "congxincun");
                 return false;
             }
         }
