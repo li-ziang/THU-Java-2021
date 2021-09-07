@@ -49,7 +49,7 @@ public class InstanceLinkActivity extends AppCompatActivity {
                 inputText = searchContent.getText().toString();
 
                 if(inputText!= ""){
-                    Log.i("testing instanceLinkActivity", "tesing instanceLinkActivity");
+//                    Log.i("testing instanceLinkActivity", "tesing instanceLinkActivity");
                     startActivity(new Intent(InstanceLinkActivity.this, LinkedInfoActivity.class));
                 }
             }

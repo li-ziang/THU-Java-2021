@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -24,7 +26,7 @@ import okhttp3.Callback;
 
 public class LinkedInfoActivity extends AppCompatActivity {
     private ListView listView;
-    String inputText, course;
+    public String inputText, course;
     ArrayAdapter<String> adapter;
     List<String> array;
     @Override
@@ -87,5 +89,22 @@ public class LinkedInfoActivity extends AppCompatActivity {
         String[] used = array.toArray(new String[0]);
         adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, used);
         listView.setAdapter(adapter);//设置适配器
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            //parent 代表listView View 代表 被点击的列表项 position 代表第几个 id 代表列表编号
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                searchContent.setText(listAdapter.list.get(position));
+                String cou =  course;
+                String instanceName = adapter.getItem(position).toString();
+                Log.i(" to string ", "to string");
+                Log.i("to string", instanceName);
+                if(instanceName.equals("apple")) {
+                    startActivity(new Intent(LinkedInfoActivity.this, LoginActivity.class));
+                }
+
+
+//                listView.setVisibility(View.GONE);
+            }
+        });
     }
 }

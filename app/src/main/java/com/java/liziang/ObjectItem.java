@@ -95,7 +95,7 @@ public class ObjectItem {
         try {
             Log.i("  data string", "data");
             json = new JSONObject(string);
-            Log.i(" 李白 在这里", json.toString());
+//            Log.i(" 李白 在这里", json.toString());
             if(!json.has("obj_content")) {
                 Log.d("congxincun", "congxincun");
                 return false;
