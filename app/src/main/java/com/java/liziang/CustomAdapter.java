@@ -1,6 +1,7 @@
 package com.java.liziang;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.viewHolder
         });
         viewHolder.label.setText(arrayList.get(position).label);
         viewHolder.category.setText(arrayList.get(position).category);
+        viewHolder.seen = arrayList.get(position).seen;
     }
 
 
@@ -58,11 +60,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.viewHolder
     public class viewHolder extends RecyclerView.ViewHolder {
         TextView label;
         TextView category;
-
+        boolean seen;
         public viewHolder(View itemView) {
             super(itemView);
             category =(TextView) itemView.findViewById(R.id.category);
             label = (TextView) itemView.findViewById(R.id.label);
+            if(seen){
+                label.setTextColor(Color.GRAY);
+            }
         }
     }
 }
