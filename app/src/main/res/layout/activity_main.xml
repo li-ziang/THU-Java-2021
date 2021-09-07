@@ -142,7 +142,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="384dp"
+        android:layout_height="438dp"
         android:background="@drawable/star"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
