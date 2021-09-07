@@ -48,7 +48,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.viewHolder
         });
         viewHolder.label.setText(arrayList.get(position).label);
         viewHolder.category.setText(arrayList.get(position).category);
-        viewHolder.seen = arrayList.get(position).seen;
+        viewHolder.pos = viewHolder.getAdapterPosition();
     }
 
 
@@ -60,12 +60,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.viewHolder
     public class viewHolder extends RecyclerView.ViewHolder {
         TextView label;
         TextView category;
-        boolean seen;
+        int pos;
         public viewHolder(View itemView) {
             super(itemView);
             category =(TextView) itemView.findViewById(R.id.category);
             label = (TextView) itemView.findViewById(R.id.label);
-            if(seen){
+            if(arrayList.get(pos).seen){
                 label.setTextColor(Color.GRAY);
             }
         }
