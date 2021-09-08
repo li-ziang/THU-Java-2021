@@ -103,7 +103,7 @@ public class MainItem {
 
                     Collections.sort(arrList, Comparator.comparingInt(p -> p.label.length()));
 
-                    arrList.sort((p1, p2) -> p1.label.length());
+                    Collections.reverse(arrList);
                    }
                    else{
                     Collections.sort(arrList, Comparator.comparingInt(p -> p.label.length()));

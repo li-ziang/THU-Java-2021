@@ -45,11 +45,11 @@ public class MessengerActivity extends Activity {
         //User icon
         Bitmap myIcon = BitmapFactory.decodeResource(getResources(), R.drawable.face_2);
         //User name
-        String myName = "Michael";
+        String myName = "YOU";
 
         int yourId = 1;
-        Bitmap yourIcon = BitmapFactory.decodeResource(getResources(), R.drawable.face_1);
-        String yourName = "Emily";
+        Bitmap yourIcon = BitmapFactory.decodeResource(getResources(), R.drawable.robot);
+        String yourName = "BOT";
 
         final iUser me = new iUser(myId, myName, myIcon);
         final iUser you = new iUser(yourId, yourName, yourIcon);
