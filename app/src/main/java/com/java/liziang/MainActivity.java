@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
                                        int pos, long id) {
 
                 String[] sequence = getResources().getStringArray(R.array.sequence);
-                mainItem.sequence = sequence[pos];
-                Log.i("sequence",mainItem.sequence);
+                mainItem.sequence = pos;
+                //Log.i("sequence",mainItem.sequence);
                 //Toast.makeText(MainActivity.this, "你点击的是:"+sequence[pos], 2000).show();
             }
             @Override

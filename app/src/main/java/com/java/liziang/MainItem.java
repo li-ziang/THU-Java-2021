@@ -7,7 +7,7 @@ import org.json.*;
 
 
 public class MainItem {
-    public String sequence = "a-z";
+    public int sequence = 0;
     static public String curUser="hly";
     public String course="";
     public String searchContent="s";
@@ -83,23 +83,23 @@ public class MainItem {
                        }
                        else {
 //                           Log.d("is not read", label);
-                           it = new Item(label,category, true);
+                           it = new Item(label,category, false);
                        }
                        arrList.add(it);
                    }
 
 //                   Log.i("label",arrList.size()+"");
-                   if(sequence.equalsIgnoreCase("a-z")){
+                   if(sequence==0){
                        //从a到z把arrList排序
                        arrList.sort((p1, p2) -> p1.label.compareTo(p2.label));
                    }
-                   else if(sequence.equalsIgnoreCase("z-a")){
+                   else if(sequence==1){
                     arrList.sort((p1, p2) -> p1.label.compareTo(p2.label));
 
                     Collections.reverse(arrList);
 
                    }
-                   else if(sequence.equalsIgnoreCase("长-短")){
+                   else if(sequence==2){
 
                     Collections.sort(arrList, Comparator.comparingInt(p -> p.label.length()));
 
