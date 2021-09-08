@@ -98,8 +98,10 @@ class Question {
 class  AddCollection{
     public String username;
     public String instanceName;
-    public AddCollection(String username, String instanceName) {
+    public String course;
+    public AddCollection(String username, String course, String instanceName) {
         this.instanceName = instanceName;
+        this.course = course;
         this.username = username;
     }
 }
@@ -568,11 +570,11 @@ public class UserController {
 
     @PostMapping("/users/addCollection")
     public String addCollection(@Valid @RequestBody AddCollection addCollection) {
-        String username = addCollection.username, instanceName = addCollection.instanceName;
+        String username = addCollection.username, instanceName = addCollection.instanceName, course = addCollection.course;
         List<User> users = userRepository.findAll();
         for(User temp_user: users) {
             if(temp_user.getUsername().equals(username) && temp_user.isLoggedIn()) {
-                Collection collection = new Collection(instanceName, temp_user);
+                Collection collection = new Collection(instanceName, course, temp_user);
                 for(Collection temp_collection: temp_user.collections) {
                     if(temp_collection.getInstanceName().equals(instanceName)) {
                         return "Already in collection";
@@ -588,13 +590,14 @@ public class UserController {
 
     @PostMapping("/users/deleteCollection")
     public String deleteCollection(@Valid @RequestBody AddCollection deleteCollection) {
-        String username = deleteCollection.username, instanceName = deleteCollection.instanceName;
+        String username = deleteCollection.username, instanceName = deleteCollection.instanceName, course = deleteCollection.course;
         List<User> users = userRepository.findAll();
         for(User temp_user: users) {
             if(temp_user.getUsername().equals(username) && temp_user.isLoggedIn()) {
                 System.out.println("Get users");
                 for(int i = 0; i < temp_user.collections.size(); i++) {
-                    if(temp_user.collections.get(i).getInstanceName().equals(instanceName)) {
+                    if(temp_user.collections.get(i).getInstanceName().equals(instanceName) &&
+                            temp_user.collections.get(i).getCourse().equals(course)) {
                         System.out.println(temp_user.collections.size());
                         temp_user.collections.remove(i);
                         userRepository.save(temp_user);
@@ -605,6 +608,27 @@ public class UserController {
             }
         }
         return "No such User";
+    }
+    @PostMapping("/users/getCollection")
+    public String getCollections(@Valid @RequestBody String collection) {
+        JSONObject json = new JSONObject(collection);
+        String username = json.getString("username");
+        List<User> users = userRepository.findAll();
+        JSONArray retArray = new JSONArray();
+        for(User temp_user: users) {
+            if(temp_user.getUsername().equals(username)) {
+                List<Collection> collections = temp_user.getCollections();
+//                retObj.put("collections", collections);
+                for(Collection temp: collections) {
+                    JSONObject obj = new JSONObject();
+                    obj.put("course", temp.getCourse());
+                    obj.put("instanceName", temp.getInstanceName());
+                    retArray.put(obj);
+                }
+                return retArray.toString();
+            }
+        }
+        return retArray.toString();
     }
 
     List<String> parseQuesion(String qBody) {
