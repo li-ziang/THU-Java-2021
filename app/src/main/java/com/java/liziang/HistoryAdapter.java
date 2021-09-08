@@ -50,7 +50,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.viewHold
         });
         viewHolder.history.setText(arrayList.get(position).history);
         viewHolder.course.setText(arrayList.get(position).course);
-        viewHolder.time.setText(arrayList.get(position).course);
+        viewHolder.time.setText(arrayList.get(position).time);
 
         viewHolder.pos = viewHolder.getAdapterPosition();
     }
