@@ -17,8 +17,8 @@ public class HttpRequest {
             String urlNameString = url + "?" + param;
             URL realUrl = new URL(urlNameString);
             URLConnection connection = realUrl.openConnection();
-            connection.setConnectTimeout(5 * 1000);
-            connection.setReadTimeout(5 * 1000);
+//            connection.setConnectTimeout(5 * 1000);
+//            connection.setReadTimeout(5 * 1000);
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
 //            connection.setRequestProperty("user-agent",
@@ -54,8 +54,8 @@ public class HttpRequest {
         try {
             URL realUrl = new URL(url);
             URLConnection conn = realUrl.openConnection();
-            conn.setConnectTimeout(5 * 1000);
-            conn.setReadTimeout(5 * 1000);
+//            conn.setConnectTimeout(5 * 1000);
+//            conn.setReadTimeout(5 * 1000);
             conn.setRequestProperty("accept", "*/*");
             conn.setRequestProperty("connection", "Keep-Alive");
             conn.setRequestProperty("user-agent",

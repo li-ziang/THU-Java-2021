@@ -295,12 +295,16 @@ public class UserController {
 
     public Boolean judge(String message) {
         JSONObject json = new JSONObject(message);
+        System.out.println(message);
         if(!json.has("data")) return  false;
         if(!json.has("code")) return false;
-        if(json.has("data") && (json.getString("data") == "" || json.getString("data") == null || json.getString("data") == "null")) {
+        if(json.has("data") && (json.get("data") instanceof String) && (json.getString("data").equals("") || json.getString("data").equals("null"))) {
+            System.out.println(" data testing");
             return false;
         }
-        if(json.has("code") && json.getString("code") != "0") {
+        if(json.has("code") && !json.getString("code").equals("0")) {
+            System.out.println(json.getString("code"));
+            System.out.println("code testing");
             return false;
         }
         return true;
@@ -598,10 +602,21 @@ public class UserController {
     @PostMapping("/users/addCollection")
     public String addCollection(@Valid @RequestBody AddCollection addCollection) {
         String username = addCollection.username, instanceName = addCollection.instanceName, course = addCollection.course;
+        if(username == null || instanceName == null || course == null) {
+            return "failure";
+        }
         List<User> users = userRepository.findAll();
         for(User temp_user: users) {
             if(temp_user.getUsername().equals(username) && temp_user.isLoggedIn()) {
                 Collection collection = new Collection(instanceName, course, temp_user);
+//                for(int i = temp_user.collections.size() - 1; i >= 0; i--) {
+//                    String cou = temp_user.collections.get(i).getCourse();
+//                    if(cou == null) {
+//                        temp_user.collections.remove(i);
+//                    }
+//                }
+//                userRepository.save(temp_user);
+                System.out.println(temp_user.collections);
                 for(Collection temp_collection: temp_user.collections) {
                     if(temp_collection.getInstanceName().equals(instanceName)) {
                         return "Already in collection";
@@ -699,9 +714,9 @@ public class UserController {
             System.out.println(e);
         }
         if(!judge(string)) {
+            System.out.println("failed");
             return "failure";
         }
-        System.out.println(string);
         JSONObject json = new JSONObject(string);
         if(!json.has("data")) {
             JSONArray ret = new JSONArray();
@@ -715,7 +730,6 @@ public class UserController {
             Long qId = question.getLong("id");
             String qBody = question.getString("qBody");
             List<String> quesionWithAns = parseQuesion(qBody);
-            System.out.println(quesionWithAns);
             JSONObject obj = new JSONObject();
             obj.put("qId", qId);
             obj.put("questionWithAns", quesionWithAns);
@@ -816,10 +830,13 @@ public class UserController {
             if(temp_user.getUsername().equals(username) && temp_user.isLoggedIn()) {
                 List<History> histories = temp_user.getHistories();
                 List<String> arr = getTopTenHistories(histories);
+                System.out.println(arr);
+                System.out.println("--------------------------------------------------");
                 JSONArray retArray = new JSONArray();
                 for(int i = 0; i < arr.size(); i++) {
                     String know = arr.get(i);
                     JSONArray temp_arr = new JSONArray(getRelatedExercise(know));
+                    System.out.println(i);
                     for(int j = 0; j < temp_arr.length(); j++) {
                         JSONObject new_obj = temp_arr.getJSONObject(j);
                         boolean flag = false;
@@ -837,7 +854,7 @@ public class UserController {
                     }
                 }
                 List<Integer> randList = getRandomTen(retArray.length());
-                System.out.println(randList);
+//                System.out.println(randList);
                 JSONArray ret = new JSONArray();
                 for(int i = 0; i < randList.size(); i++) {
                     ret.put(retArray.get(randList.get(i)));
