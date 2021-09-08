@@ -276,7 +276,7 @@ public class UserController {
                 SearchKeyHis s = new SearchKeyHis(searchKey, temp_user);
                 temp_user.searchKeyHistories.add(s);
                 userRepository.save(temp_user);
-                System.out.println(temp_user.searchKeyHistories);
+//                System.out.println(temp_user.searchKeyHistories);
             }
         }
 
@@ -311,7 +311,7 @@ public class UserController {
         catch (UnsupportedEncodingException e) {
             System.out.println(e);
         }
-
+        System.out.println(string);
 
         JSONObject json = new JSONObject(string);
         if(!json.has("data")) {
