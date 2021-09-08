@@ -138,6 +138,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.message_image).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, KeywordForQuesion.class));
+            }
+        });
+        findViewById(R.id.message_image_2).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                MainActivity.mainItem.rec=true;
+                Intent startIntent=new Intent(MainActivity.this, QuestionsActivity.class);
+                startActivity(startIntent);
+            }
+        });
+        
+
         findViewById(R.id.buttonSearch).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {

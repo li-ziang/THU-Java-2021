@@ -9,21 +9,20 @@
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_edit_subject.xml" value="0.16666666666666666" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_host.xml" value="0.3135245901639344" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_login.xml" value="0.16666666666666666" />
-        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_object.xml" value="0.1" />
+        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_register.xml" value="0.1" />
-        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/content_main.xml" value="0.14673913043478262" />
-        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/fragment_first.xml" value="0.14673913043478262" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/fragment_host.xml" value="0.1" />
-        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/fragment_second.xml" value="0.14673913043478262" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/fragment_tab.xml" value="0.1" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/history_item.xml" value="0.41890639481000924" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/item_list.xml" value="0.10778985507246377" />
-        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/item_list_pro.xml" value="0.1" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/menu.xml" value="0.1078125" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/text_row_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_channel.xml" value="0.23072916666666668" />
         <entry key="app/src/main/res/layout/activity_channel_list.xml" value="0.25625" />
+        <entry key="app/src/main/res/layout/activity_linked_info.xml" value="0.20923913043478262" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.20923913043478262" />
+        <entry key="app/src/main/res/layout/activity_logout.xml" value="0.20923913043478262" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.17657169233082157" />
         <entry key="app/src/main/res/layout/activity_messenger.xml" value="0.2682291666666667" />
         <entry key="app/src/main/res/layout/activity_questions.xml" value="0.25586998029961094" />
         <entry key="app/src/main/res/layout/activity_result.xml" value="0.12545289855072464" />

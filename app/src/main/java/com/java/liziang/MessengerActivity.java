@@ -138,7 +138,10 @@ public class MessengerActivity extends Activity {
                     catch (InterruptedException e){}
                     output= arrString.get(0);
                     if(output==""){
-                        output="我不知道";
+                        output="我不知道如何回答这个问题，换个问题试试？";
+                    }
+                    else if(output=="failure"){
+                        output="服务器又炸了！";
                     }
                 }
 

@@ -32,7 +32,10 @@ public class KeywordForQuesion extends AppCompatActivity {
                 }
                 Log.i(" asking for questions", keywords.toString());
                 if(inputText!= ""){
-                    startActivity(new Intent(KeywordForQuesion.this, QuestionsActivity.class));
+
+                    MainActivity.mainItem.rec=false;
+                    Intent startIntent=new Intent( KeywordForQuesion.this, QuestionsActivity.class);
+                    startActivity(startIntent);
                 }
             }
         });

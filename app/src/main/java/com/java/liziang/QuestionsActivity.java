@@ -31,6 +31,8 @@ public class QuestionsActivity extends AppCompatActivity {
     int flag=0;
     Boolean done=false;
 
+
+
     public ArrayList<Question> questionList = new ArrayList<>();
 
 
@@ -218,7 +220,8 @@ public class QuestionsActivity extends AppCompatActivity {
     protected void getQuiz(ArrayList<String> stringArr){
 //        JSONArray jsonArray = JSONArray.fromObject(stringArr);
 
-    if(false){
+    if(!MainActivity.mainItem.rec){
+        Log.i("????","!!!!!");
         JSONObject jsonObject = new JSONObject();
         done=false;
         JSONArray j=new JSONArray(stringArr);
@@ -268,6 +271,7 @@ public class QuestionsActivity extends AppCompatActivity {
 
         }
         else{
+            Log.i("!!!!","!!!!!");
             String api = "/users/recommend";
             String json = String.format("{\"username\": \"%s\"}", MainActivity.mainItem.curUser);
             Server server = new Server(api,json);

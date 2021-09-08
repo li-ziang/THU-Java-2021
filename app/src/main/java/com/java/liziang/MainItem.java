@@ -19,6 +19,8 @@ public class MainItem {
     public ArrayList<String> searchKeyList = new ArrayList<>(); // 搜索历史
     public ArrayList<String> viewList = new ArrayList<>(); //浏览历史
 
+    Boolean rec=false;
+
     MainItem(String course){
         curStringList.add("chinese");
         curStringList.add("english");
