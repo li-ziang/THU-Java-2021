@@ -196,6 +196,16 @@
                     android:background="@color/white"
                     android:contentDescription="message"
                     android:src="@drawable/message" />
+
+                <ImageView
+                    android:id="@+id/message_image_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_margin="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:contentDescription="message"
+                    android:src="@drawable/rec" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
