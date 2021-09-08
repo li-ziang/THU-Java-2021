@@ -193,7 +193,8 @@ public class UserController {
             if(other.getUsername().equals(username)) {
                 System.out.println("found");
                 List<History> histories = other.getHistories();
-                for(History history:histories) {
+                for(int i = histories.size() - 1; i >= 0; i--) {
+                    History history = histories.get(i);
                     tot_num ++;
                     JSONObject temp = new JSONObject();
                     temp.put("history", history.getInstanceName());
@@ -202,11 +203,13 @@ public class UserController {
                     retArray.put(temp);
                     if(tot_num == number) return retArray.toString();
                 }
-                for(History temp: other.histories) {
-                    if(temp.getCourse() == null) {
-                        other.histories.remove(temp);
-                    }
-                }
+//                System.out.println("ni ma bo");
+//                for(int i = other.histories.size() - 1; i >= 0; i--) {
+//                    if(other.histories.get(i).getCourse() == null) {
+//                        other.histories.remove(i);
+//                    }
+//                }
+//                userRepository.save(other);
                 return retArray.toString();
             }
         }
