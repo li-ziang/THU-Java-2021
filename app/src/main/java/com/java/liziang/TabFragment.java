@@ -40,7 +40,7 @@ public class TabFragment extends Fragment {
         }
         catch (InterruptedException e){}
         Log.i("size",String.valueOf(MainActivity.mainItem.arrList.size()));
-
+        itemModel.add(new ItemModel("","",false));
         for(int i=0;i<MainActivity.mainItem.arrList.size();i++){
             itemModel.add(new ItemModel(MainActivity.mainItem.arrList.get(i).label,MainActivity.mainItem.arrList.get(i).category,MainActivity.mainItem.arrList.get(i).isRead));
             Log.i("banban",String.valueOf(MainActivity.mainItem.arrList.get(i).isRead));
@@ -76,7 +76,10 @@ public class TabFragment extends Fragment {
     }
     @Override
     public String toString(){
-        return String.valueOf(itemModel.size());
+//        if(itemModel.size()==0)
+//            return String.valueOf(itemModel.size());
+//        else
+            return String.valueOf(itemModel.size()-1);
     }
 
 }
