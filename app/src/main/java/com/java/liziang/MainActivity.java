@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.i("user",mainItem.curUser);
                 if(mainItem.curUser.equals("hly")){
-                    startActivity(new Intent(MainActivity.this, InstanceLinkActivity.class));
+                    startActivity(new Intent(MainActivity.this, HistoryActivity.class));
 //                startActivity(new Intent(MainActivity.this, LinkedInfo.class));
 //                 startActivity(new Intent(MainActivity.this, QuestionsActivity.class));
                 }
