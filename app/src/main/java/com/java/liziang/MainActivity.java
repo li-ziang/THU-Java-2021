@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
                                        int pos, long id) {
 
                 String[] sequence = getResources().getStringArray(R.array.sequence);
-                mainItem.sequence = sequence[pos];
-                Log.i("sequence",mainItem.sequence);
+                mainItem.sequence = pos;
+                //Log.i("sequence",mainItem.sequence);
                 //Toast.makeText(MainActivity.this, "你点击的是:"+sequence[pos], 2000).show();
             }
             @Override
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.i("user",mainItem.curUser);
                 if(mainItem.curUser.equals("hly")){
-                    startActivity(new Intent(MainActivity.this, InstanceLinkActivity.class));
+                    startActivity(new Intent(MainActivity.this, KeywordForQuesion.class));
 //                startActivity(new Intent(MainActivity.this, LinkedInfo.class));
 //                 startActivity(new Intent(MainActivity.this, QuestionsActivity.class));
                 }
