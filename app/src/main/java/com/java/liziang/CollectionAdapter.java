@@ -11,8 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.viewHolder> {
-    List<HistoryInfo> arrayList = new ArrayList<>();
+
+public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.viewHolder> {
+    List<CollectionInfo> arrayList = new ArrayList<>();
     Context con;
 
     // 第一步 定义接口
@@ -27,14 +28,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.viewHold
         this.listener = listener;
     }
 
-    public HistoryAdapter(List<HistoryInfo> arrayList, Context con) {
+    public CollectionAdapter(List<CollectionInfo> arrayList, Context con) {
         this.arrayList = arrayList;
         this.con = con;
     }
 
     @Override
     public viewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(con).inflate(R.layout.his_list, viewGroup, false);
+        View view = LayoutInflater.from(con).inflate(R.layout.collect_list, viewGroup, false);
         return new viewHolder(view);
     }
 
@@ -48,9 +49,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.viewHold
                 }
             }
         });
-        viewHolder.history.setText(arrayList.get(position).history);
         viewHolder.course.setText(arrayList.get(position).course);
-        viewHolder.time.setText(arrayList.get(position).time);
+        viewHolder.instanceName.setText(arrayList.get(position).intanceName);
 
         viewHolder.pos = viewHolder.getAdapterPosition();
     }
@@ -62,15 +62,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.viewHold
 
     public class viewHolder extends RecyclerView.ViewHolder {
         TextView course;
-        TextView history;
-        TextView time;
+        TextView instanceName;
         int pos;
 
         public viewHolder(View itemView) {
             super(itemView);
-            course = (TextView) itemView.findViewById(R.id.hiscourse);
-            history = (TextView) itemView.findViewById(R.id.historyName);
-            time = (TextView) itemView.findViewById(R.id.time);
+            course = (TextView) itemView.findViewById(R.id.collect_course);
+            instanceName = (TextView) itemView.findViewById(R.id.instanceName);
         }
     }
 }
