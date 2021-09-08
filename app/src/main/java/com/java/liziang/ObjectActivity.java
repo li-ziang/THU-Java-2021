@@ -28,19 +28,25 @@ public class ObjectActivity extends AppCompatActivity {
     String subject = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        itemPro = new ArrayList<>();
         super.onCreate(savedInstanceState);
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
             label = bundle.getString("label");
             subject =bundle.getString("subject");
         }
-        objectItem = new ObjectItem(label,subject);
+        objectItem = new ObjectItem("李白","chinese");
         try{
             while(objectItem.get==false){
                 Thread.sleep(10);
             }
         }
         catch (InterruptedException e){}
+        Log.i("sssssssss",String.valueOf(objectItem.property.size()));
+        for(Content ele:objectItem.property){
+            itemPro.add(new ItemPro(ele.predicateLabel,ele.jectLabel,ele.isEntity));
+        }
+        Log.i("llllllll",String.valueOf(itemPro.size()));
         setContentView(R.layout.activity_object);
         recyclerView1 = findViewById(R.id.recycler_view_pro);
         recyclerView1.setLayoutManager(new LinearLayoutManager(ObjectActivity.this,LinearLayoutManager.VERTICAL,false));
@@ -53,6 +59,7 @@ public class ObjectActivity extends AppCompatActivity {
                     openActivity(ObjectActivity.this, itemPro.get(position).content,subject);
             }
         });
+        recyclerView1.setAdapter(adapter_pro);
         name = findViewById(R.id.entity_name);
         name.setText(objectItem.name);
     }
@@ -67,7 +74,7 @@ public class ObjectActivity extends AppCompatActivity {
     class ItemPro{
         public String label;
         public String content;
-        public boolean isEntity;
+        public Boolean isEntity;
         ItemPro(String label,String content,Boolean isEntity){
             this.label = label;this.content = content;this.isEntity = isEntity;
         }
