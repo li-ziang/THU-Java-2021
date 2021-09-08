@@ -718,10 +718,6 @@ public class UserController {
             return "failure";
         }
         JSONObject json = new JSONObject(string);
-        if(!json.has("data")) {
-            JSONArray ret = new JSONArray();
-            return ret.toString();
-        }
         JSONArray data = json.getJSONArray("data");
         JSONArray retArray = new JSONArray();
         for(int i = 0; i < data.length(); i++) {
@@ -746,7 +742,11 @@ public class UserController {
         JSONArray retArray = new JSONArray();
         for(int i = 0; i < arr.size(); i++) {
             String know = arr.get(i);
-            JSONArray temp_arr = new JSONArray(getRelatedExercise(know));
+            String relatedExercise = getRelatedExercise(know);
+            if(relatedExercise.equals("failure")) {
+                continue;
+            }
+            JSONArray temp_arr = new JSONArray(relatedExercise);
             for(int j = 0; j < temp_arr.length(); j++) {
                 JSONObject new_obj = temp_arr.getJSONObject(j);
                 boolean flag = false;
@@ -835,7 +835,11 @@ public class UserController {
                 JSONArray retArray = new JSONArray();
                 for(int i = 0; i < arr.size(); i++) {
                     String know = arr.get(i);
-                    JSONArray temp_arr = new JSONArray(getRelatedExercise(know));
+                    String relatedExercise = getRelatedExercise(know);
+                    if(relatedExercise.equals("failure")) {
+                        continue;
+                    }
+                    JSONArray temp_arr = new JSONArray(relatedExercise);
                     System.out.println(i);
                     for(int j = 0; j < temp_arr.length(); j++) {
                         JSONObject new_obj = temp_arr.getJSONObject(j);
