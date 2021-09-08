@@ -370,6 +370,7 @@ public class UserController {
             System.out.println(e);
         }
         if(!judge(string)) {
+
             return "failure";
         }
         System.out.println("search/info");
