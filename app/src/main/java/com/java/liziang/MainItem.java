@@ -70,20 +70,20 @@ public class MainItem {
                        String label = jsonObj.optString("label","defaultValue");
                        String category = jsonObj.optString("category","defaultValue");
                        //: 找到是不是在数据库中
-                        // label = "李白"; // TODO: 改成非硬编码
-                        // course="chinese";
+//                        label = "李白"; // TODO: 改成非硬编码
+//                        course="chinese";
 //                       String find_ans = DbHelper.find(label, course, MainActivity.dbHelper.getReadableDatabase());
                         Boolean inDb = ObjectItem.inDatabase(label, course);
                        Item it;
 //                       Log.i(" reading", "reading");
 
                        if(inDb) {
-                           Log.d("isRead", label);
+//                           Log.d("isRead", label);
                            it = new Item(label, category, true);
                        }
                        else {
-                           Log.d("is not read", label);
-                           it = new Item(label,category, false);
+//                           Log.d("is not read", label);
+                           it = new Item(label,category, true);
                        }
                        arrList.add(it);
                    }
@@ -91,15 +91,22 @@ public class MainItem {
 //                   Log.i("label",arrList.size()+"");
                    if(sequence.equalsIgnoreCase("a-z")){
                        //从a到z把arrList排序
+                       arrList.sort((p1, p2) -> p1.label.compareTo(p2.label));
                    }
                    else if(sequence.equalsIgnoreCase("z-a")){
+                    arrList.sort((p1, p2) -> p1.label.compareTo(p2.label));
+
+                    Collections.reverse(arrList);
 
                    }
                    else if(sequence.equalsIgnoreCase("长-短")){
 
+                    Collections.sort(arrList, Comparator.comparingInt(p -> p.label.length()));
+
+                    arrList.sort((p1, p2) -> p1.label.length());
                    }
                    else{
-
+                    Collections.sort(arrList, Comparator.comparingInt(p -> p.label.length()));
                    }
                    getArr = true;
                } catch (JSONException e) {
