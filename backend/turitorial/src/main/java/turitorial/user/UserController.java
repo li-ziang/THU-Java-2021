@@ -816,7 +816,7 @@ public class UserController {
 //            System.out.println(mapping.getKey() + ":" + mapping.getValue());
             ret.add(mapping.getKey());
             tot_num++;
-            if(tot_num == 10) return ret;
+            if(tot_num == 1) return ret;
         }
         return ret;
     }
