@@ -117,7 +117,7 @@ class GetExercise {
 
 @RestController
 public class UserController {
-    String apiId = "56e882e9-df1a-4326-9dfa-7192f47d0056";
+    String apiId = "964628b3-12ff-4ccb-a0f7-a30ea2653a30";
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -188,7 +188,6 @@ public class UserController {
         Integer number = userHistory.number;
         Integer tot_num = 0;
 
-//        List<String> ret = new ArrayList<String>();
         System.out.println(number);
         JSONArray retArray = new JSONArray();
         for(User other: users) {
@@ -205,13 +204,6 @@ public class UserController {
                     retArray.put(temp);
                     if(tot_num == number) return retArray.toString();
                 }
-//                System.out.println("ni ma bo");
-//                for(int i = other.histories.size() - 1; i >= 0; i--) {
-//                    if(other.histories.get(i).getCourse() == null) {
-//                        other.histories.remove(i);
-//                    }
-//                }
-//                userRepository.save(other);
                 return retArray.toString();
             }
         }
@@ -224,7 +216,6 @@ public class UserController {
         String username = usersearchKey.username;
         Integer number = usersearchKey.number;
         Integer tot_num = 0;
-        System.out.println("是不是null");
         System.out.println(number);
         List<String> ret = new ArrayList<String>();
         for(User other: users) {
@@ -302,6 +293,19 @@ public class UserController {
 
     }
 
+    public Boolean judge(String message) {
+        JSONObject json = new JSONObject(message);
+        if(!json.has("data")) return  false;
+        if(!json.has("code")) return false;
+        if(json.has("data") && (json.getString("data") == "" || json.getString("data") == null || json.getString("data") == "null")) {
+            return false;
+        }
+        if(json.has("code") && json.getString("code") != "0") {
+            return false;
+        }
+        return true;
+    }
+
     @PostMapping("/users/search")
     public String searchInstance(@Valid @RequestBody SearchKey searchKey) { // 实体搜索接口
         String username = searchKey.username, keyword = searchKey.keyword, subject = searchKey.course;
@@ -322,6 +326,9 @@ public class UserController {
             System.out.println(e);
         }
         System.out.println(string);
+        if(!judge(string)) {
+            return "failure";
+        }
 
         JSONObject json = new JSONObject(string);
         if(!json.has("data")) {
@@ -357,6 +364,9 @@ public class UserController {
         }
         catch(UnsupportedEncodingException e) {
             System.out.println(e);
+        }
+        if(!judge(string)) {
+            return "failure";
         }
         System.out.println("search/info");
 
@@ -396,13 +406,16 @@ public class UserController {
                 if(object.contains("http://edukg.org")) { // 为实体uri，需要转换成中文
                     String instanceFromUri = getInstanceFromUri(object, course);
                     JSONObject temp_obj = new JSONObject(instanceFromUri);
-                    if(!temp_obj.has("data")) {
-                        JSONArray temp = new JSONArray();
-                        return temp.toString();
+                    JSONObject temp_data;
+                    if(temp_obj.has("data")) {
+                        temp_data = temp_obj.getJSONObject("data");
+                        if(temp_data.has("entity_name")) {
+                            entity_name = temp_data.getString("entity_name");
+                        }
                     }
-                    JSONObject temp_data = temp_obj.getJSONObject("data");
-
-                    entity_name = temp_data.getString("entity_name");
+                    else {
+                        entity_name = "";
+                    }
                     isEntity = true;
                 }
                 else {
@@ -481,7 +494,10 @@ public class UserController {
         String string = HttpRequest.sendPost("http://open.edukg.cn/opedukg/api/typeAuth/user/login",
                 "password=thueda2019&phone=18201616030");
         JSONObject jsonObject = new JSONObject(string);
-        System.out.println(jsonObject.getString("id"));
+//        System.out.println(jsonObject.getString("id"));
+        if(!jsonObject.has("id")) {
+            return apiId;
+        }
         this.apiId = jsonObject.getString("id");
         return jsonObject.getString("id");
     }
@@ -498,6 +514,9 @@ public class UserController {
         }
         catch (UnsupportedEncodingException e) {
             System.out.println(e);
+        }
+        if(!judge(string)) {
+            return "failure";
         }
 
         System.out.println(string);
@@ -536,9 +555,17 @@ public class UserController {
         catch (UnsupportedEncodingException e) {
             System.out.println(e);
         }
+        if(!judge(string)) {
+            return "failure";
+        }
+
         System.out.println(string);
         JSONObject json = new JSONObject(string);
-        if(!json.has("data")) {
+        if(json.has("code") && json.getString("code") != "0") {
+            JSONArray ret = new JSONArray();
+
+        }
+        if(!json.has("data") || !json.has("code")) {
             JSONArray ret = new JSONArray();
             return ret.toString();
         }
@@ -670,6 +697,9 @@ public class UserController {
         }
         catch (UnsupportedEncodingException e) {
             System.out.println(e);
+        }
+        if(!judge(string)) {
+            return "failure";
         }
         System.out.println(string);
         JSONObject json = new JSONObject(string);
