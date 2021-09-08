@@ -8,7 +8,7 @@ import org.json.*;
 
 public class MainItem {
     public String sequence = "a-z";
-    public String curUser="hly";
+    static public String curUser="hly";
     public String course="";
     public String searchContent="s";
     public ArrayList<String> curStringList =new ArrayList<>();//cur string list 4 cources
