@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HouFuDao"
         android:usesCleartextTraffic="true">
-        <activity android:name=".HistoryActivity"></activity>
+        <activity android:name=".CollectionActivity"></activity>
+        <activity android:name=".HistoryActivity" />
         <activity android:name=".HisoryActivity" />
         <activity
             android:name=".LogoutActivity"
