@@ -14,6 +14,7 @@ public class ObjectItem {
     public String name;
     public String course;
     public String jsonString;
+    public boolean get = false;
 
     public Boolean namedIndividual;
     public ArrayList<Content> objContent = new ArrayList<>();
@@ -21,6 +22,7 @@ public class ObjectItem {
     public ArrayList<Content> subContent = new ArrayList<>();
 
     ObjectItem(String name_, String course_) {
+        get = false;
         name = name_;
         course = course_;
 //        Log.i(" name of instance", name);
@@ -30,6 +32,7 @@ public class ObjectItem {
             //: public String jsonString;
 
             jsonString = DbHelper.find(name, course, MainActivity.dbHelper.getReadableDatabase());
+            get  =true;
         } else {
 //            Log.i("not in database", "not in database");
             String api = "/search/info";
@@ -71,7 +74,7 @@ public class ObjectItem {
                         objContent = parseJsonArray(jsonObjContent, "object_label", "predicate_label", false);
                         property = parseJsonArray(jsonProperty, "label", "predicateLabel", true);
                         subContent = parseJsonArray(jsonSubContent, "subject_label", "predicate_label", false);
-
+                        get =true;
 
                     } catch (JSONException e) {
                         e.printStackTrace();
