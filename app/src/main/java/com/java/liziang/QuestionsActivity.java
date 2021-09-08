@@ -217,6 +217,8 @@ public class QuestionsActivity extends AppCompatActivity {
 
     protected void getQuiz(ArrayList<String> stringArr){
 //        JSONArray jsonArray = JSONArray.fromObject(stringArr);
+
+    if(false){
         JSONObject jsonObject = new JSONObject();
         done=false;
         JSONArray j=new JSONArray(stringArr);
@@ -260,6 +262,50 @@ public class QuestionsActivity extends AppCompatActivity {
 
             }
         });
+    }
+    else{
+        if(!MainActivity.mainItem.curUser.equals("hly")){
+
+        }
+        else{
+            String api = "/users/recommend";
+            String json = String.format("{\"username\": \"%s\"}", MainActivity.mainItem.curUser);
+            Server server = new Server(api,json);
+            Call call=server.call();
+    
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.i("login fail",e.toString());
+                }
+    
+                @Override
+                public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                    String string = response.body().string();
+                    Log.i("exam response",string);
+                    JSONArray ret = null;
+    
+                    try {
+                        ret = new JSONArray(string);
+    
+                        for(int i=0; i<ret.length();i++){
+                            Log.i("string",ret.getJSONObject(i).toString());
+                            Question tmp = new Question(ret.getJSONObject(i));
+                            questionList.add(tmp);
+                        }
+                        done=true;
+    
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+    
+                }
+            });
+        }
+
+    }
+
+
     }
 
     public void setRadioGroup(RadioGroup testRadioGroup,Boolean set) {

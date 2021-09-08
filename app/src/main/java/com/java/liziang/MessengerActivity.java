@@ -43,7 +43,7 @@ public class MessengerActivity extends Activity {
         //User id
         int myId = 0;
         //User icon
-        Bitmap myIcon = BitmapFactory.decodeResource(getResources(), R.drawable.face_2);
+        Bitmap myIcon = BitmapFactory.decodeResource(getResources(), R.drawable.you);
         //User name
         String myName = "YOU";
 
