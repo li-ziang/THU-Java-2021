@@ -202,6 +202,11 @@ public class UserController {
                     retArray.put(temp);
                     if(tot_num == number) return retArray.toString();
                 }
+                for(History temp: other.histories) {
+                    if(temp.getCourse() == null) {
+                        other.histories.remove(temp);
+                    }
+                }
                 return retArray.toString();
             }
         }
