@@ -39,8 +39,8 @@ public class QuestionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
-        ArrayList<String> stringArr = new ArrayList();
-        stringArr.add("李白");
+        ArrayList<String> stringArr = KeywordForQuesion.keywords;
+//        stringArr.add("李白");
         getQuiz(stringArr);
         
         final TextView score = (TextView)findViewById(R.id.textView4);
