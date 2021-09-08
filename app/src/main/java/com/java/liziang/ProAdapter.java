@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.viewHolder>{
-    ArrayList<TabFragment.ItemModel> arrayList;
+public class ProAdapter extends RecyclerView.Adapter<ProAdapter.viewHolder>{
+    ArrayList<ObjectActivity.ItemPro> arrayList;
     Context con;
     //第一步 定义接口
     public interface OnItemClickListener {
@@ -26,14 +26,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.viewHolder
         this.listener = listener;
     }
 
-    public CustomAdapter(ArrayList<TabFragment.ItemModel> arrayList, Context con) {
+    public ProAdapter(ArrayList<ObjectActivity.ItemPro> arrayList, Context con) {
         this.arrayList = arrayList;
         this.con =con;
     }
 
     @Override
     public  viewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(con).inflate(R.layout.item_list, viewGroup, false);
+        View view = LayoutInflater.from(con).inflate(R.layout.item_list_pro, viewGroup, false);
         return new viewHolder(view);
     }
     @Override
@@ -47,14 +47,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.viewHolder
             }
         });
         viewHolder.label.setText(arrayList.get(position).label);
-        viewHolder.category.setText(arrayList.get(position).category);
+        viewHolder.content.setText(arrayList.get(position).content);
         viewHolder.pos = viewHolder.getAdapterPosition();
-        if(arrayList.get(viewHolder.getAdapterPosition()).seen){
-            viewHolder.label.setTextColor(Color.GRAY);
-        }
-        else{
-            viewHolder.label.setTextColor(Color.BLACK);
-        }
     }
 
 
@@ -65,12 +59,15 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.viewHolder
 
     public class viewHolder extends RecyclerView.ViewHolder {
         TextView label;
-        TextView category;
+        TextView content;
         int pos;
         public viewHolder(View itemView) {
             super(itemView);
-            category =(TextView) itemView.findViewById(R.id.category);
-            label = (TextView) itemView.findViewById(R.id.label);
+            content =(TextView) itemView.findViewById(R.id.content_pro);
+            label = (TextView) itemView.findViewById(R.id.label_pro);
+            if(arrayList.get(pos).isEntity){
+                label.setTextColor(Color.BLUE);
+            }
         }
     }
 }

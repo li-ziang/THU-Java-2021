@@ -43,7 +43,8 @@ public class TabFragment extends Fragment {
 
         for(int i=0;i<MainActivity.mainItem.arrList.size();i++){
             itemModel.add(new ItemModel(MainActivity.mainItem.arrList.get(i).label,MainActivity.mainItem.arrList.get(i).category,MainActivity.mainItem.arrList.get(i).isRead));
-//            Log.i("ooo",texts[i]);
+            Log.i("banban",String.valueOf(MainActivity.mainItem.arrList.get(i).isRead));
+            Log.i("ahuang",String.valueOf(MainActivity.mainItem.arrList.get(i).label));
         }
 
     }
@@ -59,7 +60,7 @@ public class TabFragment extends Fragment {
         adapter.setOnItemClickListener(new CustomAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                startActivity(new Intent(getContext(), ObjectActivity.class));
+                ObjectActivity.openActivity(getActivity(), itemModel.get(position).label,tag);
             }
         });
         recyclerView.setAdapter(adapter);
