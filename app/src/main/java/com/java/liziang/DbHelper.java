@@ -24,7 +24,8 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE instance(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "instanceName VARCHAR(64), course VARCHAR(64), " +
                 "content VARCHAR(1024))");
-
+        db.execSQL("CREATE TABLE curUser(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "User VARCHAR(64), username VARCHAR(64))");
     }
     //软件版本号发生改变时调用
     @Override
@@ -89,6 +90,31 @@ public class DbHelper extends SQLiteOpenHelper {
             catch (JSONException e) {}
         }
 //        return null;
+    }
+
+    static public void setCurUser(String username, SQLiteDatabase db) {
+        ContentValues values1 = new ContentValues();
+        Cursor cursor =  db.rawQuery("SELECT * FROM curUser WHERE User = 'curUser'",
+                new String[]{});
+        if(cursor.moveToFirst()) { // 已经缓存
+            db.execSQL("update curUser set username = ? where User = 'curUser'");
+            return;
+        }
+        ContentValues values = new ContentValues();
+        values.put("User", "curUser");
+        values.put("username", username);
+        db.insert("curUser", null, values);
+    }
+
+    static public String getCurUser(SQLiteDatabase db) {
+        Cursor cursor =  db.rawQuery("SELECT * FROM curUser WHERE User = 'curUser'",
+                new String[]{});
+        if(cursor.moveToFirst()) {
+            String content = cursor.getString(cursor.getColumnIndex("username"));
+//            Log.d(content, content);
+            return content;
+        }
+        return "hly2";
     }
 
     public static Boolean changeCollectedStatus(String course, String instanceName, DbHelper helper) {

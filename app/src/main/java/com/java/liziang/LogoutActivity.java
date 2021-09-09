@@ -76,6 +76,7 @@ public class LogoutActivity extends AppCompatActivity {
                     if (code.equals("200")) {
                         //TODO:need a logout.xml file
                         MainActivity.mainItem.curUser= "hly2";
+                        DbHelper.setCurUser("hly2", MainActivity.dbHelper.getWritableDatabase());
                         Message msg = new Message();
                         msg.what = -1;
                         handler.sendMessage(msg);
