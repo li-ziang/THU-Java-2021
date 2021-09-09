@@ -174,19 +174,13 @@
 
         <ImageView
             android:id="@+id/connect_image"
-            android:layout_width="202dp"
+            android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_margin="0dp"
             android:layout_weight="1"
             android:background="@color/white"
             android:contentDescription="connection"
             android:src="@drawable/connect" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/ask_image"
@@ -195,7 +189,7 @@
                 android:layout_margin="0dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:contentDescription="q and a"
+                android:contentDescription="QnA"
                 android:src="@drawable/ask" />
 
             <ImageView
@@ -217,7 +211,26 @@
                 android:background="@color/white"
                 android:contentDescription="message"
                 android:src="@drawable/rec" />
-        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/the_history"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_margin="0dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:contentDescription="history"
+            android:src="@drawable/the_history" />
+        <ImageView
+            android:id="@+id/the_collect"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_margin="0dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:contentDescription="collection"
+            android:src="@drawable/collect" />
+
     </LinearLayout>
 
 

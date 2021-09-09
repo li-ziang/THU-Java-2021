@@ -132,6 +132,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, InstanceLinkActivity.class));
             }
         });
+        ////////////////////////
+        findViewById(R.id.the_collect).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, CollectionActivity.class));
+            }
+        });
+        findViewById(R.id.the_history).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, HistoryActivity.class));
+            }
+        });
+        /////////////////////////
         findViewById(R.id.ask_image).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -306,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         StringBuilder str = new StringBuilder();
                         mainItem.curStringList.clear();
-                        Collections.sort(choice);// choice.sort();
+                        //Collections.sort(choice);// choice.sort();
                         for (int j = 0; j < choice.size(); j++) {
                             mainItem.curStringList.add(items[choice.get(j)]);
                         }
