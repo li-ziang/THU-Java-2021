@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HouFuDao"
         android:usesCleartextTraffic="true">
-        <activity android:name=".KeywordForQuesion"></activity>
+        <activity android:name=".ChangePasswordActivity"></activity>
+        <activity android:name=".KeywordForQuesion" />
         <activity android:name=".CollectionActivity" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".HisoryActivity" />

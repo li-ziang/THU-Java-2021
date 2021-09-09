@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 if(mainItem.curUser.equals("hly")){
                     // startActivity(new Intent(MainActivity.this, KeywordForQuesion.class));
 //                startActivity(new Intent(MainActivity.this, LinkedInfo.class));
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(new Intent(MainActivity.this, ChangePasswordActivity.class));
                 }
                 else{
                     startActivity(new Intent(MainActivity.this, LogoutActivity.class));
