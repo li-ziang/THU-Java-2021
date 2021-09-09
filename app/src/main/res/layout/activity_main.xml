@@ -108,6 +108,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:id="@+id/the_list"
+            android:divider="#FFCC00"
             ></ListView>
         <LinearLayout
             android:orientation="horizontal"
