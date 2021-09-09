@@ -66,6 +66,31 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM instance WHERE instanceName = ? and course = ?",  new String[]{instanceName, course});
     }
 
+    public static void setCollectionStatus(String course, String instanceName, Boolean collected, DbHelper helper) {
+        SQLiteDatabase readDb = helper.getReadableDatabase(), writeDb = helper.getWritableDatabase();
+        Cursor cursor =  readDb.rawQuery("SELECT * FROM instance WHERE instanceName = ? and course = ?",
+                new String[]{instanceName, course});
+        if(cursor.moveToFirst()) {
+            String content = cursor.getString(cursor.getColumnIndex("content"));
+            delete(instanceName, course, writeDb);
+            try {
+                JSONObject json = new JSONObject(content);
+                if(!json.has("isCollected")) return;
+                Boolean isCollected = json.getBoolean("isCollected");
+                isCollected = collected;
+                json.put("isCollected", isCollected);
+                ContentValues values1 = new ContentValues();
+                values1.put("content", json.toString());
+                values1.put("course", course);
+                values1.put("instanceName", instanceName);
+                writeDb.insert("instance", null, values1);
+//                return isCollected;
+            }
+            catch (JSONException e) {}
+        }
+//        return null;
+    }
+
     public static Boolean changeCollectedStatus(String course, String instanceName, DbHelper helper) {
         SQLiteDatabase readDb = helper.getReadableDatabase(), writeDb = helper.getWritableDatabase();
         Cursor cursor =  readDb.rawQuery("SELECT * FROM instance WHERE instanceName = ? and course = ?",
