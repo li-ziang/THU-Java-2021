@@ -28,7 +28,7 @@ public class MainItem {
         curStringList.add("physics");
         stringList.add("chinese");
         stringList.add("english");
-        stringList.add("math");
+        // stringList.add("math");
         stringList.add("physics");
         stringList.add("chemistry");
         stringList.add("biology");

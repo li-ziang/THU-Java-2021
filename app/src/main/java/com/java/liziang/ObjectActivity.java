@@ -23,6 +23,7 @@ import org.json.*;
 
 public class ObjectActivity extends AppCompatActivity {
     ObjectItem objectItem;
+    Boolean collection;
     public ImageView share;
     public ImageView collect;
     public ImageView question;
@@ -64,6 +65,8 @@ public class ObjectActivity extends AppCompatActivity {
             itemRela.add(new ItemRela(ele.predicateLabel,ele.jectLabel));
         }
         setContentView(R.layout.activity_object);
+        collection = objectItem.isCollected;
+
         share = findViewById(R.id.share);
         collect = findViewById(R.id.collect);
         question = findViewById(R.id.question);
@@ -89,6 +92,12 @@ public class ObjectActivity extends AppCompatActivity {
         name2 = findViewById(R.id.entity_name2);
         name2.setText(objectItem.name);
         nameIn = findViewById(R.id.NamedIndividual);
+        if(collection){
+            collect.setBackgroundColor(0xF8F8FF00);
+        }
+        else{
+            collect.setBackgroundColor(0xff0000ff);
+        }
         if(objectItem.namedIndividual){
             nameIn.setText("命名实体: 是");
         }
@@ -102,10 +111,25 @@ public class ObjectActivity extends AppCompatActivity {
             }
         });
 
-        share.setOnClickListener(new View.OnClickListener() {
+        question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 QuestionsActivity.openActivity(ObjectActivity.this, label);
+            }
+        });
+        collect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(collection){
+                    objectItem.delCollect();
+                    collection = false;
+                    collect.setBackgroundColor(0xff0000ff);
+                }
+                else{
+                    objectItem.addCollect();
+                    collection = true;
+                    collect.setBackgroundColor(0xF8F8FF00);
+                }
             }
         });
     }

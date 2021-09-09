@@ -47,8 +47,14 @@ public class QuestionsActivity extends AppCompatActivity {
         if(bundle!=null){
             label = bundle.getString("label");
         }
-        ArrayList<String> stringArr = KeywordForQuesion.keywords;
-//        stringArr.add("李白");
+        ArrayList<String> stringArr=new ArrayList<String>();
+        if(label!=null){
+            stringArr.add(label);
+        }
+        else{
+            stringArr = KeywordForQuesion.keywords;
+        }
+        
         getQuiz(stringArr);
         
         final TextView score = (TextView)findViewById(R.id.textView4);
@@ -227,7 +233,6 @@ public class QuestionsActivity extends AppCompatActivity {
 //        JSONArray jsonArray = JSONArray.fromObject(stringArr);
 
     if(!MainActivity.mainItem.rec){
-        Log.i("????","!!!!!");
         JSONObject jsonObject = new JSONObject();
         done=false;
         JSONArray j=new JSONArray(stringArr);
@@ -258,29 +263,32 @@ public class QuestionsActivity extends AppCompatActivity {
                 }
                 Log.i("exam response",string);
                 JSONArray ret = null;
-
-                try {
-                    ret = new JSONArray(string);
-
-                    for(int i=0; i<ret.length();i++){
-                        Log.i("string",ret.getJSONObject(i).toString());
-                        Question tmp = new Question(ret.getJSONObject(i));
-                        questionList.add(tmp);
-                    }
+                if(string.equals("[]")){
+                    Question tmp = new Question();
+                    questionList.add(tmp);
                     done=true;
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
+                else{
+                    try {
+                        ret = new JSONArray(string);
+
+                        for(int i=0; i<ret.length();i++){
+                            Log.i("string",ret.getJSONObject(i).toString());
+                            Question tmp = new Question(ret.getJSONObject(i));
+                            questionList.add(tmp);
+                        }
+                        done=true;
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
 
             }
         });
     }
     else{
-//        if(!MainActivity.mainItem.curUser.equals("hly2")){
-//
-//        }
-//        else{
             Log.i("!!!!","!!!!!");
             String api = "/users/recommend";
             String json = String.format("{\"username\": \"%s\"}", MainActivity.mainItem.curUser);
@@ -298,23 +306,31 @@ public class QuestionsActivity extends AppCompatActivity {
                     String string = response.body().string();
                     Log.i("exam response",string);
                     JSONArray ret = null;
-                    if(string.equals("failure")){
+                    if(string.equals("[]")){
+                        Question tmp = new Question();
+                        questionList.add(tmp);
                         done=true;
-                        return;
                     }
-                    try {
-                        ret = new JSONArray(string);
-    
-                        for(int i=0; i<ret.length();i++){
-                            Log.i("string",ret.getJSONObject(i).toString());
-                            Question tmp = new Question(ret.getJSONObject(i));
-                            questionList.add(tmp);
+                    else{
+                        if(string.equals("failure")){
+                            done=true;
+                            return;
                         }
-                        done=true;
-    
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        try {
+                            ret = new JSONArray(string);
+        
+                            for(int i=0; i<ret.length();i++){
+                                Log.i("string",ret.getJSONObject(i).toString());
+                                Question tmp = new Question(ret.getJSONObject(i));
+                                questionList.add(tmp);
+                            }
+                            done=true;
+        
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
+
     
                 }
             });
@@ -332,7 +348,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     public static void openActivity(Context context, String label){
-        Intent intent = new Intent(context, ObjectActivity.class);
+        Intent intent = new Intent(context, QuestionsActivity.class);
         intent.putExtra("label", label);
         context.startActivity(intent);
     }
@@ -345,7 +361,14 @@ class Question{
     ArrayList<String> choices=new ArrayList<String>();
 
     String userAnswer="";
-
+    Question(){
+        answer="这道题没有答案";
+        question="没有题目了";
+        choices.add("没有题目了");
+        choices.add("没有题目了");
+        choices.add("没有题目了");
+        choices.add("没有题目了");
+    }
     Question(JSONObject jsonObject){
         try{
             answer = jsonObject.getString("qAnswer");

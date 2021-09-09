@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.os.*;
 import android.util.*;
 import com.google.android.material.tabs.TabLayout;
 import com.java.liziang.ui.main.FmPagerAdapter;
@@ -135,10 +136,63 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, InstanceLinkActivity.class));
             }
         });
+        ////////////////////////
+        findViewById(R.id.the_collect).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if(MainActivity.mainItem.curUser.equals("hly2")){
+                    Handler handler = new Handler(){
+                        @Override
+                        public void handleMessage(Message msg) {
+                            if(msg.what == -1){
+                                Toast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
+                            }
+                            else if(msg.what == 1) {
+                                Toast.makeText(MainActivity.this, "未登陆，请先登陆", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    };
+                    Message msg = new Message();
+                    msg.what = 1;
+                    handler.sendMessage(msg);
+                    Intent startIntent=new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(startIntent);
+                }
+                else{
+                startActivity(new Intent(MainActivity.this, CollectionActivity.class));}
+            }
+        });
+        findViewById(R.id.the_history).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, HistoryActivity.class));
+            }
+        });
+        /////////////////////////
         findViewById(R.id.ask_image).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                if(MainActivity.mainItem.curUser.equals("hly2")){
+                    Handler handler = new Handler(){
+                        @Override
+                        public void handleMessage(Message msg) {
+                            if(msg.what == -1){
+                                Toast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
+                            }
+                            else if(msg.what == 1) {
+                                Toast.makeText(MainActivity.this, "未登陆，请先登陆", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    };
+                    Message msg = new Message();
+                    msg.what = 1;
+                    handler.sendMessage(msg);
+                    Intent startIntent=new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(startIntent);
+                }
+                else{
                 startActivity(new Intent(MainActivity.this, MessengerActivity.class));
+                }
             }
         });
 
@@ -151,9 +205,30 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.message_image_2).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                MainActivity.mainItem.rec=true;
-                Intent startIntent=new Intent(MainActivity.this, QuestionsActivity.class);
-                startActivity(startIntent);
+                if(MainActivity.mainItem.curUser.equals("hly2")){
+                    Handler handler = new Handler(){
+                        @Override
+                        public void handleMessage(Message msg) {
+                            if(msg.what == -1){
+                                Toast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
+                            }
+                            else if(msg.what == 1) {
+                                Toast.makeText(MainActivity.this, "未登陆，请先登陆", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    };
+                    Message msg = new Message();
+                    msg.what = 1;
+                    handler.sendMessage(msg);
+                    Intent startIntent=new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(startIntent);
+                }
+                else{
+                    MainActivity.mainItem.rec=true;
+                    Intent startIntent=new Intent(MainActivity.this, QuestionsActivity.class);
+                    startActivity(startIntent);
+                }
+
             }
         });
         
@@ -287,7 +362,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         StringBuilder str = new StringBuilder();
                         mainItem.curStringList.clear();
-                        Collections.sort(choice);// choice.sort();
+                        //Collections.sort(choice);// choice.sort();
                         for (int j = 0; j < choice.size(); j++) {
                             mainItem.curStringList.add(items[choice.get(j)]);
                         }
