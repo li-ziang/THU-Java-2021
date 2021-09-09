@@ -40,7 +40,7 @@
 
                             <TextView
                                 android:id="@+id/title_entity_detail"
-                                android:layout_width="256dp"
+                                android:layout_width="203dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="6dp"
                                 android:gravity="start"
@@ -57,12 +57,20 @@
                                 android:layout_margin="5dp"
                                 android:layout_height="match_parent"
                                 android:src="@drawable/collect"></ImageView>
+
                             <ImageView
-                                android:layout_margin="5dp"
                                 android:id="@+id/share"
                                 android:layout_width="40dp"
                                 android:layout_height="match_parent"
+                                android:layout_margin="5dp"
                                 android:src="@drawable/share"></ImageView>
+
+                            <ImageView
+                                android:layout_margin="5dp"
+                                android:id="@+id/question"
+                                android:layout_width="40dp"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/question"></ImageView>
                         </LinearLayout>
                         </LinearLayout>
                     </androidx.appcompat.widget.Toolbar>
