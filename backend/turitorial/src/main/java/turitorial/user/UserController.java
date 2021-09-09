@@ -326,6 +326,9 @@ public class UserController {
         JSONObject json = new JSONObject(message);
         System.out.println(message);
         if(!json.has("data")) return  false;
+        if(json.has("status") && json.getInt("status") == 500) {
+            return false;
+        }
         if(!json.has("code")) return false;
         if(json.has("data") && (json.get("data") instanceof String) && (json.getString("data").equals("") || json.getString("data").equals("null"))) {
             System.out.println(" data testing");
@@ -398,8 +401,10 @@ public class UserController {
         catch(UnsupportedEncodingException e) {
             System.out.println(e);
         }
+        System.out.println("search info");
+        System.out.println(string);
         if(!judge(string)) {
-
+            System.out.println("exam failed");
             return "failure";
         }
         System.out.println("search/info");
@@ -774,6 +779,7 @@ public class UserController {
             String know = arr.get(i);
             String relatedExercise = getRelatedExercise(know);
             if(relatedExercise.equals("failure")) {
+                System.out.println("keyword failed");
                 continue;
             }
             JSONArray temp_arr = new JSONArray(relatedExercise);
@@ -799,6 +805,8 @@ public class UserController {
         for(int i = 0; i < randList.size(); i++) {
             ret.put(retArray.get(randList.get(i)));
         }
+        System.out.println("___________________________");
+        System.out.println(ret.toString());
         return ret.toString();
     }
     List<Integer> getRandomTen(int len) {
@@ -808,6 +816,11 @@ public class UserController {
         }
         int tot = 100;
         Random rand = new Random();
+        System.out.println("-----------------length----------------");
+        System.out.println(len);
+        if(len == 0) {
+            return retList;
+        }
         while (tot > 0) {
             tot--;
             int x = rand.nextInt(len), y = rand.nextInt(len);
