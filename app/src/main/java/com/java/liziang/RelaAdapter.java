@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class ProAdapter extends RecyclerView.Adapter<ProAdapter.viewHolder>{
-    ArrayList<ObjectActivity.ItemPro> arrayList;
+public class RelaAdapter extends RecyclerView.Adapter<RelaAdapter.viewHolder>{
+    ArrayList<ObjectActivity.ItemRela> arrayList;
     Context con;
     //第一步 定义接口
     public interface OnItemClickListener {
@@ -26,14 +26,14 @@ public class ProAdapter extends RecyclerView.Adapter<ProAdapter.viewHolder>{
         this.listener = listener;
     }
 
-    public ProAdapter(ArrayList<ObjectActivity.ItemPro> arrayList, Context con) {
+    public RelaAdapter(ArrayList<ObjectActivity.ItemRela> arrayList, Context con) {
         this.arrayList = arrayList;
         this.con =con;
     }
 
     @Override
     public  viewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(con).inflate(R.layout.item_list_pro, viewGroup, false);
+        View view = LayoutInflater.from(con).inflate(R.layout.item_list_rela, viewGroup, false);
         return new viewHolder(view);
     }
     @Override
@@ -48,13 +48,6 @@ public class ProAdapter extends RecyclerView.Adapter<ProAdapter.viewHolder>{
         });
         viewHolder.label.setText(arrayList.get(position).label);
         viewHolder.content.setText(arrayList.get(position).content);
-        viewHolder.pos = viewHolder.getAdapterPosition();
-        if(arrayList.get(viewHolder.pos).isEntity){
-            viewHolder.content.setTextColor(Color.BLUE);
-        }
-        else{
-            viewHolder.content.setTextColor(Color.BLACK);
-        }
     }
 
 
@@ -66,11 +59,10 @@ public class ProAdapter extends RecyclerView.Adapter<ProAdapter.viewHolder>{
     public class viewHolder extends RecyclerView.ViewHolder {
         TextView label;
         TextView content;
-        int pos;
         public viewHolder(View itemView) {
             super(itemView);
-            content =(TextView) itemView.findViewById(R.id.content_pro);
-            label = (TextView) itemView.findViewById(R.id.label_pro);
+            content =(TextView) itemView.findViewById(R.id.content_rela);
+            label = (TextView) itemView.findViewById(R.id.label_rela);
         }
     }
 }
