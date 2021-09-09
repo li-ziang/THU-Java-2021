@@ -171,7 +171,7 @@ public class ObjectItem {
                 // Log.i("object search fail",string);
                 //TODO: save jsonString 用42行参数
                 if(s.equals("Success")){
-                    Log.i("addCollect success", e.toString());
+//                    Log.i("addCollect success", e.toString());
                 }
 
             }
@@ -198,7 +198,7 @@ public class ObjectItem {
                 // Log.i("object search fail",string);
                 //TODO: save jsonString 用42行参数
                 if(s.equals("Success")){
-                    Log.i("delCollect success", e.toString());
+//                    Log.i("delCollect success", e.toString());
                 }
 
             }
