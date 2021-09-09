@@ -704,7 +704,8 @@ public class UserController {
             if(temp_user.getUsername().equals(username)) {
                 List<Collection> collections = temp_user.getCollections();
 //                retObj.put("collections", collections);
-                for(Collection temp: collections) {
+                for(int i = collections.size() - 1; i >=0; i--) {
+                    Collection temp = collections.get(i);
                     JSONObject obj = new JSONObject();
                     obj.put("course", temp.getCourse());
                     obj.put("instanceName", temp.getInstanceName());
