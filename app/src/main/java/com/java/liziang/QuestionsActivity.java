@@ -267,10 +267,10 @@ public class QuestionsActivity extends AppCompatActivity {
         });
     }
     else{
-        if(!MainActivity.mainItem.curUser.equals("hly")){
-
-        }
-        else{
+//        if(!MainActivity.mainItem.curUser.equals("hly2")){
+//
+//        }
+//        else{
             Log.i("!!!!","!!!!!");
             String api = "/users/recommend";
             String json = String.format("{\"username\": \"%s\"}", MainActivity.mainItem.curUser);
@@ -310,7 +310,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
 
-    }
+//    }
 
     public void setRadioGroup(RadioGroup testRadioGroup,Boolean set) {
         for (int i = 0; i < testRadioGroup.getChildCount(); i++) {

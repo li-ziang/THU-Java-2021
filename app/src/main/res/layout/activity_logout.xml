@@ -23,17 +23,29 @@
 
     <Button
         android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="248dp"
+        android:layout_width="226dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="256dp"
         android:background="@color/purple_200"
         android:text="LOGOUT"
         android:textColor="@android:color/background_dark"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/changePasswordButton"
+        android:layout_width="227dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="188dp"
+        android:background="@color/purple_200"
+        android:text="change passwd"
+        android:textColor="@android:color/background_dark"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

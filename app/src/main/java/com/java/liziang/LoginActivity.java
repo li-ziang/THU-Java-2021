@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,7 +16,17 @@ import okhttp3.Callback;
 import org.json.JSONException;
 import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
-
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what == -1){
+                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
+            }
+            else if(msg.what == 1) {
+                Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
     private EditText etUsername, etPassword;
 
     @Override
@@ -82,9 +94,15 @@ public class LoginActivity extends AppCompatActivity {
                     if (code.equals("200")) {
                         Log.i("login success",userName);
                         MainActivity.mainItem.curUser= userName;
+                        Message msg = new Message();
+                        msg.what = -1;
+                        handler.sendMessage(msg);
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
 //                        startActivity(new Intent(LoginActivity.this, MainActivity.class).putExtra("username", userName));
                     } else {
+                        Message msg = new Message();
+                        msg.what = 1;
+                        handler.sendMessage(msg);
                         Log.i("login fail","error info");
                     }
                 } catch (JSONException e) {
