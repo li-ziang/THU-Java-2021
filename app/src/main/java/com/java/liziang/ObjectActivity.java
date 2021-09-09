@@ -98,10 +98,10 @@ public class ObjectActivity extends AppCompatActivity {
         name2.setText(objectItem.name);
         nameIn = findViewById(R.id.NamedIndividual);
         if(collection){
-            collect.setBackgroundColor(0xF8F8FF00);
+            collect.setImageResource(R.drawable.collect2);
         }
         else{
-            collect.setBackgroundColor(0xff0000ff);
+            collect.setImageResource(R.drawable.collect);
         }
         if(objectItem.namedIndividual){
             nameIn.setText("命名实体: 是");
@@ -145,12 +145,12 @@ public class ObjectActivity extends AppCompatActivity {
                     if(collection){
                         objectItem.delCollect();
                         collection = false;
-                        collect.setBackgroundColor(0xff0000ff);
+                        collect.setImageResource(R.drawable.collect);
                     }
                     else{
                         objectItem.addCollect();
                         collection = true;
-                        collect.setBackgroundColor(0xF8F8FF00);
+                        collect.setImageResource(R.drawable.collect2);
                     }
                 }
 
