@@ -90,7 +90,7 @@ public class ObjectItem {
                             namedIndividual = jsonObject.getBoolean("NamedIndividual");
 
                             JSONArray jsonSubContent = jsonObject.getJSONArray("sub_content");
-
+                            isCollected= jsonObject.getBoolean("isCollected");
                             objContent = parseJsonArray(jsonObjContent, "object_label", "predicate_label", false);
                             property = parseJsonArray(jsonProperty, "label", "predicateLabel", true);
                             subContent = parseJsonArray(jsonSubContent, "subject_label", "predicate_label", false);
@@ -154,7 +154,7 @@ public class ObjectItem {
 
     void addCollect(){
         String api = "/users/addCollection";
-        String json = String.format("{\"username\": \"%s\", \"instanceName\":\"%s\"}", MainActivity.mainItem.curUser, name);
+        String json = String.format("{\"username\": \"%s\", \"instanceName\":\"%s\",\"course\":\"%s\"}", MainActivity.mainItem.curUser, name,course);
         Server server = new Server(api, json);
         isCollected=true;
         Call call = server.call();
@@ -168,19 +168,17 @@ public class ObjectItem {
             @Override
             public void onResponse(Call call, okhttp3.Response response) throws IOException {
                 String s= response.body().string();
-                // Log.i("object search fail",string);
-                //TODO: save jsonString 用42行参数
-//                if(s.equals("Success")){
-//                    Log.i("addCollect success", e.toString());
-//                }
-
+                Log.i("addCollect",s);
             }
         });
 
+        DbHelper.changeCollectedStatus(course,name,MainActivity.dbHelper);
+            
+
     }
     void delCollect(){
-        String api = " /user/deleteCollection";
-        String json = String.format("{\"username\": \"%s\", \"instanceName\":\"%s\"}", MainActivity.mainItem.curUser, name);
+        String api = "/users/deleteCollection";
+        String json = String.format("{\"username\": \"%s\", \"instanceName\":\"%s\",\"course\":\"%s\"}", MainActivity.mainItem.curUser, name,course);
         Server server = new Server(api, json);
         isCollected=false;
 
@@ -195,14 +193,14 @@ public class ObjectItem {
             @Override
             public void onResponse(Call call, okhttp3.Response response) throws IOException {
                 String s= response.body().string();
-                // Log.i("object search fail",string);
-                //TODO: save jsonString 用42行参数
-//                if(s.equals("Success")){
-//                    Log.i("delCollect success", e.toString());
-//                }
+                Log.i("delCollect",s);
 
             }
         });
+
+        DbHelper.changeCollectedStatus(course,name,MainActivity.dbHelper);
+
+
 
     }
 
