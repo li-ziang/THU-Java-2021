@@ -54,21 +54,23 @@ public class CollectionActivity extends AppCompatActivity {
                 JSONArray jsonArray = null;
                 array = new ArrayList<>();
                 Log.i(" searching collections", string);
-                try {
-                    jsonArray = new JSONArray(string);
-                    if (jsonArray.length() != 0) {
-                        for(int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject temp = jsonArray.getJSONObject(i);
-                            String course = temp.getString("course");
-                            String instanceName = temp.getString("instanceName");
-                            CollectionInfo ci = new CollectionInfo(course, instanceName);
-                            array.add(ci);
+                if(!string.equals("failure")){
+                    try {
+                        jsonArray = new JSONArray(string);
+                        if (jsonArray.length() != 0) {
+                            for(int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject temp = jsonArray.getJSONObject(i);
+                                String course = temp.getString("course");
+                                String instanceName = temp.getString("instanceName");
+                                CollectionInfo ci = new CollectionInfo(course, instanceName);
+                                array.add(ci);
+                            }
+                        } else {
+                            Log.i("fail","error info");
                         }
-                    } else {
-                        Log.i("fail","error info");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
 
             }
