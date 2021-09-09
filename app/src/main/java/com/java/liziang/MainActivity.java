@@ -136,7 +136,26 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.the_collect).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, CollectionActivity.class));
+                if(MainActivity.mainItem.curUser.equals("hly2")){
+                    Handler handler = new Handler(){
+                        @Override
+                        public void handleMessage(Message msg) {
+                            if(msg.what == -1){
+                                Toast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
+                            }
+                            else if(msg.what == 1) {
+                                Toast.makeText(MainActivity.this, "未登陆，请先登陆", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    };
+                    Message msg = new Message();
+                    msg.what = 1;
+                    handler.sendMessage(msg);
+                    Intent startIntent=new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(startIntent);
+                }
+                else{
+                startActivity(new Intent(MainActivity.this, CollectionActivity.class));}
             }
         });
         findViewById(R.id.the_history).setOnClickListener(new View.OnClickListener(){
@@ -149,7 +168,27 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.ask_image).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                if(MainActivity.mainItem.curUser.equals("hly2")){
+                    Handler handler = new Handler(){
+                        @Override
+                        public void handleMessage(Message msg) {
+                            if(msg.what == -1){
+                                Toast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
+                            }
+                            else if(msg.what == 1) {
+                                Toast.makeText(MainActivity.this, "未登陆，请先登陆", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    };
+                    Message msg = new Message();
+                    msg.what = 1;
+                    handler.sendMessage(msg);
+                    Intent startIntent=new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(startIntent);
+                }
+                else{
                 startActivity(new Intent(MainActivity.this, MessengerActivity.class));
+                }
             }
         });
 
