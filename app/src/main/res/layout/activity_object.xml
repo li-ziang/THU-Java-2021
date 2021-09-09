@@ -68,32 +68,34 @@
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
             </com.google.android.material.appbar.AppBarLayout>
 
-                <LinearLayout
-                    android:orientation="vertical"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="127dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/entity_name"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:text="李白"
-                        android:layout_margin="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:id="@+id/entity_name"
-                        android:textSize="36sp"
-                        android:textStyle="bold"
-                        android:gravity="left"/>
-                    <TextView
-                        android:text="命名实体: 是"
-                        android:layout_marginLeft="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/NamedIndividual"
-                        android:textSize="14sp"
-                        android:gravity="center|start"
-                        tools:layout_conversion_absoluteHeight="49dp"
-                        tools:layout_editor_absoluteY="167dp"
-                        tools:layout_editor_absoluteX="171dp"
-                        tools:layout_conversion_absoluteWidth="240dp"/>
-                </LinearLayout>
+                    android:layout_height="86dp"
+                    android:layout_margin="10dp"
+                    android:gravity="left"
+                    android:text="李白"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/NamedIndividual"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center|start"
+                    android:text="命名实体: 是"
+                    android:textSize="14sp"
+                    tools:layout_conversion_absoluteHeight="49dp"
+                    tools:layout_conversion_absoluteWidth="240dp"
+                    tools:layout_editor_absoluteX="171dp"
+                    tools:layout_editor_absoluteY="167dp" />
+            </LinearLayout>
 
 
             <TextView

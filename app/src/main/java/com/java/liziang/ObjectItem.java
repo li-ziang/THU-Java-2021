@@ -26,7 +26,7 @@ public class ObjectItem {
         name = name_;
         course = course_;
 //        Log.i(" name of instance", name);
-        if (inDatabase(name, course)) {
+        if (!inDatabase(name, course)) {
 //            Log.i(" searching in database", "searching in database");
             int b = 1;
             //: public String jsonString;
