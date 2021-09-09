@@ -174,7 +174,7 @@
 
         <ImageView
             android:id="@+id/connect_image"
-            android:layout_width="267dp"
+            android:layout_width="202dp"
             android:layout_height="54dp"
             android:layout_margin="0dp"
             android:layout_weight="1"
