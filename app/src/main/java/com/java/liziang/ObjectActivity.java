@@ -102,7 +102,7 @@ public class ObjectActivity extends AppCompatActivity {
             }
         });
 
-        share.setOnClickListener(new View.OnClickListener() {
+        question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 QuestionsActivity.openActivity(ObjectActivity.this, label);

@@ -332,7 +332,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     public static void openActivity(Context context, String label){
-        Intent intent = new Intent(context, ObjectActivity.class);
+        Intent intent = new Intent(context, QuestionsActivity.class);
         intent.putExtra("label", label);
         context.startActivity(intent);
     }
