@@ -86,11 +86,11 @@ public class MainItem {
 //                       Log.i(" reading", "reading");
 
                        if(inDb) {
-//                           Log.d("isRead", label);
+                           Log.d("isRead", label);
                            it = new Item(label, category, true);
                        }
                        else {
-//                           Log.d("is not read", label);
+                           Log.d("is not read", label);
                            it = new Item(label,category, false);
                        }
                        arrList.add(it);
@@ -194,8 +194,6 @@ public class MainItem {
 
                 searchKeyList = searchKeyList_;
                 getHis = true;
-//                Log.i("searchKeyList size",String.valueOf(searchKeyList.size()));
-//                Log.i("searchKeyList 0",searchKeyList.get(0));
  
             }
         });

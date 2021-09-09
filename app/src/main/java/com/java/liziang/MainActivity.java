@@ -316,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showMultiSelect() {
         final List<Integer> choice = new ArrayList<>();
-        final String[] items = {"chinese", "english", "math", "physics", "chemistry", "biology", "history", "geo", "politics"};
+        final String[] items = {"chinese", "english",  "physics", "chemistry", "biology", "history", "geo", "politics"};
         //默认都未选中
         boolean[] isSelect = new boolean[9];
         if(mainItem.curStringList.contains("chinese")) {
@@ -327,33 +327,29 @@ public class MainActivity extends AppCompatActivity {
             isSelect[1] = true;
             choice.add(1);
         }
-        if(mainItem.curStringList.contains("math")) {
+        if(mainItem.curStringList.contains("physics")) {
             isSelect[2] = true;
             choice.add(2);
         }
-        if(mainItem.curStringList.contains("physics")) {
+        if(mainItem.curStringList.contains("chemistry")) {
             isSelect[3] = true;
             choice.add(3);
         }
-        if(mainItem.curStringList.contains("chemistry")) {
+        if(mainItem.curStringList.contains("biology")) {
             isSelect[4] = true;
             choice.add(4);
         }
-        if(mainItem.curStringList.contains("biology")) {
+        if(mainItem.curStringList.contains("history")) {
             isSelect[5] = true;
             choice.add(5);
         }
-        if(mainItem.curStringList.contains("history")) {
+        if(mainItem.curStringList.contains("geo")) {
             isSelect[6] = true;
             choice.add(6);
         }
-        if(mainItem.curStringList.contains("geo")) {
+        if(mainItem.curStringList.contains("politics")) {
             isSelect[7] = true;
             choice.add(7);
-        }
-        if(mainItem.curStringList.contains("politics")) {
-            isSelect[8] = true;
-            choice.add(8);
         }
         builder = new AlertDialog.Builder(this)
                 .setTitle("选择学科加入顶部栏")
