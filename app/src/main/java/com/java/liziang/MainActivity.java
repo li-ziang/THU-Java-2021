@@ -44,7 +44,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbHelper = new DbHelper(MainActivity.this, "test.db", null, 1);
+        dbHelper = new DbHelper(MainActivity.this, "new.db", null, 1);
+        DbHelper.insert("test", "test", "english", dbHelper.getWritableDatabase()); // 测试用
+//        String test =  DbHelper.find("李白", "chinese", dbHelper.getReadableDatabase());
+//        Log.i("testing database", test);
+//        DbHelper.changeCollectedStatus("chinese", "李白",dbHelper);
         String course = "chinese";
         if(mainItem==null){
             mainItem = new MainItem(course);
@@ -207,8 +211,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        dbHelper = new DbHelper(MainActivity.this, "test.db", null, 1);
-//        DbHelper.insert("test", "test", "english", dbHelper.getWritableDatabase()); // 测试用
+
         // findViewById(R.id.buttonSearch).setOnClickListener(new View.OnClickListener(){
         //     @Override
         //     public void onClick(View view) {
@@ -216,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
         //     }
         // });
 
-        DbHelper.insert("test", "test", "test", dbHelper.getWritableDatabase());
+//        DbHelper.insert("test", "test", "test", dbHelper.getWritableDatabase());
 
 
 

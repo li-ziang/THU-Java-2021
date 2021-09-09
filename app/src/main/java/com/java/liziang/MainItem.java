@@ -80,6 +80,8 @@ public class MainItem {
 //                        course="chinese";
 //                       String find_ans = DbHelper.find(label, course, MainActivity.dbHelper.getReadableDatabase());
                         Boolean inDb = ObjectItem.inDatabase(label, course);
+                        Log.i(" testing indatabase", String.valueOf(inDb));
+//                        Boolean inDb = true;
                        Item it;
 //                       Log.i(" reading", "reading");
 

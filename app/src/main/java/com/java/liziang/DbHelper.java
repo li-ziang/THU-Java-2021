@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class DbHelper extends SQLiteOpenHelper {
     public DbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
                     int version) {
@@ -17,9 +20,9 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     //数据库第一次创建时被调用
     public void onCreate(SQLiteDatabase db) {
-        // Log.d("creating database", "creating database");
+         Log.d("creating database", "creating database");
         db.execSQL("CREATE TABLE instance(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "instanceName VARCHAR(64), course VARCHAR(64),  " +
+                "instanceName VARCHAR(64), course VARCHAR(64), " +
                 "content VARCHAR(1024))");
 
     }
@@ -49,7 +52,6 @@ public class DbHelper extends SQLiteOpenHelper {
 //        SQLiteDatabase db = MainActivity.dbHelper.getReadableDatabase();
         Cursor cursor =  db.rawQuery("SELECT * FROM instance WHERE instanceName = ? and course = ?",
                 new String[]{instanceName, course});
-        if(cursor.moveToFirst() == true)
 //        Log.d("finding data", instanceName + " " + course);
         if(cursor.moveToFirst())
         {
@@ -62,5 +64,33 @@ public class DbHelper extends SQLiteOpenHelper {
     }
     public static void delete(String instanceName, String course, SQLiteDatabase db) {
         db.execSQL("DELETE FROM instance WHERE instanceName = ? and course = ?",  new String[]{instanceName, course});
+    }
+
+    public static Boolean changeCollectedStatus(String course, String instanceName, DbHelper helper) {
+        SQLiteDatabase readDb = helper.getReadableDatabase(), writeDb = helper.getWritableDatabase();
+        Cursor cursor =  readDb.rawQuery("SELECT * FROM instance WHERE instanceName = ? and course = ?",
+                new String[]{instanceName, course});
+        if(cursor.moveToFirst()) {
+            String content = cursor.getString(cursor.getColumnIndex("content"));
+            delete(instanceName, course, writeDb);
+            try {
+                JSONObject json = new JSONObject(content);
+                if(!json.has("isCollected")) return null;
+                Boolean isCollected = json.getBoolean("isCollected");
+                if(isCollected == true) isCollected = false;
+                else{
+                    isCollected = true;
+                }
+                json.put("isCollected", isCollected);
+                ContentValues values1 = new ContentValues();
+                values1.put("content", json.toString());
+                values1.put("course", course);
+                values1.put("instanceName", instanceName);
+                writeDb.insert("instance", null, values1);
+                return isCollected;
+            }
+            catch (JSONException e) {return null;}
+        }
+        return null;
     }
 }
