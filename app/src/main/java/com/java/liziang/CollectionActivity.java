@@ -91,7 +91,14 @@ public class CollectionActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new CollectionAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                startActivity(new Intent(CollectionActivity.this, ObjectActivity.class));
+                Intent intent = new Intent(CollectionActivity.this, ObjectActivity.class);
+
+                String instanceName = adapter.arrayList.get(position).intanceName.toString();
+                String course = adapter.arrayList.get(position).course.toString();
+                intent.putExtra("label", instanceName);
+                intent.putExtra("subject", course);
+
+                startActivity(intent);
             }
         });
         recyclerView.setAdapter(adapter);

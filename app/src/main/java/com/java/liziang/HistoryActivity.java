@@ -93,7 +93,15 @@ public class HistoryActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new HistoryAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                startActivity(new Intent(HistoryActivity.this, ObjectActivity.class));
+                Intent intent = new Intent(HistoryActivity.this, ObjectActivity.class);
+
+                String instanceName = adapter.arrayList.get(position).history.toString();
+                String course = adapter.arrayList.get(position).course.toString();
+                Log.i("testing history", instanceName + " " + course);
+
+                intent.putExtra("label", instanceName);
+                intent.putExtra("subject", course);
+                startActivity(intent);
             }
         });
         recyclerView.setAdapter(adapter);
