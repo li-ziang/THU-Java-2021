@@ -30,6 +30,12 @@ public class InstanceLinkActivity extends AppCompatActivity {
         data_list.add("chinese");
         data_list.add("english");
         data_list.add("math");
+        data_list.add("physics");
+        data_list.add("chemistry");
+        data_list.add("biology");
+        data_list.add("history");
+        data_list.add("geo");
+        data_list.add("politics");
         arr_adapter= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_list);
         //设置样式
         arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
