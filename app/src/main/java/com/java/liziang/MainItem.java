@@ -8,7 +8,7 @@ import org.json.*;
 
 public class MainItem {
     public int sequence = 0;
-    static public String curUser="hly";
+    static public String curUser="hly2";
     public String course="";
     public String searchContent="s";
     public ArrayList<String> curStringList =new ArrayList<>();//cur string list 4 cources
@@ -43,7 +43,7 @@ public class MainItem {
         this.searchContent=searchContent;
     }
     public void search(){ //实体搜索
- //       getArr = true;
+//        getArr = true;
 //        Log.i("call func","call search");
         //arrList = new ArrayList<>();
        getArr = false;
@@ -70,7 +70,7 @@ public class MainItem {
                try {
                     arrList.clear();
                     arr = new JSONArray(string);
-                    
+
                     for(int i=0; i<arr.length(); i++) {
                        JSONObject jsonObj = arr.getJSONObject(i);
                        String label = jsonObj.optString("label","defaultValue");
@@ -120,8 +120,8 @@ public class MainItem {
                }
            }
        });
-//       Log.i("end func","end search");
-//        Log.i("size in func",arrList.size()+"");
+       Log.i("end func","end search");
+        Log.i("size in func",arrList.size()+"");
     }
     public void getViewHistory(int number){ 
         String api = "/search/history";

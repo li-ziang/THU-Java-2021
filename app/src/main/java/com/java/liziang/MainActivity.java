@@ -112,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.user_image).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Log.i("user",mainItem.curUser);
-                if(mainItem.curUser.equals("hly")){
+                Log.i("user's name",mainItem.curUser);
+                if(mainItem.curUser.equals("hly2")){
                     // startActivity(new Intent(MainActivity.this, KeywordForQuesion.class));
 //                startActivity(new Intent(MainActivity.this, LinkedInfo.class));
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));

@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +19,17 @@ import okhttp3.Call;
 import okhttp3.Callback;
 
 public class LogoutActivity extends AppCompatActivity {
-
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what == -1){
+                Toast.makeText(LogoutActivity.this, "登出成功", Toast.LENGTH_LONG).show();
+            }
+            else if(msg.what == 1) {
+                Toast.makeText(LogoutActivity.this, "登出失败", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +39,12 @@ public class LogoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 logoutUser();
+            }
+        });
+        findViewById(R.id.changePasswordButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LogoutActivity.this, ChangePasswordActivity.class));
             }
         });
     }
@@ -56,9 +75,15 @@ public class LogoutActivity extends AppCompatActivity {
 
                     if (code.equals("200")) {
                         //TODO:need a logout.xml file
-                        MainActivity.mainItem.curUser= "hly";
+                        MainActivity.mainItem.curUser= "hly2";
+                        Message msg = new Message();
+                        msg.what = -1;
+                        handler.sendMessage(msg);
                          startActivity(new Intent(LogoutActivity.this, MainActivity.class));
                     } else {
+                        Message msg = new Message();
+                        msg.what = 1;
+                        handler.sendMessage(msg);
                         Log.i("logout fail","error info");
                     }
                 } catch (JSONException e) {
