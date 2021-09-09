@@ -199,7 +199,7 @@ public class UserController {
         List<User> users = userRepository.findAll();
         for(User temp_user: users) {
             if(temp_user.getUsername().equals(username)) {
-                if(temp_user.getPassword().equals(oldPassword)) {
+                if(temp_user.getPassword().equals(oldPassword) && temp_user.isLoggedIn()) {
                     temp_user.password = newPassword;
                     userRepository.save(temp_user);
                     return "Success";
