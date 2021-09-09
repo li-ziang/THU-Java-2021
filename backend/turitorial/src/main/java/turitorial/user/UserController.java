@@ -225,6 +225,10 @@ public class UserController {
                 List<History> histories = other.getHistories();
                 for(int i = histories.size() - 1; i >= 0; i--) {
                     History history = histories.get(i);
+                    if(history.getInstanceName().equals("")) {
+//                        other.histories.remove(i);
+                        continue;
+                    }
                     tot_num ++;
                     JSONObject temp = new JSONObject();
                     temp.put("history", history.getInstanceName());
@@ -640,6 +644,7 @@ public class UserController {
         if(username == null || instanceName == null || course == null) {
             return "failure";
         }
+        System.out.println("in addCollection");
         List<User> users = userRepository.findAll();
         for(User temp_user: users) {
             if(temp_user.getUsername().equals(username) && temp_user.isLoggedIn()) {
@@ -657,6 +662,7 @@ public class UserController {
                         return "Already in collection";
                     }
                 }
+                System.out.println("adding collection");
                 temp_user.collections.add(collection);
                 userRepository.save(temp_user);
                 return "Success";
@@ -669,6 +675,7 @@ public class UserController {
     public String deleteCollection(@Valid @RequestBody AddCollection deleteCollection) {
         String username = deleteCollection.username, instanceName = deleteCollection.instanceName, course = deleteCollection.course;
         List<User> users = userRepository.findAll();
+        System.out.println("in deleteCollection");
         for(User temp_user: users) {
             if(temp_user.getUsername().equals(username) && temp_user.isLoggedIn()) {
                 System.out.println("Get users");
@@ -679,6 +686,7 @@ public class UserController {
                         temp_user.collections.remove(i);
                         userRepository.save(temp_user);
                         System.out.println(temp_user.collections.size());
+                        System.out.println("deleting collection");
                         return "Success";
                     }
                 }
