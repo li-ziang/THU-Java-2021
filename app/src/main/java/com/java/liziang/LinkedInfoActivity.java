@@ -98,7 +98,15 @@ public class LinkedInfoActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new LinkedAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                startActivity(new Intent(LinkedInfoActivity.this, ObjectActivity.class));
+                Intent intent = new Intent(LinkedInfoActivity.this, ObjectActivity.class);
+
+                String instanceName = adapter.arrayList.get(position).label.toString();
+                String course = adapter.arrayList.get(position).course.toString();
+                Log.i("testing history", instanceName + " " + course);
+
+                intent.putExtra("label", instanceName);
+                intent.putExtra("subject", course);
+                startActivity(intent);
             }
         });
         recyclerView.setAdapter(adapter);
