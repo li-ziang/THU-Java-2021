@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
   public static MainItem mainItem;
+  public ImageView user_image;
     public static ArrayList<String> historyList = new ArrayList<String>();
     public TabLayout tabLayout;
     public ViewPager viewPager1;
@@ -284,6 +286,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        user_image = findViewById(R.id.user_image);
+        if(MainItem.curUser.equalsIgnoreCase("hly2")){
+            user_image.setImageResource(R.drawable.user);
+        }
+        else{
+            user_image.setImageResource(R.drawable.monkey);
+        }
+
 
 
 
