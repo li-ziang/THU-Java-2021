@@ -17,7 +17,7 @@ public class ObjectItem {
     public boolean get = false;
     public boolean isCollected=false;
 
-    public Boolean namedIndividual;
+    public Boolean namedIndividual =false;
     public ArrayList<Content> objContent = new ArrayList<>();
     public ArrayList<Content> property = new ArrayList<>();
     public ArrayList<Content> subContent = new ArrayList<>();
@@ -170,9 +170,9 @@ public class ObjectItem {
                 String s= response.body().string();
                 // Log.i("object search fail",string);
                 //TODO: save jsonString 用42行参数
-                if(s.equals("Success")){
-                    Log.i("addCollect success", e.toString());
-                }
+//                if(s.equals("Success")){
+//                    Log.i("addCollect success", e.toString());
+//                }
 
             }
         });
@@ -197,9 +197,9 @@ public class ObjectItem {
                 String s= response.body().string();
                 // Log.i("object search fail",string);
                 //TODO: save jsonString 用42行参数
-                if(s.equals("Success")){
-                    Log.i("delCollect success", e.toString());
-                }
+//                if(s.equals("Success")){
+//                    Log.i("delCollect success", e.toString());
+//                }
 
             }
         });

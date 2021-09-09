@@ -2,6 +2,7 @@ package com.java.liziang;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class QuestionsActivity extends AppCompatActivity {
     RadioButton rb1,rb2,rb3,rb4;
     int flag=0;
     Boolean done=false;
+    String label;
 
 
 
@@ -41,6 +43,10 @@ public class QuestionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null){
+            label = bundle.getString("label");
+        }
         ArrayList<String> stringArr = KeywordForQuesion.keywords;
 //        stringArr.add("李白");
         getQuiz(stringArr);
@@ -323,6 +329,12 @@ public class QuestionsActivity extends AppCompatActivity {
         for (int i = 0; i < testRadioGroup.getChildCount(); i++) {
             testRadioGroup.getChildAt(i).setEnabled(set);
         }
+    }
+
+    public static void openActivity(Context context, String label){
+        Intent intent = new Intent(context, ObjectActivity.class);
+        intent.putExtra("label", label);
+        context.startActivity(intent);
     }
 }
 
