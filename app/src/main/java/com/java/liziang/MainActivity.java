@@ -258,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 catch (InterruptedException e){}
+                Log.i("fdhsjkflgbdsajhkfdsa",mainItem.searchKeyList.size()+"");
                 listAdapter.list.clear();
                 for(String ele:mainItem.searchKeyList){
                     listAdapter.list.add(ele);
