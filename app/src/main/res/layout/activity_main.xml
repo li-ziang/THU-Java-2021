@@ -9,11 +9,11 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:theme="@style/Theme.HouFuDao.AppBarOverlay">
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent" android:layout_weight="1">
         <TextView
             android:id="@+id/title"
@@ -26,12 +26,12 @@
             android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"/>
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent" android:layout_weight="1">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
-                android:layout_width="252dp"
+                android:layout_width="210dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.12"
                 android:background="@color/design_default_color_primary"
@@ -39,25 +39,24 @@
 
             <ImageView
                 android:id="@+id/user_image"
-                android:layout_width="match_parent"
+                android:layout_width="131dp"
                 android:layout_height="44dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:src="@drawable/user"
                 android:contentDescription="Add channel"
-                 />
+                android:src="@drawable/user" />
         </LinearLayout>
         </LinearLayout>
 
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="58dp"
             android:orientation="horizontal">
 
             <AutoCompleteTextView
                 android:id="@+id/searchEdit"
-                android:layout_width="215dp"
+                android:layout_width="191dp"
                 android:layout_height="50dp"
                 android:layout_margin="4dp"
                 android:layout_marginStart="32dp"
@@ -81,7 +80,7 @@
 
                 <Spinner
                     android:id="@+id/spinner1"
-                    android:layout_width="115dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:entries="@array/sequence" />
             </LinearLayout>
@@ -89,7 +88,7 @@
             <Button
 
                 android:id="@+id/buttonSearch"
-                android:layout_width="466dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:layout_marginTop="5dp"
@@ -102,7 +101,7 @@
 
 
 <FrameLayout
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent">
         <ListView
             android:layout_width="match_parent"
@@ -112,12 +111,12 @@
             ></ListView>
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent" android:layout_weight="1">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout2"
-                android:layout_width="395dp"
+                android:layout_width="340dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.12"
                 android:background="@color/white"
@@ -126,7 +125,7 @@
 
             <ImageView
                 android:id="@+id/edit_image"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="27dp"
                 android:layout_margin="12dp"
                 android:layout_weight="1"
@@ -135,7 +134,7 @@
         </LinearLayout>
 </FrameLayout>
 <LinearLayout
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="bottom"
     android:orientation="vertical">
@@ -147,13 +146,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/star"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -168,7 +167,7 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="54dp"
         android:layout_gravity="bottom"
         android:orientation="horizontal">
