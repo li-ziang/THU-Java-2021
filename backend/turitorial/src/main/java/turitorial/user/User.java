@@ -14,7 +14,7 @@ import java.util.Objects;
 public class User {
     private @Id @GeneratedValue long id;
     private @NotBlank String username;
-    private @NotBlank String password;
+    public @NotBlank String password;
     private @NotBlank boolean loggedIn;
     @OneToMany(cascade = CascadeType.ALL) List<History> histories;
     @OneToMany(cascade = CascadeType.ALL) List<SearchKeyHis> searchKeyHistories;

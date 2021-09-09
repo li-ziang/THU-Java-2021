@@ -115,6 +115,17 @@ class GetExercise {
     }
 }
 
+class NewPasswd{
+    public String username;
+    public String oldPassword;
+    public String newPassword;
+    public NewPasswd(String username, String oldPassword, String newPassword) {
+        this.username = username;
+        this.oldPassword = oldPassword;
+        this.newPassword = newPassword;
+    }
+}
+
 @RestController
 public class UserController {
     String apiId = "964628b3-12ff-4ccb-a0f7-a30ea2653a30";
@@ -181,6 +192,24 @@ public class UserController {
         jsonObject.put("content", "did not login");
         return  jsonObject.toString();
     }
+
+    @PostMapping("/users/changePassword")
+    public String changePassword(@Valid @RequestBody NewPasswd newPasswd) {
+        String username = newPasswd.username, oldPassword = newPasswd.oldPassword, newPassword = newPasswd.newPassword;
+        List<User> users = userRepository.findAll();
+        for(User temp_user: users) {
+            if(temp_user.getUsername().equals(username)) {
+                if(temp_user.getPassword().equals(oldPassword)) {
+                    temp_user.password = newPassword;
+                    userRepository.save(temp_user);
+                    return "Success";
+                }
+            }
+        }
+        return "failure";
+    }
+
+
     @PostMapping("/search/history")
     public String getHistories(@Valid @RequestBody userHistory userHistory) { // 获取某一个用户的历史记录
         List<User> users = userRepository.findAll();
