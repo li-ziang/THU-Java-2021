@@ -39,11 +39,11 @@
 
                             <TextView
                                 android:id="@+id/title_entity_detail"
-                                android:layout_width="280dp"
+                                android:layout_width="256dp"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
                                 android:gravity="start"
                                 android:text="实体详情"
-                                android:layout_margin="6dp"
                                 android:textColor="@android:color/white"
                                 android:textSize="32sp" />
                         <LinearLayout

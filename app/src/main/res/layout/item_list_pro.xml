@@ -15,18 +15,19 @@
                 android:id="@+id/label_pro"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
+                android:padding="15dp"
                 android:textColor="#999"
-                android:textSize="16dp"/>
+                android:textSize="16dp" />
+
             <TextView
                 android:id="@+id/content_pro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:layout_margin="5dp"
+                android:padding="5dp"
                 android:textColor="@color/black"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
         </LinearLayout>
 
 
