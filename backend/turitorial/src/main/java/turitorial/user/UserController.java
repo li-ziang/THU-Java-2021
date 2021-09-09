@@ -873,6 +873,9 @@ public class UserController {
             if(temp_user.getUsername().equals(username) && temp_user.isLoggedIn()) {
                 List<History> histories = temp_user.getHistories();
                 List<String> arr = getTopTenHistories(histories);
+                if(arr.size() == 0) {
+                    arr.add("李白");
+                }
                 System.out.println(arr);
                 System.out.println("--------------------------------------------------");
                 JSONArray retArray = new JSONArray();
