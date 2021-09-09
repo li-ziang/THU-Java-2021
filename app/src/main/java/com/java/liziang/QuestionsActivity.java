@@ -246,6 +246,10 @@ public class QuestionsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, okhttp3.Response response) throws IOException {
                 String string = response.body().string();
+                if(string.equals("failure")){
+                    done=true;
+                    return;
+                }
                 Log.i("exam response",string);
                 JSONArray ret = null;
 
@@ -288,7 +292,10 @@ public class QuestionsActivity extends AppCompatActivity {
                     String string = response.body().string();
                     Log.i("exam response",string);
                     JSONArray ret = null;
-    
+                    if(string.equals("failure")){
+                        done=true;
+                        return;
+                    }
                     try {
                         ret = new JSONArray(string);
     

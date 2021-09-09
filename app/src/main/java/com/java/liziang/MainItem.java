@@ -63,6 +63,10 @@ public class MainItem {
                String string = response.body().string();
 //               Log.i("search response",string);
                JSONArray arr = null;
+               if(string.equals("failure")){
+                   getArr=true;
+                   return;
+               }
                try {
                     arrList.clear();
                     arr = new JSONArray(string);
@@ -171,6 +175,10 @@ public class MainItem {
             @Override
             public void onResponse(Call call, okhttp3.Response response) throws IOException {
                 String string = response.body().string();
+                if(string.equals("failure")){
+                    getHis =true;
+                    return;
+                }
                 Log.i("getSearchHistory response",string);
                 ArrayList<String> searchKeyList_ = new ArrayList<>();
                 if(string.length()!=2){

@@ -35,7 +35,7 @@ public class ObjectActivity extends AppCompatActivity {
             label = bundle.getString("label");
             subject =bundle.getString("subject");
         }
-        objectItem = new ObjectItem("李白","chinese");
+        objectItem = new ObjectItem(label,subject);
         try{
             while(objectItem.get==false){
                 Thread.sleep(10);
