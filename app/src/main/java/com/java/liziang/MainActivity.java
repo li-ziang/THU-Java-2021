@@ -165,13 +165,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.the_history).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, HistoryActivity.class));
-            }
-        });
-        /////////////////////////
-        findViewById(R.id.ask_image).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
                 if(MainActivity.mainItem.curUser.equals("hly2")){
                     Handler handler = new Handler(){
                         @Override
@@ -191,8 +184,16 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(startIntent);
                 }
                 else{
+                startActivity(new Intent(MainActivity.this, HistoryActivity.class));}
+            }
+        });
+        /////////////////////////
+        findViewById(R.id.ask_image).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
                 startActivity(new Intent(MainActivity.this, MessengerActivity.class));
-                }
+        
             }
         });
 

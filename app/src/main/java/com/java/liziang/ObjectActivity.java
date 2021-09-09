@@ -13,10 +13,15 @@ import android.os.Bundle;
 
 import java.io.IOException;
 import java.util.*;
+
+import android.os.Handler;
+import android.os.Message;
 import android.util.*;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 import okhttp3.*;
 import org.json.*;
@@ -120,16 +125,35 @@ public class ObjectActivity extends AppCompatActivity {
         collect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(collection){
-                    objectItem.delCollect();
-                    collection = false;
-                    collect.setBackgroundColor(0xff0000ff);
+                if(MainActivity.mainItem.curUser.equals("hly2")){
+                    Handler handler = new Handler(){
+                        @Override
+                        public void handleMessage(Message msg) {
+                            if(msg.what == -1){
+                                Toast.makeText(ObjectActivity.this, "", Toast.LENGTH_LONG).show();
+                            }
+                            else if(msg.what == 1) {
+                                Toast.makeText(ObjectActivity.this, "未登陆，请先登陆", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    };
+                    Message msg = new Message();
+                    msg.what = 1;
+                    handler.sendMessage(msg);
                 }
                 else{
-                    objectItem.addCollect();
-                    collection = true;
-                    collect.setBackgroundColor(0xF8F8FF00);
+                    if(collection){
+                        objectItem.delCollect();
+                        collection = false;
+                        collect.setBackgroundColor(0xff0000ff);
+                    }
+                    else{
+                        objectItem.addCollect();
+                        collection = true;
+                        collect.setBackgroundColor(0xF8F8FF00);
+                    }
                 }
+
             }
         });
     }
