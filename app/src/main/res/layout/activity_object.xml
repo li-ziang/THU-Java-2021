@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="@drawable/sky"
     >
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="vertical">
             <com.google.android.material.appbar.AppBarLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" android:id="@+id/appBarLayout">
 
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/collapsing_toolbar"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
                     app:contentScrim="?attr/colorPrimary"
@@ -29,12 +29,12 @@
 
                     <androidx.appcompat.widget.Toolbar
                         android:id="@+id/toolbarEntityDetail"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="?attr/actionBarSize"
                         app:layout_collapseMode="pin"
                         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
@@ -48,7 +48,7 @@
                                 android:textColor="@android:color/white"
                                 android:textSize="32sp" />
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
                             <ImageView
@@ -78,13 +78,13 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="127dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/entity_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="left"
@@ -94,7 +94,7 @@
 
                 <TextView
                     android:id="@+id/NamedIndividual"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center|start"
@@ -109,21 +109,22 @@
             <TextView
                 android:text="属性"
                 android:layout_margin="10dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/entityRelationTitle2"
                 android:textSize="25sp"
                 android:textStyle="bold"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_pro"
-                android:layout_width="300dp"
+                android:layout_width="279dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp" />
 
             <TextView
                 android:text="关系"
                 android:layout_margin="10dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/entityRelationTitle"
                 android:textSize="25sp"
                 android:textStyle="bold"/>
@@ -134,7 +135,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_relation"
-        android:layout_width="206dp"
+        android:layout_width="181dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp" />
 

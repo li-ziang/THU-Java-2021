@@ -5,14 +5,22 @@
       <map>
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1953125" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1953125" />
+        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_collection.xml" value="0.12047101449275362" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_dashboard.xml" value="0.6169354838709677" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_edit_subject.xml" value="0.16666666666666666" />
+        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_history.xml" value="0.12047101449275362" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_host.xml" value="0.3135245901639344" />
+        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_instance_link.xml" value="0.12047101449275362" />
+        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_linked_info.xml" value="0.147008547008547" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_login.xml" value="0.16666666666666666" />
+        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_logout.xml" value="0.147008547008547" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_main.xml" value="0.2916666666666667" />
+        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_messenger.xml" value="0.147008547008547" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_object.xml" value="0.2074074074074074" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_object_linck.xml" value="0.17916666666666667" />
+        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_questions.xml" value="0.147008547008547" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_register.xml" value="0.1" />
+        <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/activity_result.xml" value="0.147008547008547" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/fragment_host.xml" value="0.1" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/fragment_tab.xml" value="0.1" />
         <entry key="..\:/java-2021/THU-Java-2021/app/src/main/res/layout/history_item.xml" value="0.41890639481000924" />
