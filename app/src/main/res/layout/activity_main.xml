@@ -31,7 +31,7 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
-                android:layout_width="210dp"
+                android:layout_width="177dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.12"
                 android:background="@color/design_default_color_primary"
@@ -39,9 +39,9 @@
 
             <ImageView
                 android:id="@+id/user_image"
-                android:layout_width="131dp"
-                android:layout_height="44dp"
-                android:layout_margin="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="3dp"
                 android:layout_weight="1"
                 android:contentDescription="Add channel"
                 android:src="@drawable/user" />
@@ -56,7 +56,7 @@
 
             <AutoCompleteTextView
                 android:id="@+id/searchEdit"
-                android:layout_width="191dp"
+                android:layout_width="169dp"
                 android:layout_height="50dp"
                 android:layout_margin="4dp"
                 android:layout_marginStart="32dp"
@@ -116,7 +116,7 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout2"
-                android:layout_width="340dp"
+                android:layout_width="307dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.12"
                 android:background="@color/white"

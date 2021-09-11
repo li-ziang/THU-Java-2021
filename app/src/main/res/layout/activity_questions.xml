@@ -11,12 +11,12 @@
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="384dp"
+        android:layout_width="355dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/answersgrp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="-377dp"
+        android:layout_marginTop="-414dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="#FF5722"
@@ -128,7 +128,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginBottom="49dp"
+        android:layout_marginBottom="15dp"
         android:text="Questions"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 

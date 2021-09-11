@@ -32,7 +32,7 @@
         android:padding="10dp"
         android:text="Collection"
         android:textColor="@color/purple_200"
-        android:textSize="60sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.655"
