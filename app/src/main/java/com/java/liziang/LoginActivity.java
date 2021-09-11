@@ -100,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (code.equals("200")) {
                         Log.i("login success",userName);
                         MainActivity.mainItem.curUser= userName;
+                        DbHelper.setCurUser(userName, MainActivity.dbHelper.getWritableDatabase());
                         renewCollection(userName);
                         Message msg = new Message();
                         msg.what = -1;

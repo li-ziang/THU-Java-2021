@@ -36,7 +36,7 @@ public class MainItem {
         stringList.add("geo");
         stringList.add("politics");
         this.course=course;
-
+        curUser = DbHelper.getCurUser(MainActivity.dbHelper.getReadableDatabase());
     }
     MainItem(String course,String searchContent){
         this(course);
