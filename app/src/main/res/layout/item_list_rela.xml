@@ -5,7 +5,6 @@
     android:layout_height="wrap_content">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,12 +13,13 @@
 
         <TextView
             android:id="@+id/content_rela"
-            android:layout_width="140dp"
+            android:layout_width="119dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:padding="5dp"
             android:textColor="@color/black"
-            android:textSize="20dp" />
+            android:textSize="15dp" />
+
         <TextView
             android:id="@+id/label_rela"
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_margin="5dp"
             android:padding="15dp"
             android:textColor="#777"
-            android:textSize="16dp" />
+            android:textSize="12dp" />
 
 
     </LinearLayout>
