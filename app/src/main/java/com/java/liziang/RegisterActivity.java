@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -26,7 +28,17 @@ import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
-
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what == -1){
+                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_LONG).show();
+            }
+            else if(msg.what == 1) {
+                Toast.makeText(RegisterActivity.this, "注册失败，用户名重复", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
     private EditText etUsername, etPassword;
 
     @Override
@@ -92,8 +104,14 @@ public class RegisterActivity extends AppCompatActivity {
 
                     if (code.equals("200")) {
 //                        Toast.makeText(RegisterActivity.this, "Successfully registered. Please login", Toast.LENGTH_LONG).show();
+                        Message msg = new Message();
+                        msg.what = -1;
+                        handler.sendMessage(msg);
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     } else {
+                        Message msg = new Message();
+                        msg.what = 1;
+                        handler.sendMessage(msg);
                         Log.i("regist fail","user already exit");
                     }
                 } catch (JSONException e) {

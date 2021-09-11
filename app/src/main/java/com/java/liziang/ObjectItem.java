@@ -153,6 +153,9 @@ public class ObjectItem {
         return contentList;}
 
     void addCollect(){
+        if(DbHelper.find(name, course, MainActivity.dbHelper.getReadableDatabase()) == null) {
+            return;
+        }
         String api = "/users/addCollection";
         String json = String.format("{\"username\": \"%s\", \"instanceName\":\"%s\",\"course\":\"%s\"}", MainActivity.mainItem.curUser, name,course);
         Server server = new Server(api, json);
