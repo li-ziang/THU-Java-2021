@@ -97,8 +97,8 @@ public class DbHelper extends SQLiteOpenHelper {
         Cursor cursor =  db.rawQuery("SELECT * FROM curUser WHERE User = 'curUser'",
                 new String[]{});
         if(cursor.moveToFirst()) { // 已经缓存
-            db.execSQL("update curUser set username = ? where User = 'curUser'");
-            return;
+            Log.i("username is ", username);
+            db.execSQL("DELETE FROM curUser WHERE User = ?",  new String[]{"curUser"});
         }
         ContentValues values = new ContentValues();
         values.put("User", "curUser");
@@ -112,6 +112,7 @@ public class DbHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()) {
             String content = cursor.getString(cursor.getColumnIndex("username"));
 //            Log.d(content, content);
+            if(content != null)
             return content;
         }
         return "hly2";
