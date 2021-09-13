@@ -3,10 +3,13 @@ package turitorial.dataloader;
 import java.io.*;
 import java.net.*;
 import org.json.*;
+
+import javax.net.ssl.HttpsURLConnection;
 import java.util.*;
 
 
 public class HttpRequest {
+    public int ms = 5 * 1000;
     public static String sendGet(String url, String param) {
         String result = "";
         BufferedReader in = null;
@@ -14,6 +17,8 @@ public class HttpRequest {
             String urlNameString = url + "?" + param;
             URL realUrl = new URL(urlNameString);
             URLConnection connection = realUrl.openConnection();
+//            connection.setConnectTimeout(5 * 1000);
+//            connection.setReadTimeout(5 * 1000);
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
 //            connection.setRequestProperty("user-agent",
@@ -49,12 +54,15 @@ public class HttpRequest {
         try {
             URL realUrl = new URL(url);
             URLConnection conn = realUrl.openConnection();
+//            conn.setConnectTimeout(5 * 1000);
+//            conn.setReadTimeout(5 * 1000);
             conn.setRequestProperty("accept", "*/*");
             conn.setRequestProperty("connection", "Keep-Alive");
             conn.setRequestProperty("user-agent",
                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             conn.setDoOutput(true);
             conn.setDoInput(true);
+
             out = new PrintWriter(conn.getOutputStream());
             out.print(param);
             out.flush();
@@ -84,18 +92,5 @@ public class HttpRequest {
         return result;
     }
 
-//    public static void main(String[] args) {
-//        String s=HttpRequest.sendGet("http://open.edukg.cn/opedukg/api/typeOpen/open/instanceList",
-//                "course=english&searchKey=apple&id=ee09e883-c628-403a-bd7f-edf0ef3c490a");
-//        JSONObject jsonObject = new JSONObject(s);
-//        JSONArray data = jsonObject.getJSONArray("data");
-//
-//        jsonObject = data.getJSONObject(0);
-//        String label = jsonObject.getString("label");
-//        String category = jsonObject.getString("category");
-//        String uri = jsonObject.getString("uri");
-//        System.out.println(label);
-//        System.out.println(category);
-//        System.out.println(uri);
-//    }
+
 }

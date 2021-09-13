@@ -1,6 +1,8 @@
 package turitorial.user;
 
+import turitorial.collection.Collection;
 import turitorial.history.History;
+import turitorial.searchKeyHis.SearchKeyHis;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,9 +14,11 @@ import java.util.Objects;
 public class User {
     private @Id @GeneratedValue long id;
     private @NotBlank String username;
-    private @NotBlank String password;
+    public @NotBlank String password;
     private @NotBlank boolean loggedIn;
     @OneToMany(cascade = CascadeType.ALL) List<History> histories;
+    @OneToMany(cascade = CascadeType.ALL) List<SearchKeyHis> searchKeyHistories;
+    @OneToMany(cascade = CascadeType.ALL) List<Collection> collections;
     public User() {
     }
     public User(@NotBlank String username,
@@ -23,10 +27,12 @@ public class User {
         this.password = password;
         this.loggedIn = false;
     }
+    public List<Collection> getCollections() { return collections;}
 
     public List<History> getHistories() {
         return histories;
     }
+    public List<SearchKeyHis> getSearchKeyHistories() {return  searchKeyHistories;}
 
     public long getId() {
         return id;
